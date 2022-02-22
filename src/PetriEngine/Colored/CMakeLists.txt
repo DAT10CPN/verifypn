@@ -1,5 +1,7 @@
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+add_subdirectory(Reduction)
+
 add_library(Colored ColoredPetriNetBuilder.cpp
 Colors.cpp
 Multiset.cpp

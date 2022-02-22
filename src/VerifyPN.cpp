@@ -46,6 +46,8 @@
 
 #include "VerifyPN.h"
 #include "PetriEngine/PQL/Analyze.h"
+#include "PetriEngine/PQL/PlaceUseVisitor.h"
+#include "PetriEngine/Colored/Reduction/ColoredReducer.h"
 
 #include <mutex>
 
@@ -53,6 +55,13 @@ using namespace PetriEngine;
 using namespace PetriEngine::PQL;
 using namespace PetriEngine::Reachability;
 
+
+bool reduceColored(const ColoredPetriNetBuilder& cpnBuilder, uint32_t timeout, std::ostream& out) {
+    if (!cpnBuilder.isColored()) return false;
+    Colored::Reduction::ColoredReducer reducer(cpnBuilder);
+    bool anyReduction = reducer.reduce(timeout);
+    return anyReduction;
+}
 
 std::tuple<PetriNetBuilder, Colored::PTTransitionMap, Colored::PTPlaceMap>
 unfold(ColoredPetriNetBuilder& cpnBuilder, bool compute_partiton, bool compute_symmetry, bool computed_fixed_point,
