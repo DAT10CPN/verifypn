@@ -47,8 +47,9 @@
 #include "VerifyPN.h"
 #include "PetriEngine/PQL/Analyze.h"
 #include "PetriEngine/PQL/PlaceUseVisitor.h"
-#include "PetriEngine/Colored/Reduction/ColoredReducer.h"
+#include "PetriEngine/PQL/ContainsVisitor.h"
 
+#include "PetriEngine/Colored/Reduction/ColoredReducer.h"
 #include <mutex>
 
 using namespace PetriEngine;
@@ -56,10 +57,19 @@ using namespace PetriEngine::PQL;
 using namespace PetriEngine::Reachability;
 
 
-bool reduceColored(const ColoredPetriNetBuilder& cpnBuilder, uint32_t timeout, std::ostream& out) {
+bool reduceColored(const ColoredPetriNetBuilder& cpnBuilder, std::vector<std::shared_ptr<PQL::Condition> >& queries, uint32_t timeout, std::ostream& out) {
     if (!cpnBuilder.isColored()) return false;
+
+    PlaceUseVisitor place_use_visitor(cpnBuilder.getPlaceCount());
+    ContainsVisitor<DeadlockCondition> contains_deadlock_visitor;
+
+    for (auto & q : queries) {
+        PQL::Visitor::visit(place_use_visitor, q);
+        PQL::Visitor::visit(contains_deadlock_visitor, q);
+    }
+
     Colored::Reduction::ColoredReducer reducer(cpnBuilder);
-    bool anyReduction = reducer.reduce(timeout);
+    bool anyReduction = reducer.reduce(timeout, place_use_visitor.in_use(), !contains_deadlock_visitor.does_contain());
     return anyReduction;
 }
 
