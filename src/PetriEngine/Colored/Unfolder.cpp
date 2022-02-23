@@ -46,7 +46,7 @@ namespace PetriEngine {
                     }
                     for (const auto& arc : _builder.inhibitors()) {
                         pnBuilder.addInputArc(_builder.places()[arc.place].name, _builder.transitions()[arc.transition].name, true,
-                            arc.weight);
+                            arc.inhib_weight);
                     }
                 }
             }
@@ -203,7 +203,7 @@ namespace PetriEngine {
                         }
                         _sumPlacesNames[inhibArc.place] = std::move(sumPlaceName);
                     }
-                    ptBuilder.addInputArc(placeName, newname, true, inhibArc.weight);
+                    ptBuilder.addInputArc(placeName, newname, true, inhibArc.inhib_weight);
                 }
             }
         }

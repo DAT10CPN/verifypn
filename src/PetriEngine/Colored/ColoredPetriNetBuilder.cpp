@@ -87,8 +87,9 @@ namespace PetriEngine {
         }
     }
 
-    void ColoredPetriNetBuilder::addInputArc(const std::string& place, const std::string& transition, const Colored::ArcExpression_ptr& expr, bool inhibitor, int weight) {
-        addArc(place, transition, expr, true, inhibitor, weight);
+    void ColoredPetriNetBuilder::addInputArc(const std::string& place, const std::string& transition, const Colored::ArcExpression_ptr& expr, bool inhibitor, int inhib_weight) {
+        assert(inhibitor == (inhib_weight != 0));
+        addArc(place, transition, expr, true, inhibitor, inhib_weight);
     }
 
     void ColoredPetriNetBuilder::addOutputArc(const std::string& transition, const std::string& place, int weight) {
@@ -98,10 +99,10 @@ namespace PetriEngine {
     }
 
     void ColoredPetriNetBuilder::addOutputArc(const std::string& transition, const std::string& place, const Colored::ArcExpression_ptr& expr) {
-        addArc(place, transition, expr, false, false, 1);
+        addArc(place, transition, expr, false, false, 0);
     }
 
-    void ColoredPetriNetBuilder::addArc(const std::string& place, const std::string& transition, const Colored::ArcExpression_ptr& expr, bool input, bool inhibitor, int weight) {
+    void ColoredPetriNetBuilder::addArc(const std::string& place, const std::string& transition, const Colored::ArcExpression_ptr& expr, bool input, bool inhibitor, int inhib_weight) {
         if(_transitionnames.count(transition) == 0)
             throw base_error("Transition '", transition, "' not found. ");
         if(_placenames.count(place) == 0)
@@ -119,11 +120,13 @@ namespace PetriEngine {
         arc.place = p;
         arc.transition = t;
         _places[p].inhibitor |= inhibitor;
+        _transitions[t].inhibited |= inhibitor;
+        assert(inhibitor == (inhib_weight != 0));
         if(!inhibitor)
             assert(expr != nullptr);
         arc.expr = std::move(expr);
         arc.input = input;
-        arc.weight = weight;
+        arc.inhib_weight = inhib_weight;
         if(inhibitor){
             _inhibitorArcs.push_back(std::move(arc));
         } else {

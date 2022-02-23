@@ -35,7 +35,7 @@ namespace PetriEngine {
             uint32_t transition;
             ArcExpression_ptr expr;
             bool input;
-            uint32_t weight;
+            uint32_t inhib_weight; // inhibitor arc if >0
         };
 
         struct Transition {
@@ -45,6 +45,7 @@ namespace PetriEngine {
             double _x = 0, _y = 0;
             std::vector<Arc> input_arcs;
             std::vector<Arc> output_arcs;
+            bool inhibited;
         };
 
         struct Place {

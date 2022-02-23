@@ -60,7 +60,7 @@ namespace PetriEngine {
         void addInputArc(const std::string& place,
                 const std::string& transition,
                 const Colored::ArcExpression_ptr& expr,
-                bool inhibitor, int weight) override;
+                bool inhibitor, int inhib_weight) override;
         void addOutputArc(const std::string& transition,
                 const std::string& place,
                 int weight) override;
@@ -128,7 +128,7 @@ namespace PetriEngine {
         void addArc(const std::string& place,
                 const std::string& transition,
                 const Colored::ArcExpression_ptr& expr,
-                bool input, bool inhibitor, int weight);
+                bool input, bool inhibitor, int inhib_weight);
     };
 
     enum ExpressionType {
