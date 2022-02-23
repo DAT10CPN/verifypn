@@ -70,6 +70,9 @@ bool reduceColored(const ColoredPetriNetBuilder& cpnBuilder, std::vector<std::sh
 
     Colored::Reduction::ColoredReducer reducer(cpnBuilder);
     bool anyReduction = reducer.reduce(timeout, place_use_visitor.in_use(), !contains_deadlock_visitor.does_contain());
+
+    out << "Colored structural reductions computed in " << reducer.time() << " seconds" << std::endl;
+
     return anyReduction;
 }
 

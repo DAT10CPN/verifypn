@@ -25,6 +25,11 @@ namespace PetriEngine::Colored {
                 return _time_spent;
             }
 
+            bool hasTimedOut() {
+                auto now = std::chrono::high_resolution_clock::now();
+                return std::chrono::duration_cast<std::chrono::seconds>(now - _start_time).count() >= _timeout;
+            }
+
             const std::vector<Colored::Place>& places() const {
                 return _builder.places();
             }
@@ -39,6 +44,8 @@ namespace PetriEngine::Colored {
 
         private:
             const PetriEngine::ColoredPetriNetBuilder& _builder;
+            std::chrono::system_clock::time_point _start_time;
+            uint32_t _timeout = 0;
             double _time_spent = 0;
             ReduceFirstPlace _reduceFirstPlace;
             std::vector<ReductionRule*> _reductions {

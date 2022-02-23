@@ -8,10 +8,10 @@
 namespace PetriEngine::Colored::Reduction {
 
     bool ColoredReducer::reduce(uint32_t timeout, const std::vector<bool>& in_query, bool can_remove_deadlocks) {
-        if (timeout <= 0) return false;
 
-        auto start_time = std::chrono::high_resolution_clock::now();
-        auto now = std::chrono::high_resolution_clock::now();
+        _start_time = std::chrono::high_resolution_clock::now();
+        if (timeout <= 0) return false;
+        _timeout = timeout;
 
         bool changed;
         do {
@@ -24,10 +24,10 @@ namespace PetriEngine::Colored::Reduction {
                     changed |= rule->apply(*this, in_query, can_remove_deadlocks);
             }
 
-            now = std::chrono::high_resolution_clock::now();
-        } while (changed && std::chrono::duration_cast<std::chrono::seconds>(now - start_time).count() < timeout);
+        } while (changed && hasTimedOut());
 
-        _time_spent = (std::chrono::duration_cast<std::chrono::microseconds>(now - start_time).count()) * 0.000001;
+        auto now = std::chrono::high_resolution_clock::now();
+        _time_spent = (std::chrono::duration_cast<std::chrono::microseconds>(now - _start_time).count()) * 0.000001;
         return false;
     }
 
