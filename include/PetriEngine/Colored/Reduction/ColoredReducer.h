@@ -5,6 +5,8 @@
 #ifndef VERIFYPN_COLOREDREDUCER_H
 #define VERIFYPN_COLOREDREDUCER_H
 
+#include <utility>
+
 #include "PetriEngine/Colored/ColoredPetriNetBuilder.h"
 #include "PetriEngine/PQL/PlaceUseVisitor.h"
 #include "ReductionRule.h"
@@ -16,12 +18,29 @@ namespace PetriEngine::Colored {
 
     namespace Reduction {
 
+        struct ApplicationSummary {
+            std::string name;
+            uint32_t applications;
+            ApplicationSummary(std::string name, uint32_t applications) : name(std::move(name)), applications(applications) {}
+        };
+
         class ColoredReducer {
         public:
             ColoredReducer(PetriEngine::ColoredPetriNetBuilder &b) : _builder(b),
                                                                      _origPlaceCount(b.getPlaceCount()),
                                                                      _origTransitionCount(
-                                                                             b.getTransitionCount()) {}
+                                                                             b.getTransitionCount()) {
+#if NDEBUG
+                // All rule names must be unique
+                std::set<std::string> names;
+                for (auto &rule : _reductions) {
+                    assert(names.find(rule->name()) == names.end());
+                    names.insert(rule->name());
+                }
+#endif
+            }
+
+            std::vector<ApplicationSummary> createApplicationSummary() const;
 
             bool reduce(uint32_t timeout, const std::vector<bool> &in_query, bool can_remove_deadlocks);
 
