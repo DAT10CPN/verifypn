@@ -30,7 +30,7 @@ namespace PetriEngine::Colored {
                                                                      _origPlaceCount(b.getPlaceCount()),
                                                                      _origTransitionCount(
                                                                              b.getTransitionCount()) {
-#if NDEBUG
+#ifndef NDEBUG
                 // All rule names must be unique
                 std::set<std::string> names;
                 for (auto &rule : _reductions) {
