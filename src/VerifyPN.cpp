@@ -57,7 +57,7 @@ using namespace PetriEngine::PQL;
 using namespace PetriEngine::Reachability;
 
 
-bool reduceColored(const ColoredPetriNetBuilder& cpnBuilder, std::vector<std::shared_ptr<PQL::Condition> >& queries, uint32_t timeout, std::ostream& out) {
+bool reduceColored(ColoredPetriNetBuilder& cpnBuilder, std::vector<std::shared_ptr<PQL::Condition> >& queries, uint32_t timeout, std::ostream& out) {
     if (!cpnBuilder.isColored()) return false;
 
     PlaceUseVisitor place_use_visitor(cpnBuilder.getPlaceCount());

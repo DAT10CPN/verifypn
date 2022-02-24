@@ -10,6 +10,7 @@
 #include "ReductionRule.h"
 #include "ReduceFirstPlace.h"
 
+
 namespace PetriEngine::Colored {
     using CArcIter = std::vector<Arc>::iterator;
 
@@ -17,40 +18,74 @@ namespace PetriEngine::Colored {
 
         class ColoredReducer {
         public:
-            ColoredReducer(const PetriEngine::ColoredPetriNetBuilder& b) : _builder(b) {}
+            ColoredReducer(PetriEngine::ColoredPetriNetBuilder &b) : _builder(b),
+                                                                     _origPlaceCount(b.getPlaceCount()),
+                                                                     _origTransitionCount(
+                                                                             b.getTransitionCount()) {}
 
-            bool reduce(uint32_t timeout, const std::vector<bool>& in_query, bool can_remove_deadlocks);
+            bool reduce(uint32_t timeout, const std::vector<bool> &in_query, bool can_remove_deadlocks);
 
             double time() const {
-                return _time_spent;
+                return _timeSpent;
             }
 
-            bool hasTimedOut() {
+            bool hasTimedOut() const {
                 auto now = std::chrono::high_resolution_clock::now();
-                return std::chrono::duration_cast<std::chrono::seconds>(now - _start_time).count() >= _timeout;
+                return std::chrono::duration_cast<std::chrono::seconds>(now - _startTime).count() >= _timeout;
             }
 
-            const std::vector<Colored::Place>& places() const {
+            uint32_t origPlaceCount() const {
+                return _origPlaceCount;
+            }
+
+            uint32_t origTransitionCount() const {
+                return _origTransitionCount;
+            }
+
+            uint32_t unskippedPlacesCount() const {
+                return _builder.getPlaceCount() - _skippedPlaces.size();
+            }
+
+            uint32_t unskippedTransitionsCount() {
+                return _builder.getTransitionCount() - _skippedTransitions.size();
+            }
+
+            const std::vector<Colored::Place> &places() const {
                 return _builder.places();
             }
 
-            const std::vector<Colored::Transition>& transitions() const {
+            const std::vector<Colored::Transition> &transitions() const {
                 return _builder.transitions();
             }
 
-            CArcIter getInArc(uint32_t pid, Colored::Transition& tran);
+            const std::vector<Colored::Arc> &inhibitorArcs() const {
+                return _builder.inhibitors();
+            }
 
-            CArcIter getOutArc(Colored::Transition& tran, uint32_t pid);
+            CArcIter getInArc(uint32_t pid, Colored::Transition &tran) const;
+
+            CArcIter getOutArc(Colored::Transition &tran, uint32_t pid) const;
+
+            void skipPlace(uint32_t pid);
+
+            void skipTransition(uint32_t tid);
+
 
         private:
-            const PetriEngine::ColoredPetriNetBuilder& _builder;
-            std::chrono::system_clock::time_point _start_time;
+            PetriEngine::ColoredPetriNetBuilder &_builder;
+            std::chrono::system_clock::time_point _startTime;
             uint32_t _timeout = 0;
-            double _time_spent = 0;
+            double _timeSpent = 0;
+            uint32_t _origPlaceCount;
+            uint32_t _origTransitionCount;
+            std::vector<uint32_t> _skippedPlaces;
+            std::vector<uint32_t> _skippedTransitions;
+
+            // Reduction rules
             ReduceFirstPlace _reduceFirstPlace;
-            std::vector<ReductionRule*> _reductions {
-                // TODO Actually useful reductions. This is just a test rule to guide implementation
-                &_reduceFirstPlace
+            std::vector<ReductionRule *> _reductions{
+                    // TODO Actually useful reductions. This is just a test rule to guide implementation
+                    &_reduceFirstPlace
             };
         };
     }

@@ -46,6 +46,7 @@ namespace PetriEngine {
             std::vector<Arc> input_arcs;
             std::vector<Arc> output_arcs;
             bool inhibited;
+            bool skipped;
         };
 
         struct Place {
@@ -56,6 +57,7 @@ namespace PetriEngine {
             bool inhibitor;
             std::vector<uint32_t> _pre;
             std::vector<uint32_t> _post;
+            bool skipped;
         };
     }
 }

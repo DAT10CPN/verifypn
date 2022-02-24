@@ -28,9 +28,14 @@
 #include "../PetriNetBuilder.h"
 
 namespace PetriEngine {
+    namespace Colored::Reduction {
+        class ColoredReducer;
+    }
 
     class ColoredPetriNetBuilder : public AbstractPetriNetBuilder {
     public:
+        friend class Colored::Reduction::ColoredReducer;
+
         ColoredPetriNetBuilder();
         ColoredPetriNetBuilder(const ColoredPetriNetBuilder& orig);
         virtual ~ColoredPetriNetBuilder();
