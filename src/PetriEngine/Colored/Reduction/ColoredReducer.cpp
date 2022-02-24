@@ -12,7 +12,7 @@ namespace PetriEngine::Colored::Reduction {
         for (auto& rule : _reductions) {
             res.emplace_back(rule->name(), rule->applications());
         }
-        std::sort(res.begin(), res.end()); // Sort by 1st element (name)
+        std::sort(res.begin(), res.end());
         return res;
     }
 
