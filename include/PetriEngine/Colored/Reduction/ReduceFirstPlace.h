@@ -10,7 +10,7 @@
 namespace PetriEngine::Colored::Reduction {
     class ReduceFirstPlace : public ReductionRule {
     public:
-        bool apply(const ColoredReducer& red, const std::vector<bool> &in_query, bool can_remove_deadlocks) override;
+        bool apply(ColoredReducer& red, const std::vector<bool> &in_query, bool can_remove_deadlocks) override;
         bool canBeAppliedRepeatedly() override { return false; }
     };
 }

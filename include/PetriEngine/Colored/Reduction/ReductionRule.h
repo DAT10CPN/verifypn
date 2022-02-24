@@ -13,7 +13,7 @@ namespace PetriEngine::Colored::Reduction {
 
         class ReductionRule {
         public:
-            virtual bool apply(const ColoredReducer& red, const std::vector<bool>& in_query, bool can_remove_deadlocks) = 0;
+            virtual bool apply(ColoredReducer& red, const std::vector<bool>& in_query, bool can_remove_deadlocks) = 0;
 
             uint32_t applications() {
                 return _applications;
@@ -21,7 +21,7 @@ namespace PetriEngine::Colored::Reduction {
 
             virtual bool canBeAppliedRepeatedly() = 0;
 
-        private:
+        protected:
             uint32_t _applications = 0;
         };
     }
