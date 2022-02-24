@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <cstdint>
+#include <string>
 
 namespace PetriEngine::Colored::Reduction {
         class ColoredReducer;

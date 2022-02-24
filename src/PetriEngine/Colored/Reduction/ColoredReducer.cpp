@@ -8,7 +8,7 @@
 namespace PetriEngine::Colored::Reduction {
 
     std::vector<ApplicationSummary> ColoredReducer::createApplicationSummary() const {
-        auto res = std::vector<ApplicationSummary>(_reductions.size());
+        std::vector<ApplicationSummary> res;
         for (auto& rule : _reductions) {
             res.emplace_back(rule->name(), rule->applications());
         }

@@ -22,6 +22,7 @@ namespace PetriEngine::Colored {
             std::string name;
             uint32_t applications;
             ApplicationSummary(std::string name, uint32_t applications) : name(std::move(name)), applications(applications) {}
+            bool operator<(const ApplicationSummary &rhs) const { return name < rhs.name; }
         };
 
         class ColoredReducer {
