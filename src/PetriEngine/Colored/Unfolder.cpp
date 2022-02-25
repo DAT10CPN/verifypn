@@ -15,10 +15,12 @@ namespace PetriEngine {
             PetriNetBuilder pnBuilder;
             if (_builder.isColored()) {
                 for (auto& place : _builder.places()) {
+                    if (place.skipped) continue;
                     pnBuilder.addPlace(place.name, place.marking.size(), place._x, place._y);
                 }
 
                 for (auto& transition : _builder.transitions()) {
+                    if (transition.skipped) continue;
                     pnBuilder.addTransition(transition.name, transition._player, transition._x, transition._y);
                     for (const auto& arc : transition.input_arcs) {
                         try {
