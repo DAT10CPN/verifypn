@@ -71,6 +71,7 @@ namespace PetriEngine {
 
                 const auto& unfoldedPlaceMap = ptBuilder.getPlaceNames();
                 for (auto& place : _builder.places()) {
+                    if (place.skipped) continue;
                     handleOrphanPlace(ptBuilder, place, unfoldedPlaceMap);
                 }
 
