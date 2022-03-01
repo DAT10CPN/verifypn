@@ -46,9 +46,9 @@
 
 #include "VerifyPN.h"
 #include "PetriEngine/PQL/Analyze.h"
-#include "PetriEngine/PQL/PlaceUseVisitor.h"
 #include "PetriEngine/PQL/ContainsVisitor.h"
 #include "PetriEngine/Colored/Reduction/ColoredReducer.h"
+#include "PetriEngine/PQL/ColoredPlaceUseVisitor.h"
 
 #include <mutex>
 
@@ -61,8 +61,8 @@ bool reduceColored(ColoredPetriNetBuilder &cpnBuilder, std::vector<std::shared_p
                    uint32_t timeout, std::ostream &out) {
     if (!cpnBuilder.isColored()) return false;
 
-    PlaceUseVisitor place_use_visitor(cpnBuilder.getPlaceCount());
-    ContainsVisitor<DeadlockCondition> contains_deadlock_visitor;
+    ColoredPlaceUseVisitor place_use_visitor(cpnBuilder);
+    ContainsVisitor<DeadlockCondition> contains_deadlock_visitor; // FIXME This is not the only reason to preserve deadlocks
 
     for (auto &q: queries) {
         PQL::Visitor::visit(place_use_visitor, q);
