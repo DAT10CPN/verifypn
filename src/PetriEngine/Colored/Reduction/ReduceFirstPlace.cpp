@@ -10,7 +10,7 @@ namespace PetriEngine::Colored::Reduction {
                                  bool can_remove_deadlocks) {
 
         // Remove place 0 - who cares about correctness :)
-        if (!red.places().empty() && !red.places()[0].skipped) {
+        if (!red.places().empty() && !red.places()[0].skipped && !in_query[0]) {
             red.skipPlace(0);
             _applications++;
             return true;

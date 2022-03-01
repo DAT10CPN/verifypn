@@ -74,14 +74,14 @@ bool reduceColored(ColoredPetriNetBuilder &cpnBuilder, std::vector<std::shared_p
 
     auto removedPlacesCount = (int32_t)reducer.origPlaceCount() - (int32_t)reducer.unskippedPlacesCount();
     auto removedTransitionsCount = (int32_t)reducer.origTransitionCount() - (int32_t)reducer.unskippedTransitionsCount();
-    double placePercentage = (double)removedPlacesCount / reducer.origPlaceCount();
-    double transitionPercentage = (double)removedTransitionsCount / reducer.origTransitionCount();
+    double placePercentage = 100 * (double)removedPlacesCount / reducer.origPlaceCount();
+    double transitionPercentage = 100 * (double)removedTransitionsCount / reducer.origTransitionCount();
 
     out << "\nColored structural reductions computed in " << reducer.time() << " seconds" << std::endl;
     out << "Reduced from " << reducer.origPlaceCount() << " to " << reducer.unskippedPlacesCount() << " places " <<
         "(" << removedPlacesCount << ", " << placePercentage << "%)" << std::endl;
     out << "Reduced from " << reducer.origTransitionCount() << " to " << reducer.unskippedTransitionsCount() << " transitions " <<
-        "(" << removedPlacesCount << ", " << transitionPercentage << "%)" << std::endl;
+        "(" << removedTransitionsCount << ", " << transitionPercentage << "%)" << std::endl;
 
     auto summary = reducer.createApplicationSummary();
     for (auto& rule : summary) {
