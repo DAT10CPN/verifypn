@@ -1,6 +1,9 @@
-//
-// Created by nicoesterby on 22-02-2022.
-//
+/*
+ * Authors:
+ *      Nicolaj Østerby Jensen
+ *      Jesper van Diepen
+ *      Mathias Mehl Sørensen
+ */
 
 #ifndef VERIFYPN_COLOREDREDUCER_H
 #define VERIFYPN_COLOREDREDUCER_H
@@ -10,7 +13,7 @@
 #include "PetriEngine/Colored/ColoredPetriNetBuilder.h"
 #include "PetriEngine/PQL/PlaceUseVisitor.h"
 #include "ReductionRule.h"
-#include "ReduceFirstPlace.h"
+#include "RedRuleIdentity.h"
 
 
 namespace PetriEngine::Colored {
@@ -102,7 +105,7 @@ namespace PetriEngine::Colored {
             std::vector<uint32_t> _skippedTransitions;
 
             // Reduction rules
-            ReduceFirstPlace _reduceFirstPlace;
+            RedRuleIdentity _reduceFirstPlace;
             std::vector<ReductionRule *> _reductions{
                     // TODO Actually useful reductions. This is just a test rule to guide implementation
                     &_reduceFirstPlace

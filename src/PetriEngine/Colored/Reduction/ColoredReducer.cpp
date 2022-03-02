@@ -1,6 +1,9 @@
-//
-// Created by nicoesterby on 22-02-2022.
-//
+/*
+ * Authors:
+ *      Nicolaj Østerby Jensen
+ *      Jesper van Diepen
+ *      Mathias Mehl Sørensen
+ */
 
 #include "PetriEngine/Colored/ColoredPetriNetBuilder.h"
 #include "PetriEngine/Colored/Reduction/ColoredReducer.h"

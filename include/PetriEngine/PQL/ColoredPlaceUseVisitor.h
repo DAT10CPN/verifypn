@@ -1,6 +1,9 @@
-//
-// Created by nicoesterby on 01-03-2022.
-//
+/*
+ * Authors:
+ *      Nicolaj Østerby Jensen
+ *      Jesper van Diepen
+ *      Mathias Mehl Sørensen
+ */
 
 #ifndef VERIFYPN_COLOREDPLACEUSEVISITOR_H
 #define VERIFYPN_COLOREDPLACEUSEVISITOR_H
