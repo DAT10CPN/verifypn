@@ -1,7 +1,7 @@
 /*
  * Authors:
  *      Nicolaj Østerby Jensen
- *      Jesper van Diepen
+ *      Jesper Adriaan van Diepen
  *      Mathias Mehl Sørensen
  */
 
