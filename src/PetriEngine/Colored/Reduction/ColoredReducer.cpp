@@ -12,14 +12,14 @@ namespace PetriEngine::Colored::Reduction {
 
     std::vector<ApplicationSummary> ColoredReducer::createApplicationSummary() const {
         std::vector<ApplicationSummary> res;
-        for (auto& rule : _reductions) {
+        for (auto &rule : _reductions) {
             res.emplace_back(rule->name(), rule->applications());
         }
         std::sort(res.begin(), res.end());
         return res;
     }
 
-    bool ColoredReducer::reduce(uint32_t timeout, const std::vector<bool> &in_query, bool can_remove_deadlocks) {
+    bool ColoredReducer::reduce(uint32_t timeout, const std::vector<bool> &inQuery, bool preserveDeadlocks) {
 
         _startTime = std::chrono::high_resolution_clock::now();
         if (timeout <= 0) return false;
@@ -32,9 +32,9 @@ namespace PetriEngine::Colored::Reduction {
 
             for (auto &rule: _reductions) {
                 if (rule->canBeAppliedRepeatedly())
-                    while (rule->apply(*this, in_query, can_remove_deadlocks)) changed = true;
+                    while (rule->apply(*this, inQuery, preserveDeadlocks)) changed = true;
                 else
-                    changed |= rule->apply(*this, in_query, can_remove_deadlocks);
+                    changed |= rule->apply(*this, inQuery, preserveDeadlocks);
             }
 
             any |= changed;

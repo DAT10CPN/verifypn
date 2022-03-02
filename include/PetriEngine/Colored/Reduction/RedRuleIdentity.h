@@ -14,9 +14,10 @@ namespace PetriEngine::Colored::Reduction {
     class RedRuleIdentity : public ReductionRule {
     public:
         std::string name() override { return "Identity"; }
+
         bool canBeAppliedRepeatedly() override { return false; }
 
-        bool apply(ColoredReducer& red, const std::vector<bool> &in_query, bool can_remove_deadlocks) override;
+        bool apply(ColoredReducer &red, const std::vector<bool> &inQuery, bool preserveDeadlocks) override;
     };
 }
 

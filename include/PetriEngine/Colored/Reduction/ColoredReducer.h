@@ -24,7 +24,10 @@ namespace PetriEngine::Colored {
         struct ApplicationSummary {
             std::string name;
             uint32_t applications;
-            ApplicationSummary(std::string name, uint32_t applications) : name(std::move(name)), applications(applications) {}
+
+            ApplicationSummary(std::string name, uint32_t applications) : name(std::move(name)),
+                                                                          applications(applications) {}
+
             bool operator<(const ApplicationSummary &rhs) const { return name < rhs.name; }
         };
 
@@ -46,7 +49,7 @@ namespace PetriEngine::Colored {
 
             std::vector<ApplicationSummary> createApplicationSummary() const;
 
-            bool reduce(uint32_t timeout, const std::vector<bool> &in_query, bool can_remove_deadlocks);
+            bool reduce(uint32_t timeout, const std::vector<bool> &inQuery, bool preserveDeadlocks);
 
             double time() const {
                 return _timeSpent;

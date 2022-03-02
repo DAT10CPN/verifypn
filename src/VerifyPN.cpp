@@ -61,16 +61,16 @@ bool reduceColored(ColoredPetriNetBuilder &cpnBuilder, std::vector<std::shared_p
                    uint32_t timeout, std::ostream &out) {
     if (!cpnBuilder.isColored()) return false;
 
-    ColoredPlaceUseVisitor place_use_visitor(cpnBuilder);
-    ContainsVisitor<DeadlockCondition> contains_deadlock_visitor; // FIXME This is not the only reason to preserve deadlocks
+    ColoredPlaceUseVisitor placeUseVisitor(cpnBuilder.colored_placenames(), cpnBuilder.getPlaceCount());
+    ContainsVisitor<DeadlockCondition> containsDeadlockVisitor; // FIXME This is not the only reason to preserve deadlocks
 
     for (auto &q: queries) {
-        PQL::Visitor::visit(place_use_visitor, q);
-        PQL::Visitor::visit(contains_deadlock_visitor, q);
+        PQL::Visitor::visit(placeUseVisitor, q);
+        PQL::Visitor::visit(containsDeadlockVisitor, q);
     }
 
     Colored::Reduction::ColoredReducer reducer(cpnBuilder);
-    bool anyReduction = reducer.reduce(timeout, place_use_visitor.in_use(), !contains_deadlock_visitor.does_contain());
+    bool anyReduction = reducer.reduce(timeout, placeUseVisitor.in_use(), containsDeadlockVisitor.does_contain());
 
     auto removedPlacesCount = (int32_t)reducer.origPlaceCount() - (int32_t)reducer.unskippedPlacesCount();
     auto removedTransitionsCount = (int32_t)reducer.origTransitionCount() - (int32_t)reducer.unskippedTransitionsCount();

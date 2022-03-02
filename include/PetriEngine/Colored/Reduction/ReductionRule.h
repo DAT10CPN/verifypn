@@ -13,23 +13,24 @@
 #include <string>
 
 namespace PetriEngine::Colored::Reduction {
-        class ColoredReducer;
+    class ColoredReducer;
 
-        class ReductionRule {
-        public:
-            virtual std::string name() = 0;
-            virtual bool canBeAppliedRepeatedly() = 0;
+    class ReductionRule {
+    public:
+        virtual std::string name() = 0;
 
-            uint32_t applications() {
-                return _applications;
-            }
+        virtual bool canBeAppliedRepeatedly() = 0;
 
-            virtual bool apply(ColoredReducer& red, const std::vector<bool>& in_query, bool can_remove_deadlocks) = 0;
+        uint32_t applications() {
+            return _applications;
+        }
 
-        protected:
-            uint32_t _applications = 0;
-        };
-    }
+        virtual bool apply(ColoredReducer &red, const std::vector<bool> &inQuery, bool preserveDeadlocks) = 0;
+
+    protected:
+        uint32_t _applications = 0;
+    };
+}
 
 
 #endif //VERIFYPN_REDUCTIONRULE_H

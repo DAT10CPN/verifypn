@@ -9,8 +9,8 @@
 #include "PetriEngine/Colored/Reduction/ColoredReducer.h"
 
 namespace PetriEngine::Colored::Reduction {
-    bool RedRuleIdentity::apply(ColoredReducer& red, const std::vector<bool> &in_query,
-                                 bool can_remove_deadlocks) {
+    bool RedRuleIdentity::apply(ColoredReducer &red, const std::vector<bool> &inQuery,
+                                bool preserveDeadlocks) {
 
         // Do nothing
         _applications = 1;
