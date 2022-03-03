@@ -53,6 +53,16 @@ void options_t::print(std::ostream& optionsOut) {
         optionsOut << ",State_Space_Exploration=DISABLED";
     }
 
+    if (enablecolreduction == 0) {
+        optionsOut << ",Colored_Structural_Reduction=DISABLED";
+    } else if (enablereduction == 1) {
+        optionsOut << ",Colored_Structural_Reduction=AGGRESSIVE";
+    } else if (enablereduction == 1) {
+        optionsOut << ",Colored_Structural_Reduction=CUSTOM SEQUENCE";
+    }
+
+    optionsOut << ",Colored_Struct_Red_Timout=" << colReductionTimeout;
+
     if (enablereduction == 0) {
         optionsOut << ",Structural_Reduction=DISABLED";
     } else if (enablereduction == 1) {
@@ -134,6 +144,7 @@ void printHelp() {
         "                                       - 1  aggressive reduction (default)\n"
         "                                       - 2  user defined reduction sequence, eg -b 2 0,1,2,3 to use rules A,B,C,D only, and in that order\n"
         "  -d, --reduction-timeout <timeout>    Timeout for structural reductions in seconds (default 60)\n"
+        "  -f, --colreduction-timeout <timeout> Timeout for colored structural reductions in seconds (default 60)\n"
         "  -q, --query-reduction <timeout>      Query reduction timeout in seconds (default 30)\n"
         "                                       write -q 0 to disable query reduction\n"
         "  --interval-timeout <timeout>         Time in seconds before the max intervals is halved (default 10)\n"
@@ -356,10 +367,17 @@ bool options_t::parse(int argc, const char** argv) {
             if (sscanf(argv[++i], "%d", &reductionTimeout) != 1) {
                 throw base_error("Argument Error: Invalid reduction timeout argument ", std::quoted(argv[i]));
             }
-        } else if (std::strcmp(argv[i], "--seed-offset") == 0) {
-            if (sscanf(argv[++i], "%u", &seed_offset) != 1) {
-                throw base_error("Argument Error: Invalid seed offset argument ", std::quoted(argv[i]));
+        } else if (std::strcmp(argv[i], "-f") == 0 || std::strcmp(argv[i], "--colreduction-timeout") == 0) {
+            if (i == argc - 1) {
+                throw base_error("Missing number after ", std::quoted(argv[i]));
             }
+            if (sscanf(argv[++i], "%d", &colReductionTimeout) != 1) {
+                throw base_error("Argument Error: Invalid reduction timeout argument ", std::quoted(argv[i]));
+            }
+        } else if (std::strcmp(argv[i], "--seed-offset") == 0) {
+        if (sscanf(argv[++i], "%u", &seed_offset) != 1) {
+            throw base_error("Argument Error: Invalid seed offset argument ", std::quoted(argv[i]));
+        }
         } else if (std::strcmp(argv[i], "-p") == 0 || std::strcmp(argv[i], "--disable-partial-order") == 0) {
             stubbornreduction = false;
         } else if (std::strcmp(argv[i], "-a") == 0 || std::strcmp(argv[i], "--siphon-trap") == 0) {
