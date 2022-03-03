@@ -96,6 +96,16 @@ namespace PetriEngine::Colored {
 
             void skipTransition(uint32_t tid);
 
+            void keepReductions(std::vector<uint32_t>& reductions) {
+                uint32_t index = 0;
+                for (auto &rule: _reductions) {
+                    if(!(std::find(reductions.begin(), reductions.end(), index) != reductions.end())) {
+                        _reductions.erase(_reductions.begin() + index);
+                    }
+                    ++index;
+                }
+            }
+
 
         private:
             PetriEngine::ColoredPetriNetBuilder &_builder;

@@ -29,7 +29,8 @@ namespace PetriEngine::Colored::Reduction {
         bool changed;
 
         if (reductiontype == 2) {
-            do {
+            ColoredReducer::keepReductions(reductions);
+            /*do {
                 changed = false;
 
                 // TODO should probably handle skipping rules better, by not having unused rules in _reductions in the first place
@@ -45,21 +46,21 @@ namespace PetriEngine::Colored::Reduction {
                 }
 
                 any |= changed;
-            } while (changed && hasTimedOut());
-        } else {
-            do {
-                changed = false;
-
-                for (auto &rule: _reductions) {
-                        if (rule->canBeAppliedRepeatedly())
-                            while (rule->apply(*this, inQuery, preserveDeadlocks)) changed = true;
-                        else
-                            changed |= rule->apply(*this, inQuery, preserveDeadlocks);
-                }
-
-                any |= changed;
-            } while (changed && hasTimedOut());
+            } while (changed && hasTimedOut());*/
         }
+        do {
+            changed = false;
+
+            for (auto &rule: _reductions) {
+                    if (rule->canBeAppliedRepeatedly())
+                        while (rule->apply(*this, inQuery, preserveDeadlocks)) changed = true;
+                    else
+                        changed |= rule->apply(*this, inQuery, preserveDeadlocks);
+            }
+
+            any |= changed;
+        } while (changed && hasTimedOut());
+
 
         auto now = std::chrono::high_resolution_clock::now();
         _timeSpent = (std::chrono::duration_cast<std::chrono::microseconds>(now - _startTime).count()) * 0.000001;
