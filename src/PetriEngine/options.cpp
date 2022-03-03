@@ -55,9 +55,9 @@ void options_t::print(std::ostream& optionsOut) {
 
     if (enablecolreduction == 0) {
         optionsOut << ",Colored_Structural_Reduction=DISABLED";
-    } else if (enablereduction == 1) {
+    } else if (enablecolreduction == 1) {
         optionsOut << ",Colored_Structural_Reduction=AGGRESSIVE";
-    } else if (enablereduction == 1) {
+    } else if (enablecolreduction == 2) {
         optionsOut << ",Colored_Structural_Reduction=CUSTOM SEQUENCE";
     }
 
@@ -139,10 +139,10 @@ void printHelp() {
         "                                       - 1  aggressive reduction (default)\n"
         "                                       - 2  reduction preserving k-boundedness\n"
         "                                       - 3  user defined reduction sequence, eg -r 3 0,1,2,3 to use rules A,B,C,D only, and in that order\n"
-        "  -b, --color-reduction <type>         Change structural colored net reduction:\n"
+        "  -b, --col-reduction <type>           Change structural net reduction:\n"
         "                                       - 0  disabled\n"
         "                                       - 1  aggressive reduction (default)\n"
-        "                                       - 2  user defined reduction sequence, eg -b 2 0,1,2,3 to use rules A,B,C,D only, and in that order\n"
+        "                                       - 2  user defined reduction sequence, eg -r 3 0,1,2,3 to use rules A,B,C,D only, and in that order\n"
         "  -d, --reduction-timeout <timeout>    Timeout for structural reductions in seconds (default 60)\n"
         "  -f, --colreduction-timeout <timeout> Timeout for colored structural reductions in seconds (default 60)\n"
         "  -q, --query-reduction <timeout>      Query reduction timeout in seconds (default 30)\n"
@@ -342,7 +342,7 @@ bool options_t::parse(int argc, const char** argv) {
                     }
                 }
             }
-        } else if (std::strcmp(argv[i], "-b") == 0 || std::strcmp(argv[i], "--colored-reduction") == 0) {
+        } else if (std::strcmp(argv[i], "-b") == 0 || std::strcmp(argv[i], "--col-reduction") == 0) {
             if (i == argc - 1) {
                 throw base_error("Missing number after ", std::quoted(argv[i]));
             }
