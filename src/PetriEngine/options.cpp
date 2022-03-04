@@ -56,7 +56,7 @@ void options_t::print(std::ostream& optionsOut) {
     if (enablecolreduction == 0) {
         optionsOut << ",Colored_Structural_Reduction=DISABLED";
     } else if (enablecolreduction == 1) {
-        optionsOut << ",Colored_Structural_Reduction=AGGRESSIVE";
+        optionsOut << ",Colored_Structural_Reduction=ALL";
     } else if (enablecolreduction == 2) {
         optionsOut << ",Colored_Structural_Reduction=CUSTOM SEQUENCE";
     }
