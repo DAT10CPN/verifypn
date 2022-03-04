@@ -14,7 +14,6 @@
 #include "PetriEngine/PQL/PlaceUseVisitor.h"
 #include "ReductionRule.h"
 #include "RedRuleIdentity.h"
-#include "testrule.h"
 
 
 namespace PetriEngine::Colored {
