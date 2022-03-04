@@ -14,6 +14,7 @@
 #include "PetriEngine/PQL/PlaceUseVisitor.h"
 #include "ReductionRule.h"
 #include "RedRuleIdentity.h"
+#include "testrule.h"
 
 
 namespace PetriEngine::Colored {
@@ -96,16 +97,13 @@ namespace PetriEngine::Colored {
 
             void skipTransition(uint32_t tid);
 
-            void keepReductions(std::vector<uint32_t>& reductions) {
-                uint32_t index = 0;
-                for (auto &rule: _reductions) {
-                    if(!(std::find(reductions.begin(), reductions.end(), index) != reductions.end())) {
-                        _reductions.erase(_reductions.begin() + index);
-                    }
-                    ++index;
+            std::vector<ReductionRule *> getSpecifiedReductions(std::vector<uint32_t>& reductions) {
+                std::vector<ReductionRule *> specifiedReductions;
+                for (auto &rule: reductions) {
+                    specifiedReductions.push_back(_reductions[rule]);
                 }
+                return specifiedReductions;
             }
-
 
         private:
             PetriEngine::ColoredPetriNetBuilder &_builder;
@@ -117,11 +115,15 @@ namespace PetriEngine::Colored {
             std::vector<uint32_t> _skippedPlaces;
             std::vector<uint32_t> _skippedTransitions;
 
+            std::vector<ReductionRule *> _usedReductions{};
+
             // Reduction rules
             RedRuleIdentity _reduceFirstPlace;
+            TestRule _test;
             std::vector<ReductionRule *> _reductions{
                     // TODO Actually useful reductions. This is just a test rule to guide implementation
-                    &_reduceFirstPlace
+                    &_reduceFirstPlace,
+                    &_test
             };
         };
     }

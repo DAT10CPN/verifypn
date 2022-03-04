@@ -29,13 +29,17 @@ namespace PetriEngine::Colored::Reduction {
         bool any = false;
         bool changed;
 
+        std::vector<ReductionRule *> reductionsToUse;
+
         if (reductiontype == 2) {
-            ColoredReducer::keepReductions(reductions);
+            reductionsToUse = ColoredReducer::getSpecifiedReductions(reductions);
+        } else {
+            reductionsToUse = _reductions;
         }
         do {
             changed = false;
 
-            for (auto &rule: _reductions) {
+            for (auto &rule: reductionsToUse) {
                 if (rule->canBeAppliedRepeatedly())
                     while (rule->apply(*this, inQuery, preserveDeadlocks)) changed = true;
                 else

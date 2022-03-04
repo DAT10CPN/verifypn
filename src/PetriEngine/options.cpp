@@ -139,12 +139,12 @@ void printHelp() {
         "                                       - 1  aggressive reduction (default)\n"
         "                                       - 2  reduction preserving k-boundedness\n"
         "                                       - 3  user defined reduction sequence, eg -r 3 0,1,2,3 to use rules A,B,C,D only, and in that order\n"
-        "  -b, --col-reduction <type>           Change structural net reduction:\n"
+        "  -R, --col-reduction <type>           Change structural net reduction:\n"
         "                                       - 0  disabled\n"
         "                                       - 1  aggressive reduction (default)\n"
-        "                                       - 2  user defined reduction sequence, eg -r 3 0,1,2,3 to use rules A,B,C,D only, and in that order\n"
+        "                                       - 2  user defined reduction sequence, eg -b 2 1,0 to use colored rules B,A only, and in that order\n"
         "  -d, --reduction-timeout <timeout>    Timeout for structural reductions in seconds (default 60)\n"
-        "  -f, --colreduction-timeout <timeout> Timeout for colored structural reductions in seconds (default 60)\n"
+        "  -D, --colreduction-timeout <timeout> Timeout for colored structural reductions in seconds (default 60)\n"
         "  -q, --query-reduction <timeout>      Query reduction timeout in seconds (default 30)\n"
         "                                       write -q 0 to disable query reduction\n"
         "  --interval-timeout <timeout>         Time in seconds before the max intervals is halved (default 10)\n"
@@ -342,7 +342,7 @@ bool options_t::parse(int argc, const char** argv) {
                     }
                 }
             }
-        } else if (std::strcmp(argv[i], "-b") == 0 || std::strcmp(argv[i], "--col-reduction") == 0) {
+        } else if (std::strcmp(argv[i], "-R") == 0 || std::strcmp(argv[i], "--col-reduction") == 0) {
             if (i == argc - 1) {
                 throw base_error("Missing number after ", std::quoted(argv[i]));
             }
@@ -353,7 +353,7 @@ bool options_t::parse(int argc, const char** argv) {
                 std::vector<std::string> q = explode(argv[++i]);
                 for (auto& qn : q) {
                     int32_t n;
-                    if (sscanf(qn.c_str(), "%d", &n) != 1 || n < 0 || n > 0) {
+                    if (sscanf(qn.c_str(), "%d", &n) != 1 || n < 0 || n > 1) {
                         throw base_error("Error in colored reduction rule choice ", std::quoted(qn));
                     } else {
                         colreductions.push_back(n);
@@ -367,7 +367,7 @@ bool options_t::parse(int argc, const char** argv) {
             if (sscanf(argv[++i], "%d", &reductionTimeout) != 1) {
                 throw base_error("Argument Error: Invalid reduction timeout argument ", std::quoted(argv[i]));
             }
-        } else if (std::strcmp(argv[i], "-f") == 0 || std::strcmp(argv[i], "--colreduction-timeout") == 0) {
+        } else if (std::strcmp(argv[i], "-D") == 0 || std::strcmp(argv[i], "--colreduction-timeout") == 0) {
             if (i == argc - 1) {
                 throw base_error("Missing number after ", std::quoted(argv[i]));
             }

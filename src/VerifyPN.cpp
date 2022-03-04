@@ -85,7 +85,7 @@ bool reduceColored(ColoredPetriNetBuilder &cpnBuilder, std::vector<std::shared_p
 
     auto summary = reducer.createApplicationSummary();
     for (auto& rule : summary) {
-        out << "Applications of rule " << rule.name << ": " << rule.applications;
+        out << "Applications of rule " << rule.name << ": " << rule.applications << std::endl;
     }
 
     return anyReduction;
