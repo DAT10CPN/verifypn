@@ -106,8 +106,6 @@ namespace PetriEngine::Colored {
             std::vector<uint32_t> _skippedPlaces;
             std::vector<uint32_t> _skippedTransitions;
 
-            std::vector<ReductionRule *> _usedReductions{};
-
             std::vector<ReductionRule *> buildApplicationSequence(std::vector<uint32_t>& reductions) {
                 std::vector<ReductionRule *> specifiedReductions;
                 for (auto &rule: reductions) {
