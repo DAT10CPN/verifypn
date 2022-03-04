@@ -96,14 +96,6 @@ namespace PetriEngine::Colored {
 
             void skipTransition(uint32_t tid);
 
-            std::vector<ReductionRule *> getSpecifiedReductions(std::vector<uint32_t>& reductions) {
-                std::vector<ReductionRule *> specifiedReductions;
-                for (auto &rule: reductions) {
-                    specifiedReductions.push_back(_reductions[rule]);
-                }
-                return specifiedReductions;
-            }
-
         private:
             PetriEngine::ColoredPetriNetBuilder &_builder;
             std::chrono::system_clock::time_point _startTime;
@@ -115,6 +107,14 @@ namespace PetriEngine::Colored {
             std::vector<uint32_t> _skippedTransitions;
 
             std::vector<ReductionRule *> _usedReductions{};
+
+            std::vector<ReductionRule *> buildApplicationSequence(std::vector<uint32_t>& reductions) {
+                std::vector<ReductionRule *> specifiedReductions;
+                for (auto &rule: reductions) {
+                    specifiedReductions.push_back(_reductions[rule]);
+                }
+                return specifiedReductions;
+            }
 
             // Reduction rules
             RedRuleIdentity _reduceFirstPlace;

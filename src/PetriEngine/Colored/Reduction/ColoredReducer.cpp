@@ -32,7 +32,7 @@ namespace PetriEngine::Colored::Reduction {
         std::vector<ReductionRule *> reductionsToUse;
 
         if (reductiontype == 2) {
-            reductionsToUse = ColoredReducer::getSpecifiedReductions(reductions);
+            reductionsToUse = ColoredReducer::buildApplicationSequence(reductions);
         } else {
             reductionsToUse = _reductions;
         }
