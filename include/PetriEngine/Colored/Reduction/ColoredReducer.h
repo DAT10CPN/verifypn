@@ -120,7 +120,7 @@ namespace PetriEngine::Colored {
             RedRuleIdentity _reduceFirstPlace;
             std::vector<ReductionRule *> _reductions{
                     // TODO Actually useful reductions. This is just a test rule to guide implementation
-                    &_reduceFirstPlace,
+                    &_reduceFirstPlace
             };
         };
     }
