@@ -138,6 +138,13 @@ int main(int argc, const char** argv) {
             reduceColored(cpnBuilder, queries, options.colReductionTimeout, out, options.enablecolreduction, options.colreductions);
         }
 
+        if (options.model_col_out_file.size() > 0) {
+
+            outputColNet(cpnBuilder, options.model_col_out_file);
+        }
+
+        return 1;
+
         auto [builder, transition_names, place_names] = unfold(cpnBuilder,
             options.computePartition, options.symmetricVariables,
             options.computeCFP, out,

@@ -131,6 +131,7 @@ Condition_ptr simplify_ltl_query(Condition_ptr query,
                                  std::ostream &out = std::cout);
 
 void outputNet(const PetriNetBuilder &builder, std::string out_file);
+void outputColNet(ColoredPetriNetBuilder &builder, std::string out_file);
 void outputQueries(const PetriNetBuilder &builder, const std::vector<PetriEngine::PQL::Condition_ptr> &queries,
         std::vector<std::string> &querynames, std::string filename, uint32_t binary_query_io, bool keep_solved);
 

@@ -119,6 +119,17 @@ namespace PetriEngine {
             return _ptBuilder;
         }
 
+        void toColXML(std::ostream& out) {
+            std::cout << "helloo" << std::endl;
+            out << "<?xml version=\"1.0\"?>\n"
+                << "<pnml xmlns=\"http://www.pnml.org/version-2009/grammar/pnml\">\n"
+                << "<net id=\"veryniceID\" type=\"http://www.pnml.org/version-2009/grammar/ptnet\">\n";
+            out << "<page id=\"page0\">\n"
+                << "<name>\n"
+                << "<text>DefaultPage</text>"
+                << "</name>";
+        }
+
     private:
         std::unordered_map<std::string,uint32_t> _placenames;
         std::unordered_map<std::string,uint32_t> _transitionnames;
