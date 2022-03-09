@@ -10,11 +10,26 @@
 namespace PetriEngine::Colored {
     class PnmlWriter {
     public:
-        PnmlWriter(PetriEngine::ColoredPetriNetBuilder &b) : _builder(b) {}
-        void toColPNML(std::ostream &out);
+        PnmlWriter(PetriEngine::ColoredPetriNetBuilder &b, std::ostream& out) : _builder(b), _out(out) {}
+        void toColPNML();
 
     private:
         PetriEngine::ColoredPetriNetBuilder &_builder;
+        std::ostream& _out;
+
+        void metaInfo();
+
+        void declarations();
+
+        void transitions();
+
+        void places();
+
+        void arcs();
+
+        void metaInfoClose();
+
+        void page();
     };
 
 

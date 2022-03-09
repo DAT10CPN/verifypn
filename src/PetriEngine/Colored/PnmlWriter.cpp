@@ -8,51 +8,60 @@
 namespace PetriEngine {
     namespace Colored {
 
-        void PnmlWriter::toColPNML(std::ostream &out) {
-            out << "<?xml version=\"1.0\"?>\n"
-            << "<pnml xmlns=\"http://www.pnml.org/version-2009/grammar/pnml\">\n"
-            << "<net id=\"veryniceID\" type=\"http://www.pnml.org/version-2009/grammar/symmetricnet\">\n";
-            for (auto &it: _builder._colors) {
-                out << it.first;
-            }
-            /*out << "<name><text>veryniceID</text></name>\n";
+        void PnmlWriter::metaInfo(){
+            _out << "<?xml version=\"1.0\"?>\n"
+                 << "<pnml xmlns=\"http://www.pnml.org/version-2009/grammar/pnml\">\n"
+                 << "\t<net id=\"MODELID\" type=\"http://www.pnml.org/version-2009/grammar/symmetricnet\">\n"
+                 << "\t\t<name>\n"
+                    "\t\t\t<text>MODELNAME</text>\n"
+                    "\t\t</name>\n";
+        }
 
-            out << "<declaration>\n";
-            out << "<structure>\n";
-            out << "<declarations>\n";
-            //Go through all structures
-            for (auto &it: _colors) {
-            out << it.first;
-            }
+        void PnmlWriter::metaInfoClose(){
+            _out <<   "\t</net>\n"
+                 <<   "</pnml>";
+        }
 
+        void PnmlWriter::declarations(){
+            _out << "<!-- List of declarations -->\n";
+            _out << "\t\t<declaration>\n";
+            _out << "\t\t\t<structure>\n";
+            _out << "\t\t\t\t<declarations>\n";
 
-            out << "</declarations>\n";
-            out << "</structure>\n";
-            out << "</declaration>\n";
-
-            //Go through all transition/places
-            out << "<name><text>DefaultPage</text></name>";
-
-            //Places
-            for (auto &_place: _places) {
-            //auto& p = _placenames[_place.name];
-            //auto& placelocation = _placelocations[i];
-            out << "<place id=\"" << _place.name << "\">\n";
-            << "<graphics><position x=\"" << std::get<0>(placelocation)
-            << "\" y=\"" << std::get<1>(placelocation) << "\"/></graphics>\n"
-            //<< "<name><text>" << p << "</text></name>\n";
-            if(_initialMarking[i] > 0)
-            {
-            out << "<initialMarking><text>" << _initialMarking[i] << "</text></initialMarking>\n";
-            }
-            out << "</place>\n";
-            }
-
-            //Transitions
+            
 
 
-            out << "</net>\n"
-            << "</pnml>";*/
+
+            _out << "\t\t\t\t</declarations>\n";
+            _out << "\t\t\t</structure>\n";
+            _out << "\t\t</declaration>\n";
+        }
+        void PnmlWriter::transitions(){
+            _out << "<!-- List of transitions -->\n";
+        }
+        void PnmlWriter::places(){
+            _out << "<!-- List of places -->\n";
+        }
+        void PnmlWriter::arcs(){
+            _out << "<!-- List of arcs -->\n";
+        }
+
+        void PnmlWriter::page(){
+            _out << "\t\t<page id=\"page0\">\n"
+                 << "\t\t\t<name>\n"
+                 << "\t\t\t\t<text>DefaultPage</text>\n"
+                 << "\t\t\t</name>\n";
+            transitions();
+            places();
+            arcs();
+            _out << "\t\t</page>\n";
+        }
+
+        void PnmlWriter::toColPNML() {
+            metaInfo();
+            declarations();
+            page();
+            metaInfoClose();
         }
     }
 }

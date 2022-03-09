@@ -140,10 +140,10 @@ int main(int argc, const char** argv) {
         }
 
         if (options.model_col_out_file.size() > 0) {
-            PetriEngine::Colored::PnmlWriter writer(cpnBuilder);
             std::fstream file;
             file.open(options.model_col_out_file, std::ios::out);
-            writer.toColPNML(file);
+            PetriEngine::Colored::PnmlWriter writer(cpnBuilder, file);
+            writer.toColPNML();
         }
 
         auto [builder, transition_names, place_names] = unfold(cpnBuilder,
