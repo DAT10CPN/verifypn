@@ -104,4 +104,39 @@ namespace PetriEngine::Colored::Reduction {
         tran.input_arcs.clear();
         tran.output_arcs.clear();
     }
+
+    std::string ColoredReducer::newTransitionName()
+    {
+        auto prefix = "CCT";
+        auto tmp = prefix + std::to_string(_tnameid);
+        while(_builder._transitionnames.count(tmp) >= 1)
+        {
+            ++_tnameid;
+            tmp = prefix + std::to_string(_tnameid);
+        }
+        ++_tnameid;
+        return tmp;
+    }
+
+    uint32_t ColoredReducer::newTransition(const Colored::GuardExpression_ptr& guard){
+        uint32_t id = transitions().size();
+        if (!_skippedTransitions.empty())
+        {
+            id = _skippedTransitions.back();
+            _skippedTransitions.pop_back();
+        }
+        else
+        {
+            _builder.addTransition(newTransitionName(), guard, 0,0,0);
+        }
+        return id;
+    }
+
+    void ColoredReducer::addInputArc(const Place& place, const Transition& transition, ArcExpression_ptr& expr, uint32_t inhib_weight){
+        _builder.addInputArc(place.name, transition.name, expr, inhib_weight);
+    }
+    void ColoredReducer::addOutputArc( const Transition& transition, const Place& place, ArcExpression_ptr& expr){
+        _builder.addOutputArc(transition.name, place.name, expr);
+    }
+
 }

@@ -38,6 +38,7 @@
 #include "utils/errors.h"
 #include "ColorExpressionVisitor.h"
 #include "CExprToString.h"
+#include "ArcExpressionVisitor.h"
 
 namespace PetriEngine {
     class ColoredPetriNetBuilder;
@@ -274,6 +275,7 @@ namespace PetriEngine {
             ArcExpression() {}
             virtual ~ArcExpression() {}
 
+            virtual void visit(ArcExpressionVisitor& visitor) const = 0;
             virtual uint32_t weight() const = 0;
         };
 
@@ -354,6 +356,7 @@ namespace PetriEngine {
                     : _number(number), _color(), _all(std::move(all)) {}
 
             void visit(ColorExpressionVisitor& visitor) const { visitor.accept(this); }
+            void visit(ArcExpressionVisitor& visitor) const { visitor.accept(this); }
         };
 
         typedef std::shared_ptr<NumberOfExpression> NumberOfExpression_ptr;
@@ -390,6 +393,7 @@ namespace PetriEngine {
                     : _constituents(std::move(constituents)) {}
 
             void visit(ColorExpressionVisitor& visitor) const { visitor.accept(this); }
+            void visit(ArcExpressionVisitor& visitor) const { visitor.accept(this); }
         };
 
         class SubtractExpression : public ArcExpression {
@@ -426,6 +430,7 @@ namespace PetriEngine {
                     : _left(std::move(left)), _right(std::move(right)) {}
 
             void visit(ColorExpressionVisitor& visitor) const { visitor.accept(this); }
+            void visit(ArcExpressionVisitor& visitor) const { visitor.accept(this); }
         };
 
         class ScalarProductExpression : public ArcExpression {

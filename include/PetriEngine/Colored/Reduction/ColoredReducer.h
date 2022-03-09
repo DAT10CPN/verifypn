@@ -60,6 +60,14 @@ namespace PetriEngine::Colored {
                 return std::chrono::duration_cast<std::chrono::seconds>(now - _startTime).count() >= _timeout;
             }
 
+            uint32_t placeCount() const {
+                return _builder.getPlaceCount();
+            }
+
+            uint32_t transitionCount() const {
+                return _builder.getTransitionCount();
+            }
+
             uint32_t origPlaceCount() const {
                 return _origPlaceCount;
             }
@@ -88,13 +96,24 @@ namespace PetriEngine::Colored {
                 return _builder.inhibitors();
             }
 
-            CArcIter getInArc(uint32_t pid, Colored::Transition &tran) const;
+            PetriEngine::Colored::Transition &alterableTransitionReference(uint32_t id) const {
+                return _builder._transitions[id];
+            }
+
+            void addInputArc(const Place& place, const Transition& transition, ArcExpression_ptr& expr, uint32_t inhib_weight);
+            void addOutputArc(const Transition& transition, const Place& place, ArcExpression_ptr& expr);
+
+            CArcIter getInArc(uint32_t pid,Colored::Transition &tran) const;
 
             CArcIter getOutArc(Colored::Transition &tran, uint32_t pid) const;
 
             void skipPlace(uint32_t pid);
 
             void skipTransition(uint32_t tid);
+
+            std::string newTransitionName();
+
+            uint32_t newTransition(const Colored::GuardExpression_ptr& guard);
 
 
         private:
@@ -104,6 +123,7 @@ namespace PetriEngine::Colored {
             double _timeSpent = 0;
             uint32_t _origPlaceCount;
             uint32_t _origTransitionCount;
+            uint32_t _tnameid = 1;
             std::vector<uint32_t> _skippedPlaces;
             std::vector<uint32_t> _skippedTransitions;
 

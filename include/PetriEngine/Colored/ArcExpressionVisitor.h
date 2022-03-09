@@ -10,28 +10,24 @@
 #include "Expressions.h"
 
 namespace PetriEngine {
-        namespace Colored {
-            class ArcExpressionVisitor {
-            private:
-                uint32_t k = 1;
-                bool singleVariable = true;
-                bool ok = true;
-            public:
-                ArcExpressionVisitor() = default;
+    namespace Colored {
+        class NumberOfExpression;
+        class AddExpression;
+        class SubtractExpression;
+        class ScalarProductExpression;
 
-                virtual void accept(const NumberOfExpression& e){
-                    k *= e.number();
-                }
-                virtual void accept(const AddExpression& e){
-                    singleVariable = false;
-                }
-                virtual void accept(const SubtractExpression& e){
-                    ok = false;
-                }
-                virtual void accept(const ScalarProductExpression& e){
-                    k *= e.scalar();
-                    accept(e.child());
-                }
-            }
-        }
+        class ArcExpressionVisitor {
+        private:
+            uint32_t k = 1;
+            bool singleVariable = true;
+            bool ok = true;
+        public:
+            ArcExpressionVisitor() = default;
+
+            virtual void accept(const NumberOfExpression& e);
+            virtual void accept(const AddExpression& e);
+            virtual void accept(const SubtractExpression& e);
+            virtual void accept(const ScalarProductExpression& e);
+        };
+    }
 }
