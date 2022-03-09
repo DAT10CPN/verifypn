@@ -28,8 +28,22 @@ namespace PetriEngine {
             _out << "\t\t\t<structure>\n";
             _out << "\t\t\t\t<declarations>\n";
 
-            
 
+            for (auto &namedSort : _builder._colors) {
+                ColorType* colortype = const_cast<ColorType *>(namedSort.second);
+                std::string tabs = "\t\t\t\t\t";
+                _out << tabs << "<namedsort id=\"" << colortype->getName() << "\" name=\"" << colortype->getName() << "\">\n";
+                _out << "size: " << colortype->size() << "\n";
+                _out << "product size: " << colortype->productSize() << "\n";
+
+                std::vector<const ColorType *> types;
+                colortype->getColortypes(types);
+
+                for (auto &type : types) {
+                    _out << "Name of a color in the product: " << type->getName() << "\n";
+                }
+                _out << tabs << "</namedsort>\n";
+            }
 
 
             _out << "\t\t\t\t</declarations>\n";
@@ -47,6 +61,7 @@ namespace PetriEngine {
         }
 
         void PnmlWriter::page(){
+            _out << "<!-- Page meta -->\n";
             _out << "\t\t<page id=\"page0\">\n"
                  << "\t\t\t<name>\n"
                  << "\t\t\t\t<text>DefaultPage</text>\n"
