@@ -420,12 +420,6 @@ void outputNet(const PetriNetBuilder &builder, std::string out_file) {
     unfoldedNet->toXML(file);
 }
 
-void outputColNet(ColoredPetriNetBuilder &builder, std::string out_file) {
-    std::fstream file;
-    file.open(out_file, std::ios::out);
-    builder.toColXML(file);
-}
-
 void outputQueries(const PetriNetBuilder &builder, const std::vector<PetriEngine::PQL::Condition_ptr> &queries,
     std::vector<std::string> &querynames, std::string filename, uint32_t binary_query_io, bool keep_solved) {
     std::vector<uint32_t> reorder(queries.size());
