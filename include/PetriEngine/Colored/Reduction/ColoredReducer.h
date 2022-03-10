@@ -14,10 +14,11 @@
 #include "PetriEngine/PQL/PlaceUseVisitor.h"
 #include "ReductionRule.h"
 #include "RedRuleIdentity.h"
+#include "RedRuleParallelTransitions.h"
 
 
 namespace PetriEngine::Colored {
-    using CArcIter = std::vector<Arc>::iterator;
+    using CArcIter = __gnu_cxx::__normal_iterator<const Arc *, std::vector<Arc>>;
 
     namespace Reduction {
 
@@ -88,13 +89,15 @@ namespace PetriEngine::Colored {
                 return _builder.inhibitors();
             }
 
-            CArcIter getInArc(uint32_t pid, Colored::Transition &tran) const;
+            CArcIter getInArc(uint32_t pid, const Colored::Transition &tran) const;
 
-            CArcIter getOutArc(Colored::Transition &tran, uint32_t pid) const;
+            CArcIter getOutArc(const Colored::Transition &tran, uint32_t pid) const;
 
             void skipPlace(uint32_t pid);
 
             void skipTransition(uint32_t tid);
+
+            std::vector<uint8_t> _tflags;
 
         private:
             PetriEngine::ColoredPetriNetBuilder &_builder;
@@ -116,9 +119,10 @@ namespace PetriEngine::Colored {
 
             // Reduction rules
             RedRuleIdentity _reduceFirstPlace;
+            RedRuleParallelTransitions _redRuleParallelTransitions;
             std::vector<ReductionRule *> _reductions{
-                    // TODO Actually useful reductions. This is just a test rule to guide implementation
-                    &_reduceFirstPlace
+                    &_reduceFirstPlace,
+                    &_redRuleParallelTransitions,
             };
         };
     }
