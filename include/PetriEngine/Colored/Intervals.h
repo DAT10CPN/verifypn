@@ -227,6 +227,18 @@ namespace PetriEngine {
                 }
             }
 
+            uint32_t lower() const {
+                for(const auto& range : _ranges){
+                    return range._lower;
+                }
+            }
+
+            uint32_t upper() const {
+                for(const auto& range : _ranges){
+                    return range._upper;
+                }
+            }
+
             std::string toString() const {
                 std::ostringstream strs;
                 for(const auto& range : _ranges){

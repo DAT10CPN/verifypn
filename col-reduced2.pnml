@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+	<net id="MODELID" type="http://www.pnml.org/version-2009/grammar/symmetricnet">
+	<name><text>MODELNAME</text></name>
+	<!-- List of declarations -->
+		<declaration>
+			<structure>
+				<declarations>
+					<!-- Declaration of user-defined color classes (sorts) -->
+					<namedsort id="CxZxZ" name="CxZxZ">
+						<productsort>
+							<usersort declaration="Cli"/>
+							<usersort declaration="Z"/>
+							<usersort declaration="Z"/>
+						</productsort>
+					</namedsort>
+					<namedsort id="CxZ" name="CxZ">
+						<productsort>
+							<usersort declaration="Cli"/>
+							<usersort declaration="Z"/>
+						</productsort>
+					</namedsort>
+					<namedsort id="Cli" name="Cli">
+						<finiteintrange start="1" end="8"/>
+					</namedsort>
+					<namedsort id="ZxZ" name="ZxZ">
+						<productsort>
+							<usersort declaration="Z"/>
+							<usersort declaration="Z"/>
+						</productsort>
+					</namedsort>
+					<namedsort id="Z" name="Z">
+						<finiteintrange start="1" end="2"/>
+					</namedsort>
+					<namedsort id="AxZ1xZ" name="AxZ1xZ">
+						<productsort>
+							<usersort declaration="Z"/>
+							<usersort declaration="Z"/>
+							<usersort declaration="Z"/>
+						</productsort>
+					</namedsort>
+					<namedsort id="dot" name="dot">
+						<dot/>
+					</namedsort>
+				</declarations>
+			</structure>
+		</declaration>
+	</net>
+</pnml>
