@@ -21,9 +21,14 @@
 						</productsort>
 					</namedsort>
 					<namedsort id="N" name="N">
-					interval size:  0-0 
-					colors: 1
-						<finiteintrange start="1" end="1"/>
+					size in finite int range: 1
+					name of type in finite int range: N
+					type size : 1
+					type->operator[](0) stuff: 
+					ColorName: 1
+					ToString: 1
+					GetID: 0
+						<finiteintrange start="0" end="0"/>
 					</namedsort>
 				</declarations>
 			</structure>

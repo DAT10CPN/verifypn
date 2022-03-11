@@ -9,46 +9,46 @@
 					<!-- Declaration of user-defined color classes (sorts) -->
 					<namedsort id="signal" name="signal">
 						<cyclicenumeration>
-							<feconstant id="Signal0" name= "0"/>
-							<feconstant id="Signal1" name= "1"/>
+							<feconstant id="Signal0" name= "T"/>
+							<feconstant id="Signal1" name= "F"/>
 						</cyclicenumeration>
 					</namedsort>
 					<namedsort id="Altitude" name="Altitude">
 						<cyclicenumeration>
-							<feconstant id="Altitude1" name= "0"/>
-							<feconstant id="Altitude2" name= "1"/>
-							<feconstant id="Altitude3" name= "2"/>
-							<feconstant id="Altitude4" name= "3"/>
-							<feconstant id="Altitude5" name= "4"/>
-							<feconstant id="Altitude6" name= "5"/>
-							<feconstant id="Altitude7" name= "6"/>
-							<feconstant id="Altitude8" name= "7"/>
-							<feconstant id="Altitude9" name= "8"/>
-							<feconstant id="Altitude10" name= "9"/>
-							<feconstant id="Altitude11" name= "10"/>
-							<feconstant id="Altitude12" name= "11"/>
-							<feconstant id="Altitude13" name= "12"/>
-							<feconstant id="Altitude14" name= "13"/>
-							<feconstant id="Altitude15" name= "14"/>
-							<feconstant id="Altitude16" name= "15"/>
-							<feconstant id="Altitude17" name= "16"/>
-							<feconstant id="Altitude18" name= "17"/>
-							<feconstant id="Altitude19" name= "18"/>
-							<feconstant id="Altitude20" name= "19"/>
+							<feconstant id="Altitude1" name= "1"/>
+							<feconstant id="Altitude2" name= "2"/>
+							<feconstant id="Altitude3" name= "3"/>
+							<feconstant id="Altitude4" name= "4"/>
+							<feconstant id="Altitude5" name= "5"/>
+							<feconstant id="Altitude6" name= "6"/>
+							<feconstant id="Altitude7" name= "7"/>
+							<feconstant id="Altitude8" name= "8"/>
+							<feconstant id="Altitude9" name= "9"/>
+							<feconstant id="Altitude10" name= "10"/>
+							<feconstant id="Altitude11" name= "11"/>
+							<feconstant id="Altitude12" name= "12"/>
+							<feconstant id="Altitude13" name= "13"/>
+							<feconstant id="Altitude14" name= "14"/>
+							<feconstant id="Altitude15" name= "15"/>
+							<feconstant id="Altitude16" name= "16"/>
+							<feconstant id="Altitude17" name= "17"/>
+							<feconstant id="Altitude18" name= "18"/>
+							<feconstant id="Altitude19" name= "19"/>
+							<feconstant id="Altitude20" name= "20"/>
 						</cyclicenumeration>
 					</namedsort>
 					<namedsort id="Speed" name="Speed">
 						<cyclicenumeration>
-							<feconstant id="Speed1" name= "0"/>
-							<feconstant id="Speed2" name= "1"/>
-							<feconstant id="Speed3" name= "2"/>
-							<feconstant id="Speed4" name= "3"/>
-							<feconstant id="Speed5" name= "4"/>
-							<feconstant id="Speed6" name= "5"/>
-							<feconstant id="Speed7" name= "6"/>
-							<feconstant id="Speed8" name= "7"/>
-							<feconstant id="Speed9" name= "8"/>
-							<feconstant id="Speed10" name= "9"/>
+							<feconstant id="Speed1" name= "1"/>
+							<feconstant id="Speed2" name= "2"/>
+							<feconstant id="Speed3" name= "3"/>
+							<feconstant id="Speed4" name= "4"/>
+							<feconstant id="Speed5" name= "5"/>
+							<feconstant id="Speed6" name= "6"/>
+							<feconstant id="Speed7" name= "7"/>
+							<feconstant id="Speed8" name= "8"/>
+							<feconstant id="Speed9" name= "9"/>
+							<feconstant id="Speed10" name= "10"/>
 						</cyclicenumeration>
 					</namedsort>
 					<namedsort id="dot" name="dot">
@@ -56,11 +56,11 @@
 					</namedsort>
 					<namedsort id="weight" name="weight">
 						<cyclicenumeration>
-							<feconstant id="Weight0" name= "0"/>
-							<feconstant id="Weight1" name= "1"/>
+							<feconstant id="Weight0" name= "on"/>
+							<feconstant id="Weight1" name= "off"/>
 						</cyclicenumeration>
 					</namedsort>
-				</declarations>
+					im a variable				</declarations>
 			</structure>
 		</declaration>
 	</net>

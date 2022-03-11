@@ -79,7 +79,6 @@ namespace PetriEngine {
         void addColorType(const std::string& id,
                 const Colored::ColorType* type) override;
 
-
         void sort() override;
 
         uint32_t getPlaceCount() const {
@@ -130,6 +129,7 @@ namespace PetriEngine {
         std::vector<Colored::Place> _places;
         std::vector<Colored::Transition> _transitions;
         std::vector<Colored::Arc> _inhibitorArcs;
+        std::vector<Colored::mehlVariable> _variables;
 
         Colored::ColorTypeMap _colors;
         PetriNetBuilder _ptBuilder;
@@ -138,6 +138,8 @@ namespace PetriEngine {
                 const std::string& transition,
                 const Colored::ArcExpression_ptr& expr,
                 bool input, int inhib_weight);
+
+        void addVariable(Colored::mehlVariable& variable);
     };
 
     enum ExpressionType {

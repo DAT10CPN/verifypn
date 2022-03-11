@@ -32,9 +32,17 @@ namespace PetriEngine {
                 }
                 bool first = true;
 
+                /*_out << getTabs() << "name of type in finite int range: " << type->getName() << "\n";
+                _out << getTabs() << "type size : " << type->size() << "\n";
+                _out << getTabs() << "type size : " << type->getFullInterval().toString() << "\n";*/
                 for (uint32_t i=0; i<type->size(); i++) {
                     auto nestedType = type->operator[](i);
-                    _out << (first ? increaseTabs() : getTabs()) << "<feconstant id=\"" << nestedType.getColorName() << "\" name= \"" << nestedType.getId() << "\"/>" << "\n";
+                    /*_out << getTabs() << "type->operator[](0) stuff: " << "\n";
+                    _out << getTabs() << "ColorName: " << nestedType.getColorName() << "\n";
+                    _out << getTabs() << "ToString: " << nestedType.toString() << "\n";
+                    _out << getTabs() << "GetID: " << nestedType.getId() << "\n";
+                    _out << getTabs() << "Actual color name " << nestedType.getActualColorName() << "\n";*/
+                    _out << (first ? increaseTabs() : getTabs()) << "<feconstant id=\"" << nestedType.getColorName() << "\" name= \"" << nestedType.getActualColorName() << "\"/>" << "\n";
                     first = false;
                 }
             }
@@ -60,12 +68,12 @@ namespace PetriEngine {
         }
         void PnmlWriter::handleFiniteRange(std::vector<const ColorType *> types) {
             Colored::interval_t interval = types[0]->getFullInterval();
-
-            uint32_t start = interval.lower() + 1;
-            uint32_t end = interval.upper()+ 1;
-            _out << increaseTabs() << "<finiteintrange start=\"" << start << "\" end=\"" << end << "\"/>\n";
+            for (auto type : types ) {
+                std::string start = type->operator[](0).getColorName();
+                std::string end = type->operator[](type->size()-1).getColorName();
+                _out << increaseTabs() << "<finiteintrange start=\"" << start << "\" end=\"" << end << "\"/>\n";
+            }
         }
-
 
         bool is_number(const std::string& s)
         {
@@ -74,13 +82,7 @@ namespace PetriEngine {
             return !s.empty() && it == s.end();
         }
 
-        void PnmlWriter::declarations(){
-            _out << getTabs() << "<!-- List of declarations -->\n";
-            _out << increaseTabs() << "<declaration>\n";
-            _out << increaseTabs() << "<structure>\n";
-            _out << increaseTabs() << "<declarations>\n";
-            _out << increaseTabs() << "<!-- Declaration of user-defined color classes (sorts) -->\n";
-
+        void PnmlWriter::handleNamedSorts() {
             for (auto &namedSort : _builder._colors) {
                 ColorType* colortype = const_cast<ColorType *>(namedSort.second);
                 _out << getTabs() << "<namedsort id=\"" << colortype->getName() << "\" name=\"" << colortype->getName() << "\">\n";
@@ -107,9 +109,25 @@ namespace PetriEngine {
 
                 }
                 _out << decreaseTabs() << "</namedsort>\n";
-
-
             }
+        }
+
+        void PnmlWriter::handleVariables() {
+            for (auto& variable : _builder._variables) {
+                _out << getTabs() << variable.name << "\n";
+            }
+        }
+
+        void PnmlWriter::declarations(){
+            _out << getTabs() << "<!-- List of declarations -->\n";
+            _out << increaseTabs() << "<declaration>\n";
+            _out << increaseTabs() << "<structure>\n";
+            _out << increaseTabs() << "<declarations>\n";
+            _out << increaseTabs() << "<!-- Declaration of user-defined color classes (sorts) -->\n";
+
+            handleNamedSorts();
+            handleVariables();
+
             _out << decreaseTabs() << "</declarations>\n";
             _out << decreaseTabs() << "</structure>\n";
             _out << decreaseTabs() << "</declaration>\n";

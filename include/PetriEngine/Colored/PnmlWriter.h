@@ -58,6 +58,10 @@ namespace PetriEngine::Colored {
         void handleCyclicEnumeration(std::vector<const ColorType *> types);
 
         void handleFiniteRange(std::vector<const ColorType *> types);
+
+        void handleVariables();
+
+        void handleNamedSorts();
     };
 }
 
