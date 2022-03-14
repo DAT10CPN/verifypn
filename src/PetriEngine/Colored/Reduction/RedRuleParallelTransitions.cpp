@@ -44,10 +44,12 @@ namespace PetriEngine::Colored::Reduction {
                 if (tout.skipped || tout.inhibited) continue;
 
                 for (size_t inner = outer + 1; inner < op._post.size(); inner++) {
+                    if (tout.skipped) break;
+
                     auto tinner = op._post[inner];
                     const Transition &tin = transitions[tinner];
 
-                    if (tin.skipped || tin.inhibited) continue; // FIXME Check skip of tout?
+                    if (tin.skipped || tin.inhibited) continue;
 
                     for (size_t swp = 0; swp < 2; swp++) {
 
@@ -102,6 +104,9 @@ namespace PetriEngine::Colored::Reduction {
                         continueReductions = true;
                         red.skipTransition(t2);
                         red._tflags[touter] = 0;
+                        // op._post just shrunk, so go one back to not miss any
+                        if (t2 == outer) outer--;
+                        if (t2 == inner) inner--;
                         break; // swap
                     }
                 }
