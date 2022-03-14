@@ -33,27 +33,11 @@ namespace PetriEngine::Colored {
 
         class ColoredReducer {
         public:
-            ColoredReducer(PetriEngine::ColoredPetriNetBuilder &b) : _builder(b),
-                                                                     _origPlaceCount(b.getPlaceCount()),
-                                                                     _origTransitionCount(
-                                                                             b.getTransitionCount()) {
-                for (auto& place : _builder._places){
-                    std::sort(place._pre.begin(), place._pre.end());
-                    std::sort(place._post.begin(), place._post.end());
-                }
-#ifndef NDEBUG
-                // All rule names must be unique
-                std::set<std::string> names;
-                for (auto &rule : _reductions) {
-                    assert(names.find(rule->name()) == names.end());
-                    names.insert(rule->name());
-                }
-#endif
-            }
+            ColoredReducer(PetriEngine::ColoredPetriNetBuilder &b);
 
             std::vector<ApplicationSummary> createApplicationSummary() const;
 
-            bool reduce(uint32_t timeout, const std::vector<bool> &inQuery, bool preserveDeadlocks);
+            bool reduce(uint32_t timeout, const std::vector<bool> &inQuery, bool preserveDeadlocks, int reductiontype, std::vector<uint32_t>& reductions);
 
             double time() const {
                 return _timeSpent;
@@ -130,12 +114,22 @@ namespace PetriEngine::Colored {
             std::vector<uint32_t> _skippedPlaces;
             std::vector<uint32_t> _skippedTransitions;
 
+            std::vector<ReductionRule *> buildApplicationSequence(std::vector<uint32_t>& reductions) {
+                std::vector<ReductionRule *> specifiedReductions;
+                for (auto &rule: reductions) {
+                    specifiedReductions.push_back(_reductions[rule]);
+                }
+                return specifiedReductions;
+            }
+
             // Reduction rules
             RedRulePreAgglomeration _preAgglomeration;
             std::vector<ReductionRule *> _reductions{
                     // TODO Actually useful reductions. This is just a test rule to guide implementation
                     &_preAgglomeration
             };
+
+            void consistent();
         };
     }
 }

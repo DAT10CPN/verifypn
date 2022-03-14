@@ -134,7 +134,9 @@ int main(int argc, const char** argv) {
         std::stringstream ss;
         std::ostream& out = options.printstatistics ? std::cout : ss;
 
-        reduceColored(cpnBuilder, queries, 30, out);
+        if (options.enablecolreduction > 0) {
+            reduceColored(cpnBuilder, queries, options.colReductionTimeout, out, options.enablecolreduction, options.colreductions);
+        }
 
         auto [builder, transition_names, place_names] = unfold(cpnBuilder,
             options.computePartition, options.symmetricVariables,
@@ -307,6 +309,14 @@ int main(int argc, const char** argv) {
         }
 
         if (options.doVerification) {
+
+            auto verifStart = std::chrono::high_resolution_clock::now();
+            // When this ptr goes out of scope it will print the time spent during verification
+            std::shared_ptr<void> defer (nullptr, [&verifStart](...){
+                auto verifEnd = std::chrono::high_resolution_clock::now();
+                auto diff = std::chrono::duration_cast<std::chrono::microseconds>(verifEnd - verifStart).count() / 1000000.0;
+                std::cout << std::setprecision(6) << "Spent " << diff << " on verification" << std::endl;
+            });
 
             //----------------------- Verify CTL queries -----------------------//
             std::vector<size_t> ctl_ids;
