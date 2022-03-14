@@ -5,7 +5,6 @@
  *      Mathias Mehl Sørensen
  */
 
-#include <PetriEngine/Colored/ArcExpressionVisitor.h>
 #include "PetriEngine/Colored/Reduction/RedRulePreAgglomeration.h"
 #include "PetriEngine/Colored/Reduction/ColoredReducer.h"
 
@@ -24,7 +23,7 @@ namespace PetriEngine::Colored::Reduction {
             const Place &place = red.places()[pid];
 
             // S5.1, S6.1
-            if (place.skipped || place.inhibitor || inQuery[pid] > 0 || place._pre.empty() ||
+            if (place.skipped || place.inhibitor || inQuery[pid] > 0 || !place.marking.empty() || place._pre.empty() ||
                 place._post.empty())
                 continue;
 
@@ -58,6 +57,8 @@ namespace PetriEngine::Colored::Reduction {
             bool todoAllGood = true;
             // S10-11; Do we need to check?
             std::vector<bool> kIsAlwaysOne (postsize, true);
+            // Visitor for translating ArcExpressions into the info we need.
+            ArcExpressionVisitor arvis = ArcExpressionVisitor();
 
             for (const auto& prod : place._pre){
                 const Transition& producer = red.transitions()[prod];
@@ -66,15 +67,26 @@ namespace PetriEngine::Colored::Reduction {
                     ok = false;
                     break;
                 }
-                ArcExpression_ptr kw = red.getOutArc(producer, pid)->expr;
-                ArcExpressionVisitor arvis = ArcExpressionVisitor();
-                if (kw->weight())
+
+                // Have arvis visit the arc from producer to place
+                arvis.reset();
+                red.getOutArc(producer, pid)->expr->visit(arvis);
+                uint32_t kw = 1;
+
+                if(arvis.ok() && arvis.singleVar()){
+                    kw = arvis.colorblindWeight();
+                } else {
+                    ok = false;
+                    break;
+                }
 
                 // S1, S9
                 for (uint32_t n = 0; n < place._post.size(); n++) {
-                    ArcExpression_ptr w = red.getInArc(pid, red.transitions()[place._post[n]])->expr;
+                    arvis.reset();
+                    red.getInArc(pid, red.transitions()[place._post[n]])->expr->visit(arvis);
+                    uint32_t w = arvis.colorblindWeight();
                     // S1, S9
-                    if (red.places()[pid].marking >= w || kw % w != 0) {
+                    if (!arvis.ok() || !arvis.singleVar() || kw % w != 0) {
                         todo[n] = false;
                         todoAllGood = false;
                         continue;
@@ -95,18 +107,17 @@ namespace PetriEngine::Colored::Reduction {
                     if (preplace.inhibitor || inQuery[prearc.place] > 0){
                         ok = false;
                         break;
-                    } else if (!preserveDeadlocks) {
-                        // If we can remove loops, that means we are not doing deadlock, so we can do free agglomeration which avoids this condition
-
-                        // S7
-                        for(const auto& precons : preplace._post){
-                            // S7; Transitions in place.producers are exempt from this check
-                            if (std::lower_bound(place._pre.begin(), place._pre.end(), precons) != place._pre.end())
+                    } else if (preserveDeadlocks) {
+                        // For reachability, we can do free agglomeration which avoids this condition
+                        // X10
+                        for(uint32_t alternative : preplace._post){
+                            // X10; Transitions in place.pre are exempt from this check
+                            if (std::lower_bound(place._pre.begin(), place._pre.end(), alternative) != place._pre.end())
                                 continue;
 
-                            const Transition& preconsumer = red.transitions()[precons];
-                            // S7; Transitions outside place.producers are not allowed the ability to disable an enabled transition in place.producers
-                            if (red.getInArc(prearc.place, preconsumer)->expr == red.getOutArc(preconsumer, prearc.place)->expr){
+                            const Transition& alternativeConsumer = red.transitions()[alternative];
+                            // X10; Transitions outside place.pre are not allowed to alter the contents of preplace
+                            if (red.getInArc(prearc.place, alternativeConsumer)->expr == red.getOutArc(alternativeConsumer, prearc.place)->expr){
                                 ok = false;
                                 break;
                             }

@@ -6,8 +6,7 @@
 #define VERIFYPN_ARCEXPRESSIONREADVISITOR_H
 
 #endif //VERIFYPN_ARCEXPRESSIONREADVISITOR_H
-
-#include "Expressions.h"
+#include <stdint.h>
 
 namespace PetriEngine {
     namespace Colored {
@@ -18,16 +17,23 @@ namespace PetriEngine {
 
         class ArcExpressionVisitor {
         private:
-            uint32_t k = 1;
-            bool singleVariable = true;
-            bool ok = true;
+            // This colorblindWeight is separated from the existing weight() functions because
+            // the use cases disagree on the weight of a Product.
+            uint32_t _colorblindWeight = 1;
+            bool _singleVar = true;
+            bool _ok = true;
         public:
             ArcExpressionVisitor() = default;
 
-            virtual void accept(const NumberOfExpression& e);
-            virtual void accept(const AddExpression& e);
-            virtual void accept(const SubtractExpression& e);
-            virtual void accept(const ScalarProductExpression& e);
+            uint32_t colorblindWeight();
+            bool singleVar();
+            bool ok();
+            void reset();
+
+            virtual void accept(const NumberOfExpression* e);
+            virtual void accept(const AddExpression* e);
+            virtual void accept(const SubtractExpression* e);
+            virtual void accept(const ScalarProductExpression* e);
         };
     }
 }

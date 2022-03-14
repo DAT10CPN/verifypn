@@ -275,6 +275,7 @@ namespace PetriEngine {
             ArcExpression() {}
             virtual ~ArcExpression() {}
 
+            virtual void visit(ColorExpressionVisitor& visitor) const = 0;
             virtual void visit(ArcExpressionVisitor& visitor) const = 0;
             virtual uint32_t weight() const = 0;
         };
@@ -455,6 +456,7 @@ namespace PetriEngine {
                     : _scalar(std::move(scalar)), _expr(expr) {}
 
             void visit(ColorExpressionVisitor& visitor) const { visitor.accept(this); }
+            void visit(ArcExpressionVisitor& visitor) const { visitor.accept(this); }
         };
     }
 }

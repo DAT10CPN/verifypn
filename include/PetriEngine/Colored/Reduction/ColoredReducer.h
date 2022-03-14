@@ -13,11 +13,11 @@
 #include "PetriEngine/Colored/ColoredPetriNetBuilder.h"
 #include "PetriEngine/PQL/PlaceUseVisitor.h"
 #include "ReductionRule.h"
-#include "RedRuleIdentity.h"
+#include "RedRulePreAgglomeration.h"
 
 
 namespace PetriEngine::Colored {
-    using CArcIter = std::vector<Arc>::iterator;
+    using CArcIter = __gnu_cxx::__normal_iterator<const Arc *, std::vector<Arc>>;
 
     namespace Reduction {
 
@@ -37,6 +37,10 @@ namespace PetriEngine::Colored {
                                                                      _origPlaceCount(b.getPlaceCount()),
                                                                      _origTransitionCount(
                                                                              b.getTransitionCount()) {
+                for (auto& place : _builder._places){
+                    std::sort(place._pre.begin(), place._pre.end());
+                    std::sort(place._post.begin(), place._post.end());
+                }
 #ifndef NDEBUG
                 // All rule names must be unique
                 std::set<std::string> names;
@@ -103,9 +107,8 @@ namespace PetriEngine::Colored {
             void addInputArc(const Place& place, const Transition& transition, ArcExpression_ptr& expr, uint32_t inhib_weight);
             void addOutputArc(const Transition& transition, const Place& place, ArcExpression_ptr& expr);
 
-            CArcIter getInArc(uint32_t pid,Colored::Transition &tran) const;
-
-            CArcIter getOutArc(Colored::Transition &tran, uint32_t pid) const;
+            CArcIter getInArc(uint32_t pid, const Colored::Transition &tran) const;
+            CArcIter getOutArc(const Colored::Transition &tran, uint32_t pid) const;
 
             void skipPlace(uint32_t pid);
 
@@ -128,10 +131,10 @@ namespace PetriEngine::Colored {
             std::vector<uint32_t> _skippedTransitions;
 
             // Reduction rules
-            RedRuleIdentity _reduceFirstPlace;
+            RedRulePreAgglomeration _preAgglomeration;
             std::vector<ReductionRule *> _reductions{
                     // TODO Actually useful reductions. This is just a test rule to guide implementation
-                    &_reduceFirstPlace
+                    &_preAgglomeration
             };
         };
     }

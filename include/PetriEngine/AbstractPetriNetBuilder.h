@@ -68,7 +68,7 @@ namespace PetriEngine {
         virtual void addInputArc(const std::string& place,
                 const std::string& transition,
                 bool inhibitor,
-                uint32_t) = 0;
+                uint32_t weight) = 0;
         /** Add colored input arc with given arc expression */
         virtual void addInputArc(const std::string& place,
                 const std::string& transition,

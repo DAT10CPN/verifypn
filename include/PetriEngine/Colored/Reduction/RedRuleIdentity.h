@@ -17,7 +17,7 @@ namespace PetriEngine::Colored::Reduction {
 
         bool canBeAppliedRepeatedly() override { return false; }
 
-        bool apply(ColoredReducer &red, const std::vector<bool> &inQuery, bool preserveDeadlocks) override;
+        bool apply(ColoredReducer &red, const std::vector<bool> &inQuery, bool preserveDeadlocks, bool preserveConsumers, uint32_t explosion_limiter) override;
     };
 }
 
