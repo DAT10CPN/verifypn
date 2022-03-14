@@ -113,8 +113,14 @@ namespace PetriEngine {
         assert(t < _transitions.size());
         assert(p < _places.size());
 
-        if(input) _places[p]._post.emplace_back(t);
-        else      _places[p]._pre.emplace_back(t);
+        if(input) {
+            _places[p]._post.emplace_back(t);
+            std::sort(_places[p]._post.begin(), _places[p]._post.end());
+        }
+        else {
+            _places[p]._pre.emplace_back(t);
+            std::sort(_places[p]._pre.begin(), _places[p]._pre.end());
+        }
 
         if (!input) assert(expr != nullptr);
         assert((expr == nullptr) != (inhib_weight == 0));
@@ -129,8 +135,12 @@ namespace PetriEngine {
         arc.inhib_weight = inhib_weight;
         if(inhib_weight > 0){
             _inhibitorArcs.push_back(std::move(arc));
+        } else if (input) {
+            _transitions[t].input_arcs.push_back(std::move(arc));
+            std::sort(_transitions[t].input_arcs.begin(), _transitions[t].input_arcs.end());
         } else {
-            input? _transitions[t].input_arcs.push_back(std::move(arc)): _transitions[t].output_arcs.push_back(std::move(arc));
+            _transitions[t].output_arcs.push_back(std::move(arc));
+            std::sort(_transitions[t].output_arcs.begin(), _transitions[t].output_arcs.end());
         }
     }
 

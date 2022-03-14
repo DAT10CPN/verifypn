@@ -10,7 +10,7 @@
 
 namespace PetriEngine::Colored::Reduction {
     bool RedRulePreAgglomeration::apply(ColoredReducer &red, const std::vector<bool> &inQuery,
-                                bool preserveDeadlocks, bool preserveConsumers, uint32_t explosion_limiter) {
+                                bool preserveDeadlocks, bool onlyReach, uint32_t explosion_limiter) {
         bool continueReductions = false;
 
         for (uint32_t pid = 0; pid < red.placeCount(); pid++) {
