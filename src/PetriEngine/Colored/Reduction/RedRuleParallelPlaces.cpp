@@ -10,7 +10,7 @@
 
 namespace PetriEngine::Colored::Reduction {
     bool RedRuleParallelPlaces::apply(ColoredReducer &red, const std::vector<bool> &inQuery,
-                                      bool preserveDeadlocks) {
+                                      QueryType queryType, bool preserveLoops, bool preserveStutter) {
 
         // Remove places which input and output is k times another place's input and output
 
