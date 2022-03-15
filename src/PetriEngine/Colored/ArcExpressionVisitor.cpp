@@ -11,8 +11,8 @@ namespace PetriEngine {
             return _colorblindWeight;
         }
 
-        bool ArcExpressionVisitor::singleVar(){
-            return _singleVar;
+        bool ArcExpressionVisitor::singleColor(){
+            return _singleColor;
         }
 
         bool ArcExpressionVisitor::ok() {
@@ -21,16 +21,16 @@ namespace PetriEngine {
 
         void ArcExpressionVisitor::reset(){
             _colorblindWeight = 1;
-            _singleVar = true;
+            _singleColor = true;
             _ok = true;
         }
 
         void ArcExpressionVisitor::accept(const NumberOfExpression* e) {
-            _colorblindWeight *= e->number();
+            _colorblindWeight += e->number();
         }
 
         void ArcExpressionVisitor::accept(const AddExpression* e) {
-            _singleVar = false;
+            _singleColor = false;
             for (uint32_t i = 0; i < e->size(); i++){
                 e[i].visit(*this);
             }
@@ -41,8 +41,8 @@ namespace PetriEngine {
         }
 
         void ArcExpressionVisitor::accept(const ScalarProductExpression* e) {
-            _colorblindWeight *= e->scalar();
             e->child()->visit(*this);
+            _colorblindWeight *= e->scalar();
         }
     }
 }

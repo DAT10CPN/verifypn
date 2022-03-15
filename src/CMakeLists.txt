@@ -5,7 +5,7 @@ add_subdirectory(LTL)
 add_subdirectory(PetriParse)
 add_subdirectory(PetriEngine)
 
-add_library(verifypn VerifyPN.cpp ../include/PetriEngine/Colored/ArcExpressionVisitor.h)
+add_library(verifypn VerifyPN.cpp)
 target_link_libraries(verifypn PUBLIC CTL LTL PetriEngine PetriParse)
 
 add_dependencies(verifypn glpk-ext spot-ext)

@@ -278,6 +278,7 @@ namespace PetriEngine {
             virtual void visit(ColorExpressionVisitor& visitor) const = 0;
             virtual void visit(ArcExpressionVisitor& visitor) const = 0;
             virtual uint32_t weight() const = 0;
+            virtual uint32_t singleton_product_weight() const = 0;
         };
 
         typedef std::shared_ptr<ArcExpression> ArcExpression_ptr;
@@ -317,6 +318,10 @@ namespace PetriEngine {
                     return _number * _color.size();
                 else
                     return _number * _all->size();
+            }
+
+            uint32_t singleton_product_weight() const override {
+                return number();
             }
 
             bool is_all() const {
@@ -374,6 +379,14 @@ namespace PetriEngine {
                 return res;
             }
 
+            uint32_t singleton_product_weight() const override {
+                uint32_t res = 0;
+                for (const auto& expr : _constituents) {
+                    res += expr->singleton_product_weight();
+                }
+                return res;
+            }
+
             size_t size() const {
                 return _constituents.size();
             }
@@ -417,6 +430,20 @@ namespace PetriEngine {
                 return _left->weight() - val;
             }
 
+            uint32_t singleton_product_weight() const override {
+                auto* left = dynamic_cast<NumberOfExpression*>(_left.get());
+                if (!left || !left->is_all()) {
+                    throw base_error("Left constituent of subtract is not an all expression!");
+                }
+                auto* right = dynamic_cast<NumberOfExpression*>(_right.get());
+                if (!right || !right->is_single_color()) {
+                    throw base_error("Right constituent of subtract is not a single color number of expression!");
+                }
+
+                uint32_t val = std::min(left->number(), right->number());
+                return _left->singleton_product_weight() - val;
+            }
+
             size_t size() const {
                 return 2;
             }
@@ -441,6 +468,10 @@ namespace PetriEngine {
         public:
 
             uint32_t weight() const override {
+                return _scalar * _expr->weight();
+            }
+
+            uint32_t singleton_product_weight() const override {
                 return _scalar * _expr->weight();
             }
 

@@ -73,7 +73,7 @@ namespace PetriEngine::Colored::Reduction {
                 red.getOutArc(producer, pid)->expr->visit(arvis);
                 uint32_t kw = 1;
 
-                if(arvis.ok() && arvis.singleVar()){
+                if(arvis.ok() && arvis.singleColor()){
                     kw = arvis.colorblindWeight();
                 } else {
                     ok = false;
@@ -86,7 +86,7 @@ namespace PetriEngine::Colored::Reduction {
                     red.getInArc(pid, red.transitions()[place._post[n]])->expr->visit(arvis);
                     uint32_t w = arvis.colorblindWeight();
                     // S1, S9
-                    if (!arvis.ok() || !arvis.singleVar() || kw % w != 0) {
+                    if (!arvis.ok() || !arvis.singleColor() || kw % w != 0) {
                         todo[n] = false;
                         todoAllGood = false;
                         continue;
@@ -164,9 +164,7 @@ namespace PetriEngine::Colored::Reduction {
                         // Re-fetch the transition pointers as it might be invalidated, I think that's the issue?
                         const Transition &producerPrime = red.transitions()[prod];
                         const Transition &consumerPrime = red.transitions()[originalConsumers[n]];
-                        Transition& newtran = red.alterableTransitionReference(id);
-                        newtran.skipped = false;
-                        newtran.inhibited = false;
+                        const Transition& newtran = red.transitions()[id];
 
                         // Arcs from consumer
                         for (const auto& arc : consumerPrime.output_arcs) {
@@ -207,7 +205,7 @@ namespace PetriEngine::Colored::Reduction {
                 red.skipPlace(pid);
             }
 
-            //consistent();
+            red.consistent();
         }
 
         return continueReductions;

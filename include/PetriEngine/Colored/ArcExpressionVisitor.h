@@ -20,13 +20,13 @@ namespace PetriEngine {
             // This colorblindWeight is separated from the existing weight() functions because
             // the use cases disagree on the weight of a Product.
             uint32_t _colorblindWeight = 1;
-            bool _singleVar = true;
+            bool _singleColor = true;
             bool _ok = true;
         public:
             ArcExpressionVisitor() = default;
 
             uint32_t colorblindWeight();
-            bool singleVar();
+            bool singleColor();
             bool ok();
             void reset();
 

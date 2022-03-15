@@ -84,10 +84,6 @@ namespace PetriEngine::Colored {
                 return _builder.inhibitors();
             }
 
-            PetriEngine::Colored::Transition &alterableTransitionReference(uint32_t id) const {
-                return _builder._transitions[id];
-            }
-
             void addInputArc(const Place& place, const Transition& transition, ArcExpression_ptr& expr, uint32_t inhib_weight);
             void addOutputArc(const Transition& transition, const Place& place, ArcExpression_ptr& expr);
 
@@ -101,6 +97,8 @@ namespace PetriEngine::Colored {
             std::string newTransitionName();
 
             uint32_t newTransition(const Colored::GuardExpression_ptr& guard);
+
+            void consistent();
 
 
         private:
@@ -128,8 +126,6 @@ namespace PetriEngine::Colored {
                     // TODO Actually useful reductions. This is just a test rule to guide implementation
                     &_preAgglomeration
             };
-
-            void consistent();
         };
     }
 }

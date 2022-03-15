@@ -247,6 +247,8 @@ namespace PetriEngine::Colored::Reduction {
         {
             id = _skippedTransitions.back();
             _skippedTransitions.pop_back();
+            _builder._transitions[id].skipped = false;
+            _builder._transitions[id].inhibited = false;
         }
         else
         {
