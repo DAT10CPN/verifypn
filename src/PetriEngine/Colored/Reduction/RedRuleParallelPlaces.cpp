@@ -22,16 +22,20 @@ namespace PetriEngine::Colored::Reduction {
         red._pflags.resize(places.size());
         std::fill(red._pflags.begin(), red._pflags.end(), 0);
 
-        for (size_t touter = 0; touter < transitions.size(); touter++) {
-            for (size_t outer = 0; outer < transitions[touter].output_arcs.size(); outer++) {
+        for (uint32_t touter = 0; touter < transitions.size(); touter++) {
+            for (int outer = 0; outer < transitions[touter].output_arcs.size(); outer++) {
 
                 auto pouter = transitions[touter].output_arcs[outer].place;
                 if (red._pflags[pouter] > 0) continue;
                 red._pflags[pouter] = 1;
                 if (red.hasTimedOut()) return false;
-                if (places[pouter].skipped || places[pouter].inhibitor) continue;
 
-                for (size_t inner = outer + 1; inner < transitions[touter].output_arcs.size(); inner++) {
+                const Place &pout = places[pouter];
+
+                if (pout.skipped || pout.inhibitor) continue;
+
+                for (uint32_t inner = outer + 1; inner < transitions[touter].output_arcs.size(); inner++) {
+                    if (pout.skipped) break;
 
                     auto pinner = transitions[touter].output_arcs[inner].place;
                     if (places[pinner].skipped || places[pinner].inhibitor) continue;
@@ -42,7 +46,7 @@ namespace PetriEngine::Colored::Reduction {
                     for (size_t swp = 0; swp < 2; swp++) {
 
                         if (red.hasTimedOut()) return false;
-                        if (places[inner].skipped || places[outer].skipped) break;
+                        if (places[pinner].skipped || places[pouter].skipped) break;
 
                         uint32_t p1 = pouter;
                         uint32_t p2 = pinner;
@@ -55,8 +59,8 @@ namespace PetriEngine::Colored::Reduction {
                         const Place &place1 = places[p1];
                         const Place &place2 = places[p2];
 
-                        if (place1._pre.size() < place2._pre.size() ||
-                            place1._post.size() > place2._post.size())
+                        if (place1._pre.size() > place2._pre.size() ||
+                            place1._post.size() < place2._post.size())
                             continue;
 
                         // TODO Check if p2 is k times p1 once we have variable multisets
@@ -86,7 +90,7 @@ namespace PetriEngine::Colored::Reduction {
 
                         if (!ok) break;
 
-                        if (place2.marking.isSubsetOf(place1.marking)) continue;
+                        if (place1.marking.isSubsetOf(place2.marking)) continue;
 
                         j = 0;
                         for (size_t i = 0; i < place1._pre.size(); i++) {
@@ -99,8 +103,8 @@ namespace PetriEngine::Colored::Reduction {
                             }
 
                             const Transition &trans = transitions[place1._pre[j]];
-                            auto a1 = red.getInArc(p1, trans);
-                            auto a2 = red.getInArc(p2, trans);
+                            auto a1 = red.getOutArc(trans, p1);
+                            auto a2 = red.getOutArc(trans, p2);
                             assert(a1 != trans.output_arcs.end());
                             assert(a2 != trans.output_arcs.end());
                             // TODO Check if subseteq instead of equal
@@ -117,6 +121,12 @@ namespace PetriEngine::Colored::Reduction {
                         continueReductions = true;
                         red.skipPlace(p2);
                         red._pflags[pouter] = 0;
+                        // touter.output_arcs have shrunk, so go one back to not miss any
+                        if (p2 == pouter) {
+                            outer--;
+                            inner--;
+                        }
+                        else if (p2 == pinner) inner--;
                         break;
                     }
                 }
