@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
 	<net id="MODELID" type="http://www.pnml.org/version-2009/grammar/symmetricnet">
-	<name><text>MODELNAME</text></name>
-	<!-- List of declarations -->
+		<name><text>MODELNAME</text></name>
+		<!-- List of declarations -->
 		<declaration>
 			<structure>
 				<declarations>
@@ -61,17 +61,1140 @@
 						</cyclicenumeration>
 					</namedsort>
 					<!-- Declaration of user-defined color variables -->
-					<variabledecl id="W" name="varW">
+					<variabledecl id="varW" name="W">
 						<usersort declaration="weight"/>
 					</variabledecl>
-					<variabledecl id="A" name="varA">
+					<variabledecl id="varA" name="A">
 						<usersort declaration="Altitude"/>
 					</variabledecl>
-					<variabledecl id="S" name="varS">
+					<variabledecl id="varS" name="S">
 						<usersort declaration="Speed"/>
 					</variabledecl>
 				</declarations>
 			</structure>
 		</declaration>
+		<!-- Page meta -->
+		<page id="page0">
+			<name>
+				<text>DefaultPage</text>
+			</name>
+			<!-- List of transitions -->
+			<transition id="SpeedLW">
+				<name>
+					<text>SpeedLW</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<condition>
+					<text>placeholde text</text>
+					<structure>
+						cool guard expression visitor here
+					</structure>
+				</condition>
+			</transition>
+			<transition id="SpeedRW">
+				<name>
+					<text>SpeedRW</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<condition>
+					<text>placeholde text</text>
+					<structure>
+						cool guard expression visitor here
+					</structure>
+				</condition>
+			</transition>
+			<transition id="getAlt">
+				<name>
+					<text>getAlt</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<condition>
+					<text>placeholde text</text>
+					<structure>
+						cool guard expression visitor here
+					</structure>
+				</condition>
+			</transition>
+			<transition id="SampleRW">
+				<name>
+					<text>SampleRW</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<condition>
+					<text>placeholde text</text>
+					<structure>
+						cool guard expression visitor here
+					</structure>
+				</condition>
+			</transition>
+			<transition id="SampleLW">
+				<name>
+					<text>SampleLW</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<condition>
+					<text>placeholde text</text>
+					<structure>
+						cool guard expression visitor here
+					</structure>
+				</condition>
+			</transition>
+			<transition id="t5_2">
+				<name>
+					<text>t5_2</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<condition>
+					<text>placeholde text</text>
+					<structure>
+						cool guard expression visitor here
+					</structure>
+				</condition>
+			</transition>
+			<transition id="t5_1">
+				<name>
+					<text>t5_1</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<condition>
+					<text>placeholde text</text>
+					<structure>
+						cool guard expression visitor here
+					</structure>
+				</condition>
+			</transition>
+			<transition id="t4_2">
+				<name>
+					<text>t4_2</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<condition>
+					<text>placeholde text</text>
+					<structure>
+						cool guard expression visitor here
+					</structure>
+				</condition>
+			</transition>
+			<transition id="t4_1">
+				<name>
+					<text>t4_1</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<condition>
+					<text>placeholde text</text>
+					<structure>
+						cool guard expression visitor here
+					</structure>
+				</condition>
+			</transition>
+			<transition id="t3_2">
+				<name>
+					<text>t3_2</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<condition>
+					<text>placeholde text</text>
+					<structure>
+						cool guard expression visitor here
+					</structure>
+				</condition>
+			</transition>
+			<transition id="t3_1">
+				<name>
+					<text>t3_1</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<condition>
+					<text>placeholde text</text>
+					<structure>
+						cool guard expression visitor here
+					</structure>
+				</condition>
+			</transition>
+			<transition id="t2_2">
+				<name>
+					<text>t2_2</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<condition>
+					<text>placeholde text</text>
+					<structure>
+						cool guard expression visitor here
+					</structure>
+				</condition>
+			</transition>
+			<transition id="t2_1">
+				<name>
+					<text>t2_1</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<condition>
+					<text>placeholde text</text>
+					<structure>
+						cool guard expression visitor here
+					</structure>
+				</condition>
+			</transition>
+			<transition id="t1_2">
+				<name>
+					<text>t1_2</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<condition>
+					<text>placeholde text</text>
+					<structure>
+						cool guard expression visitor here
+					</structure>
+				</condition>
+			</transition>
+			<transition id="t1_1">
+				<name>
+					<text>t1_1</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<condition>
+					<text>placeholde text</text>
+					<structure>
+						cool guard expression visitor here
+					</structure>
+				</condition>
+			</transition>
+			<!-- List of places -->
+			<place id="stp5">
+				<name>
+					<text>stp5</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<type>
+					<text>dot</text>
+					<structure>
+						<usersort declaration="dot"/>
+					</structure>
+				</type>
+				<hlinitialMarking>
+					<text>get the tokens here</text>
+					<structure>
+						cool visitor color expression here
+					</structure>
+				</hlinitialMarking>
+			</place>
+			<place id="stp4">
+				<name>
+					<text>stp4</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<type>
+					<text>dot</text>
+					<structure>
+						<usersort declaration="dot"/>
+					</structure>
+				</type>
+				<hlinitialMarking>
+					<text>get the tokens here</text>
+					<structure>
+						cool visitor color expression here
+					</structure>
+				</hlinitialMarking>
+			</place>
+			<place id="stp3">
+				<name>
+					<text>stp3</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<type>
+					<text>dot</text>
+					<structure>
+						<usersort declaration="dot"/>
+					</structure>
+				</type>
+				<hlinitialMarking>
+					<text>get the tokens here</text>
+					<structure>
+						cool visitor color expression here
+					</structure>
+				</hlinitialMarking>
+			</place>
+			<place id="stp2">
+				<name>
+					<text>stp2</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<type>
+					<text>dot</text>
+					<structure>
+						<usersort declaration="dot"/>
+					</structure>
+				</type>
+				<hlinitialMarking>
+					<text>get the tokens here</text>
+					<structure>
+						cool visitor color expression here
+					</structure>
+				</hlinitialMarking>
+			</place>
+			<place id="stp1">
+				<name>
+					<text>stp1</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<type>
+					<text>dot</text>
+					<structure>
+						<usersort declaration="dot"/>
+					</structure>
+				</type>
+				<hlinitialMarking>
+					<text>get the tokens here</text>
+					<structure>
+						cool visitor color expression here
+					</structure>
+				</hlinitialMarking>
+			</place>
+			<place id="SpeedPossibleVal">
+				<name>
+					<text>SpeedPossibleVal</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<type>
+					<text>Speed</text>
+					<structure>
+						<usersort declaration="Speed"/>
+					</structure>
+				</type>
+				<hlinitialMarking>
+					<text>get the tokens here</text>
+					<structure>
+						cool visitor color expression here
+					</structure>
+				</hlinitialMarking>
+			</place>
+			<place id="AltitudePossibleVal">
+				<name>
+					<text>AltitudePossibleVal</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<type>
+					<text>Altitude</text>
+					<structure>
+						<usersort declaration="Altitude"/>
+					</structure>
+				</type>
+				<hlinitialMarking>
+					<text>get the tokens here</text>
+					<structure>
+						cool visitor color expression here
+					</structure>
+				</hlinitialMarking>
+			</place>
+			<place id="WeightPossibleVal">
+				<name>
+					<text>WeightPossibleVal</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<type>
+					<text>weight</text>
+					<structure>
+						<usersort declaration="weight"/>
+					</structure>
+				</type>
+				<hlinitialMarking>
+					<text>get the tokens here</text>
+					<structure>
+						cool visitor color expression here
+					</structure>
+				</hlinitialMarking>
+			</place>
+			<place id="P5">
+				<name>
+					<text>P5</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<type>
+					<text>dot</text>
+					<structure>
+						<usersort declaration="dot"/>
+					</structure>
+				</type>
+				<hlinitialMarking>
+					<text>get the tokens here</text>
+					<structure>
+						cool visitor color expression here
+					</structure>
+				</hlinitialMarking>
+			</place>
+			<place id="P4">
+				<name>
+					<text>P4</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<type>
+					<text>dot</text>
+					<structure>
+						<usersort declaration="dot"/>
+					</structure>
+				</type>
+				<hlinitialMarking>
+					<text>get the tokens here</text>
+					<structure>
+						cool visitor color expression here
+					</structure>
+				</hlinitialMarking>
+			</place>
+			<place id="P3">
+				<name>
+					<text>P3</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<type>
+					<text>dot</text>
+					<structure>
+						<usersort declaration="dot"/>
+					</structure>
+				</type>
+				<hlinitialMarking>
+					<text>get the tokens here</text>
+					<structure>
+						cool visitor color expression here
+					</structure>
+				</hlinitialMarking>
+			</place>
+			<place id="P2">
+				<name>
+					<text>P2</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<type>
+					<text>dot</text>
+					<structure>
+						<usersort declaration="dot"/>
+					</structure>
+				</type>
+				<hlinitialMarking>
+					<text>get the tokens here</text>
+					<structure>
+						cool visitor color expression here
+					</structure>
+				</hlinitialMarking>
+			</place>
+			<place id="P6">
+				<name>
+					<text>P6</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<type>
+					<text>dot</text>
+					<structure>
+						<usersort declaration="dot"/>
+					</structure>
+				</type>
+				<hlinitialMarking>
+					<text>get the tokens here</text>
+					<structure>
+						cool visitor color expression here
+					</structure>
+				</hlinitialMarking>
+			</place>
+			<place id="P1">
+				<name>
+					<text>P1</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<type>
+					<text>dot</text>
+					<structure>
+						<usersort declaration="dot"/>
+					</structure>
+				</type>
+				<hlinitialMarking>
+					<text>get the tokens here</text>
+					<structure>
+						cool visitor color expression here
+					</structure>
+				</hlinitialMarking>
+			</place>
+			<place id="Weight_Right_Wheel">
+				<name>
+					<text>Weight_Right_Wheel</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<type>
+					<text>weight</text>
+					<structure>
+						<usersort declaration="weight"/>
+					</structure>
+				</type>
+				<hlinitialMarking>
+					<text>get the tokens here</text>
+					<structure>
+						cool visitor color expression here
+					</structure>
+				</hlinitialMarking>
+			</place>
+			<place id="Weight_Left_Wheel">
+				<name>
+					<text>Weight_Left_Wheel</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<type>
+					<text>weight</text>
+					<structure>
+						<usersort declaration="weight"/>
+					</structure>
+				</type>
+				<hlinitialMarking>
+					<text>get the tokens here</text>
+					<structure>
+						cool visitor color expression here
+					</structure>
+				</hlinitialMarking>
+			</place>
+			<place id="TheAltitude">
+				<name>
+					<text>TheAltitude</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<type>
+					<text>Altitude</text>
+					<structure>
+						<usersort declaration="Altitude"/>
+					</structure>
+				</type>
+				<hlinitialMarking>
+					<text>get the tokens here</text>
+					<structure>
+						cool visitor color expression here
+					</structure>
+				</hlinitialMarking>
+			</place>
+			<place id="Speed_Left_Wheel">
+				<name>
+					<text>Speed_Left_Wheel</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<type>
+					<text>Speed</text>
+					<structure>
+						<usersort declaration="Speed"/>
+					</structure>
+				</type>
+				<hlinitialMarking>
+					<text>get the tokens here</text>
+					<structure>
+						cool visitor color expression here
+					</structure>
+				</hlinitialMarking>
+			</place>
+			<place id="Speed_Right_Wheel">
+				<name>
+					<text>Speed_Right_Wheel</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<type>
+					<text>Speed</text>
+					<structure>
+						<usersort declaration="Speed"/>
+					</structure>
+				</type>
+				<hlinitialMarking>
+					<text>get the tokens here</text>
+					<structure>
+						cool visitor color expression here
+					</structure>
+				</hlinitialMarking>
+			</place>
+			<place id="Plane_On_Ground_Signal_no">
+				<name>
+					<text>Plane_On_Ground_Signal_no</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<type>
+					<text>signal</text>
+					<structure>
+						<usersort declaration="signal"/>
+					</structure>
+				</type>
+				<hlinitialMarking>
+					<text>get the tokens here</text>
+					<structure>
+						cool visitor color expression here
+					</structure>
+				</hlinitialMarking>
+			</place>
+			<!-- List of arcs -->
+			<arc id="arc0" source="stp4" target="SpeedLW">
+				<name>
+					<text>0</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc1" source="SpeedPossibleVal" target="SpeedLW">
+				<name>
+					<text>1</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc2" source="SpeedLW" target="Speed_Left_Wheel">
+				<name>
+					<text>2</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc3" source="SpeedLW" target="SpeedPossibleVal">
+				<name>
+					<text>3</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc4" source="stp5" target="SpeedRW">
+				<name>
+					<text>4</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc5" source="SpeedPossibleVal" target="SpeedRW">
+				<name>
+					<text>5</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc6" source="SpeedRW" target="Speed_Right_Wheel">
+				<name>
+					<text>6</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc7" source="SpeedRW" target="SpeedPossibleVal">
+				<name>
+					<text>7</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc8" source="stp3" target="getAlt">
+				<name>
+					<text>8</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc9" source="AltitudePossibleVal" target="getAlt">
+				<name>
+					<text>9</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc10" source="getAlt" target="TheAltitude">
+				<name>
+					<text>10</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc11" source="getAlt" target="AltitudePossibleVal">
+				<name>
+					<text>11</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc12" source="stp2" target="SampleRW">
+				<name>
+					<text>12</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc13" source="WeightPossibleVal" target="SampleRW">
+				<name>
+					<text>13</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc14" source="SampleRW" target="Weight_Right_Wheel">
+				<name>
+					<text>14</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc15" source="SampleRW" target="WeightPossibleVal">
+				<name>
+					<text>15</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc16" source="stp1" target="SampleLW">
+				<name>
+					<text>16</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc17" source="WeightPossibleVal" target="SampleLW">
+				<name>
+					<text>17</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc18" source="SampleLW" target="WeightPossibleVal">
+				<name>
+					<text>18</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc19" source="SampleLW" target="Weight_Left_Wheel">
+				<name>
+					<text>19</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc20" source="Speed_Right_Wheel" target="t5_2">
+				<name>
+					<text>20</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc21" source="P5" target="t5_2">
+				<name>
+					<text>21</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc22" source="t5_2" target="P6">
+				<name>
+					<text>22</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc23" source="t5_2" target="Plane_On_Ground_Signal_no">
+				<name>
+					<text>23</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc24" source="P5" target="t5_1">
+				<name>
+					<text>24</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc25" source="Speed_Right_Wheel" target="t5_1">
+				<name>
+					<text>25</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc26" source="t5_1" target="P6">
+				<name>
+					<text>26</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc27" source="t5_1" target="Plane_On_Ground_Signal_no">
+				<name>
+					<text>27</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc28" source="Speed_Left_Wheel" target="t4_2">
+				<name>
+					<text>28</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc29" source="P4" target="t4_2">
+				<name>
+					<text>29</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc30" source="t4_2" target="P5">
+				<name>
+					<text>30</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc31" source="Speed_Left_Wheel" target="t4_1">
+				<name>
+					<text>31</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc32" source="P4" target="t4_1">
+				<name>
+					<text>32</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc33" source="t4_1" target="P6">
+				<name>
+					<text>33</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc34" source="t4_1" target="Plane_On_Ground_Signal_no">
+				<name>
+					<text>34</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc35" source="P3" target="t3_2">
+				<name>
+					<text>35</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc36" source="TheAltitude" target="t3_2">
+				<name>
+					<text>36</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc37" source="t3_2" target="P4">
+				<name>
+					<text>37</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc38" source="P3" target="t3_1">
+				<name>
+					<text>38</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc39" source="TheAltitude" target="t3_1">
+				<name>
+					<text>39</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc40" source="t3_1" target="P6">
+				<name>
+					<text>40</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc41" source="t3_1" target="Plane_On_Ground_Signal_no">
+				<name>
+					<text>41</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc42" source="P2" target="t2_2">
+				<name>
+					<text>42</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc43" source="Weight_Right_Wheel" target="t2_2">
+				<name>
+					<text>43</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc44" source="t2_2" target="P3">
+				<name>
+					<text>44</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc45" source="P2" target="t2_1">
+				<name>
+					<text>45</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc46" source="Weight_Right_Wheel" target="t2_1">
+				<name>
+					<text>46</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc47" source="t2_1" target="Plane_On_Ground_Signal_no">
+				<name>
+					<text>47</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc48" source="t2_1" target="P6">
+				<name>
+					<text>48</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc49" source="P1" target="t1_2">
+				<name>
+					<text>49</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc50" source="Weight_Left_Wheel" target="t1_2">
+				<name>
+					<text>50</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc51" source="t1_2" target="P2">
+				<name>
+					<text>51</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc52" source="P1" target="t1_1">
+				<name>
+					<text>52</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc53" source="Weight_Left_Wheel" target="t1_1">
+				<name>
+					<text>53</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc54" source="t1_1" target="Plane_On_Ground_Signal_no">
+				<name>
+					<text>54</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+			<arc id="arc55" source="t1_1" target="P6">
+				<name>
+					<text>55</text>
+				</name>
+				<hlinscription>
+					<text>get the text for arcs here</text>
+					a cool arc expression visitor
+				</hlinscription>
+			</arc>
+		</page>
 	</net>
 </pnml>

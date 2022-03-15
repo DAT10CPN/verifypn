@@ -17,6 +17,7 @@ namespace PetriEngine::Colored {
         PetriEngine::ColoredPetriNetBuilder &_builder;
         std::ostream& _out;
         std::uint32_t _tabs;
+        std::vector<Arc> _arcs;
 
         void metaInfo();
 
@@ -62,6 +63,18 @@ namespace PetriEngine::Colored {
         void handleVariables();
 
         void handleNamedSorts();
+
+        void handlehlinitialMarking(Multiset marking);
+
+        void handleType(const Place &place);
+
+        void handleCondition(Transition &transition);
+
+        void add_arcs_from_transition(Transition &transition);
+
+        void handleArcExpression(ArcExpression_ptr arcExpression);
+
+        void handleGuardExpression(GuardExpression_ptr guard);
     };
 }
 

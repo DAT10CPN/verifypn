@@ -7,21 +7,23 @@
 namespace PetriEngine {
     namespace Colored {
 
-        void PnmlWriter::metaInfo(){
-            _out << getTabs()      << "<?xml version=\"1.0\"?>\n"
+        void PnmlWriter::metaInfo() {
+            _out << getTabs() << "<?xml version=\"1.0\"?>\n"
                  << getTabs() << "<pnml xmlns=\"http://www.pnml.org/version-2009/grammar/pnml\">\n"
-                 << increaseTabs() << "<net id=\"MODELID\" type=\"http://www.pnml.org/version-2009/grammar/symmetricnet\">\n"
-                 << getTabs() << "<name><text>MODELNAME</text></name>\n";
+                 << increaseTabs()
+                 << "<net id=\"MODELID\" type=\"http://www.pnml.org/version-2009/grammar/symmetricnet\">\n"
+                 << increaseTabs() << "<name><text>MODELNAME</text></name>\n";
         }
 
-        void PnmlWriter::metaInfoClose(){
+        void PnmlWriter::metaInfoClose() {
             _out << decreaseTabs() << "</net>\n"
                  << decreaseTabs() << "</pnml>";
         }
+
         void PnmlWriter::handleCyclicEnumeration(std::vector<const ColorType *> types) {
             _out << increaseTabs() << "<cyclicenumeration>\n";
 
-            for (auto &type : types) {
+            for (auto &type: types) {
                 if (type->productSize() > 1) {
                     throw base_error("Nested products, aborting writing PNML");
                 }
@@ -35,24 +37,25 @@ namespace PetriEngine {
                 /*_out << getTabs() << "name of type in finite int range: " << type->getName() << "\n";
                 _out << getTabs() << "type size : " << type->size() << "\n";
                 _out << getTabs() << "type size : " << type->getFullInterval().toString() << "\n";*/
-                for (uint32_t i=0; i<type->size(); i++) {
+                for (uint32_t i = 0; i < type->size(); i++) {
                     auto nestedType = type->operator[](i);
                     /*_out << getTabs() << "type->operator[](0) stuff: " << "\n";
                     _out << getTabs() << "ColorName: " << nestedType.getColorName() << "\n";
                     _out << getTabs() << "ToString: " << nestedType.toString() << "\n";
                     _out << getTabs() << "GetID: " << nestedType.getId() << "\n";
                     _out << getTabs() << "Actual color name " << nestedType.getActualColorName() << "\n";*/
-                    _out << (first ? increaseTabs() : getTabs()) << "<feconstant id=\"" << nestedType.getColorName() << "\" name= \"" << nestedType.getActualColorName() << "\"/>" << "\n";
+                    _out << (first ? increaseTabs() : getTabs()) << "<feconstant id=\"" << nestedType.getColorName()
+                         << "\" name= \"" << nestedType.getActualColorName() << "\"/>" << "\n";
                     first = false;
                 }
             }
             _out << decreaseTabs() << "</cyclicenumeration>\n";
         }
 
-        void PnmlWriter::handleProductSort(std::vector<const ColorType *> types){
+        void PnmlWriter::handleProductSort(std::vector<const ColorType *> types) {
             _out << increaseTabs() << "<productsort>\n";
             bool first = true;
-            for (auto &type : types) {
+            for (auto &type: types) {
                 std::string name = type->getName();
                 if (type->productSize() > 1) {
                     throw base_error("Nested products, aborting writing PNML");
@@ -66,26 +69,27 @@ namespace PetriEngine {
             }
             _out << decreaseTabs() << "</productsort>\n";
         }
+
         void PnmlWriter::handleFiniteRange(std::vector<const ColorType *> types) {
             Colored::interval_t interval = types[0]->getFullInterval();
-            for (auto type : types ) {
+            for (auto type: types) {
                 std::string start = type->operator[](0).getColorName();
-                std::string end = type->operator[](type->size()-1).getColorName();
+                std::string end = type->operator[](type->size() - 1).getColorName();
                 _out << increaseTabs() << "<finiteintrange start=\"" << start << "\" end=\"" << end << "\"/>\n";
             }
         }
 
-        bool is_number(const std::string& s)
-        {
+        bool is_number(const std::string &s) {
             std::string::const_iterator it = s.begin();
             while (it != s.end() && std::isdigit(*it)) ++it;
             return !s.empty() && it == s.end();
         }
 
         void PnmlWriter::handleNamedSorts() {
-            for (auto &namedSort : _builder._colors) {
-                ColorType* colortype = const_cast<ColorType *>(namedSort.second);
-                _out << getTabs() << "<namedsort id=\"" << colortype->getName() << "\" name=\"" << colortype->getName() << "\">\n";
+            for (auto &namedSort: _builder._colors) {
+                ColorType *colortype = const_cast<ColorType *>(namedSort.second);
+                _out << getTabs() << "<namedsort id=\"" << colortype->getName() << "\" name=\"" << colortype->getName()
+                     << "\">\n";
                 std::vector<const ColorType *> types;
                 colortype->getColortypes(types);
 
@@ -114,16 +118,16 @@ namespace PetriEngine {
 
         void PnmlWriter::handleVariables() {
             _out << getTabs() << "<!-- Declaration of user-defined color variables -->\n";
-            for (auto& variable : _builder._variables) {
+            for (auto &variable: _builder._variables) {
                 _out << getTabs() << "<variabledecl id=\"" << variable.name << "\" name=\"" << variable.id << "\">\n";
-                _out << increaseTabs() <<  "<usersort declaration=\"" << variable.colorType->getName() <<"\"/>\n";
-                _out << decreaseTabs() <<  "</variabledecl>\n";
+                _out << increaseTabs() << "<usersort declaration=\"" << variable.colorType->getName() << "\"/>\n";
+                _out << decreaseTabs() << "</variabledecl>\n";
             }
         }
 
-        void PnmlWriter::declarations(){
+        void PnmlWriter::declarations() {
             _out << getTabs() << "<!-- List of declarations -->\n";
-            _out << increaseTabs() << "<declaration>\n";
+            _out << getTabs() << "<declaration>\n";
             _out << increaseTabs() << "<structure>\n";
             _out << increaseTabs() << "<declarations>\n";
             _out << increaseTabs() << "<!-- Declaration of user-defined color classes (sorts) -->\n";
@@ -135,17 +139,122 @@ namespace PetriEngine {
             _out << decreaseTabs() << "</structure>\n";
             _out << decreaseTabs() << "</declaration>\n";
         }
-        void PnmlWriter::transitions(){
-            _out << getTabs() << "<!-- List of transitions -->\n";
-        }
-        void PnmlWriter::places(){
-            _out << getTabs() << "<!-- List of places -->\n";
-        }
-        void PnmlWriter::arcs(){
-            _out << getTabs() << "<!-- List of arcs -->\n";
+
+        void PnmlWriter::handleGuardExpression(GuardExpression_ptr guard) {
+            _out << increaseTabs() << "cool guard expression visitor here\n";
         }
 
-        void PnmlWriter::page(){
+        void PnmlWriter::handleCondition(Colored::Transition& transition){
+            _out << getTabs() << "<condition>\n";
+            auto text = "placeholde text";
+            _out << increaseTabs() << "<text>" << text << "</text>\n";
+            _out << getTabs() << "<structure>\n";
+            handleGuardExpression(transition.guard);
+            _out << decreaseTabs() << "</structure>\n";
+            _out << decreaseTabs() << "</condition>\n";
+        }
+
+        void PnmlWriter::add_arcs_from_transition(Colored::Transition& transition) {
+            // todo handle duplicates. Check we get all
+            for (auto &arc: transition.input_arcs) {
+                _arcs.push_back(arc);
+            }
+            for (auto &arc: transition.output_arcs) {
+                _arcs.push_back(arc);
+            }
+        }
+
+        void PnmlWriter::transitions() {
+            _out << getTabs() << "<!-- List of transitions -->\n";
+            for (auto &transition: _builder._transitions) {
+                if (transition.skipped) {
+                    continue;
+                }
+                //add arcs to _arcs
+                add_arcs_from_transition(transition);
+
+                _out << getTabs() << "<transition id=\"" << transition.name << "\">\n";
+                _out << increaseTabs() << "<name>\n";
+                _out << increaseTabs() << "<text>" << transition.name
+                     << "</text>\n"; //graphics location of name is not present in the struct, CBA to do it
+                _out << decreaseTabs() << "</name>\n";
+                _out << getTabs() << "<graphics>\n";
+                _out << increaseTabs() << "<position x=\"" << transition._x << "\" y=\"" << transition._y << "\"/>\n";
+                _out << decreaseTabs() << "</graphics>\n";
+                handleCondition(transition);
+                _out << decreaseTabs() << "</transition>\n";
+            }
+        }
+
+        void PnmlWriter::handleType(const Colored::Place &place) {
+            auto &type = place.type;
+            _out << getTabs() << "<type>\n";
+            _out << increaseTabs() << "<text>" << type->getName() << "</text>\n";
+            _out << getTabs() << "<structure>\n";
+            _out << increaseTabs() << "<usersort declaration=\"" << type->getName()
+                 << "\"/>\n"; //getName might be wrong, ID and name is the same thing for sorts bcz of parser :(
+            _out << decreaseTabs() << "</structure>\n";
+            _out << decreaseTabs() << "</type>\n";
+        }
+
+        void PnmlWriter::handlehlinitialMarking(Multiset marking) {
+            _out << getTabs() << "<hlinitialMarking>\n";
+            auto tokens = "get the tokens here";
+            _out << increaseTabs() << "<text>" << tokens << "</text>\n";
+            _out << getTabs() << "<structure>\n";
+            _out << increaseTabs() << "cool visitor color expression here\n";
+            _out << decreaseTabs() << "</structure>\n";
+            _out << decreaseTabs() << "</hlinitialMarking>\n";
+        }
+
+        void PnmlWriter::places() {
+            _out << getTabs() << "<!-- List of places -->\n";
+            for (auto &place: _builder._places) {
+                if (place.skipped) {
+                    continue;
+                }
+                _out << getTabs() << "<place id=\"" << place.name << "\">\n";
+                _out << increaseTabs() << "<name>\n";
+                _out << increaseTabs() << "<text>" << place.name
+                     << "</text>\n"; //graphics location of name is not present in the struct, CBA to do it
+                _out << decreaseTabs() << "</name>\n";
+                _out << getTabs() << "<graphics>\n";
+                _out << increaseTabs() << "<position x=\"" << place._x << "\" y=\"" << place._y << "\"/>\n";
+                _out << decreaseTabs() << "</graphics>\n";
+                handleType(place);
+                handlehlinitialMarking(place.marking);
+                _out << decreaseTabs() << "</place>\n";
+            }
+        }
+
+        void PnmlWriter::arcs() {
+            _out << getTabs() << "<!-- List of arcs -->\n";
+            uint32_t index = 0;
+            for (auto &arc : _arcs) {
+                std::string source;
+                std::string target;
+                if (arc.input) {
+                    source = _builder._places[arc.place].name;
+                    target = _builder._transitions[arc.transition].name;
+                } else {
+                    source = _builder._transitions[arc.transition].name;
+                    target = _builder._places[arc.place].name;
+                }
+                _out << getTabs() << "<arc id=\"arc" << index << "\" source=\"" << source << "\" target=\"" << target << "\">\n";
+                _out << increaseTabs() << "<name>\n";
+                _out << increaseTabs() << "<text>" << index << "</text>\n";
+                _out << decreaseTabs() << "</name>\n";
+                _out << getTabs() << "<hlinscription>\n";
+                auto arcText = "get the text for arcs here";
+                _out << increaseTabs() << "<text>" << arcText << "</text>\n";
+                handleArcExpression(arc.expr);
+                _out << decreaseTabs() << "</hlinscription>\n";
+                _out << decreaseTabs() << "</arc>\n";
+                index++;
+            }
+        }
+
+        void PnmlWriter::page() {
             _out << getTabs() << "<!-- Page meta -->\n";
             _out << getTabs() << "<page id=\"page0\">\n"
                  << increaseTabs() << "<name>\n"
@@ -160,8 +269,12 @@ namespace PetriEngine {
         void PnmlWriter::toColPNML() {
             metaInfo();
             declarations();
-            //page();
+            page();
             metaInfoClose();
+        }
+
+        void PnmlWriter::handleArcExpression(ArcExpression_ptr arcExpression) {
+            _out << getTabs() << "a cool arc expression visitor\n";
         }
     }
 }
