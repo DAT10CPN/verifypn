@@ -10,7 +10,7 @@
 
 namespace PetriEngine::Colored::Reduction {
     bool RedRuleParallelTransitions::apply(ColoredReducer &red, const std::vector<bool> &inQuery,
-                                           bool preserveDeadlocks) {
+                                           QueryType queryType, bool preserveLoops, bool preserveStutter) {
 
         // Remove transitions which effect is k times another transitions effect
 
