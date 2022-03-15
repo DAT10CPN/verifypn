@@ -147,7 +147,7 @@ void PNMLParser::parseDeclarations(rapidxml::xml_node<>* element) {
                     it->first_attribute("name")->value()
             };
             variables[it->first_attribute("id")->value()] = var;
-            builder->addVariable(reinterpret_cast<const Colored::mehlVariable &>(mehlVar));
+            builder->addVariable(*mehlVar);
         } else if (strcmp(it->name(), "partition") == 0) {
             parsePartitions(it);
         } else {

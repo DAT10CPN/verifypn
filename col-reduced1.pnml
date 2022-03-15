@@ -60,7 +60,17 @@
 							<feconstant id="Weight1" name= "off"/>
 						</cyclicenumeration>
 					</namedsort>
-					im a variable				</declarations>
+					<!-- Declaration of user-defined color variables -->
+					<variabledecl id="W" name="varW">
+						<usersort declaration="weight"/>
+					</variabledecl>
+					<variabledecl id="A" name="varA">
+						<usersort declaration="Altitude"/>
+					</variabledecl>
+					<variabledecl id="S" name="varS">
+						<usersort declaration="Speed"/>
+					</variabledecl>
+				</declarations>
 			</structure>
 		</declaration>
 	</net>

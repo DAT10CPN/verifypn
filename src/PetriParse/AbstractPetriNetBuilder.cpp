@@ -4,6 +4,7 @@
 
 #include <fstream>
 #include <iomanip>
+#include <PetriEngine/AbstractPetriNetBuilder.h>
 
 
 namespace PetriEngine {
@@ -26,6 +27,10 @@ namespace PetriEngine {
         //Parse and build the petri net
         PNMLParser parser;
         parser.parse(model, this);
+    }
+
+    void AbstractPetriNetBuilder::addVariable(Colored::mehlVariable &variable) {
+
     }
 
 }

@@ -21,15 +21,18 @@
 						</productsort>
 					</namedsort>
 					<namedsort id="N" name="N">
-					size in finite int range: 1
-					name of type in finite int range: N
-					type size : 1
-					type->operator[](0) stuff: 
-					ColorName: 1
-					ToString: 1
-					GetID: 0
-						<finiteintrange start="0" end="0"/>
+						<finiteintrange start="1" end="1"/>
 					</namedsort>
+					<!-- Declaration of user-defined color variables -->
+					<variabledecl id="x" name="x">
+						<usersort declaration="N"/>
+					</variabledecl>
+					<variabledecl id="y" name="y">
+						<usersort declaration="N"/>
+					</variabledecl>
+					<variabledecl id="v" name="v">
+						<usersort declaration="N"/>
+					</variabledecl>
 				</declarations>
 			</structure>
 		</declaration>
