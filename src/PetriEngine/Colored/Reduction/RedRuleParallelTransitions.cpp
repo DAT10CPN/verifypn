@@ -105,8 +105,11 @@ namespace PetriEngine::Colored::Reduction {
                         red.skipTransition(t2);
                         red._tflags[touter] = 0;
                         // op._post just shrunk, so go one back to not miss any
-                        if (t2 == outer) outer--;
-                        if (t2 == inner) inner--;
+                        if (t2 == touter) {
+                            outer--;
+                            inner--;
+                        }
+                        else if (t2 == tinner) inner--;
                         break; // swap
                     }
                 }
