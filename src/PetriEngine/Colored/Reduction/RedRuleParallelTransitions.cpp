@@ -20,8 +20,8 @@ namespace PetriEngine::Colored::Reduction {
         red._tflags.resize(transitions.size(), 0);
         std::fill(red._tflags.begin(), red._tflags.end(), 0);
 
-        // Remove all empty transitions except one
-        bool hasOtherEmptyTrans = false;
+        // Remove all empty transitions, except one if we have to preserve loops and stuttering
+        bool hasOtherEmptyTrans = !preserveLoops && !preserveStutter;
         for (size_t t = 0; t < transitions.size(); t++) {
             auto &trans = transitions[t];
             if (!trans.skipped && trans.input_arcs.empty() && trans.output_arcs.empty()) {
