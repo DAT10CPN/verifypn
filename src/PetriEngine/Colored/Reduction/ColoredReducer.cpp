@@ -14,22 +14,7 @@ namespace PetriEngine::Colored::Reduction {
                                                                              _origPlaceCount(b.getPlaceCount()),
                                                                              _origTransitionCount(
                                                                                      b.getTransitionCount()) {
-        // Sort place/transition references to ease reduction
-        for (Place &place : _builder._places) {
-            std::sort(place._pre.begin(), place._pre.end());
-            std::sort(place._post.begin(), place._post.end());
-        }
-        for (Transition &tran : _builder._transitions) {
-            std::sort(tran.input_arcs.begin(), tran.input_arcs.end(), [](Arc &a, Arc &b) {
-                return a.place < b.place;
-            });
-            std::sort(tran.output_arcs.begin(), tran.output_arcs.end(), [](Arc &a, Arc &b) {
-                return a.place < b.place;
-            });
-        }
-        std::sort(_builder._inhibitorArcs.begin(), _builder._inhibitorArcs.end(), [](Arc &a, Arc &b) {
-            return a.place < b.place;
-        });
+        b.sort();
 
 #ifndef NDEBUG
         // All rule names must be unique
@@ -51,8 +36,9 @@ namespace PetriEngine::Colored::Reduction {
         return res;
     }
 
-    bool ColoredReducer::reduce(uint32_t timeout, const std::vector<bool> &inQuery, bool preserveDeadlocks,
-                                int reductiontype, std::vector<uint32_t> &reductions) {
+    bool ColoredReducer::reduce(uint32_t timeout, const std::vector<bool> &inQuery, QueryType queryType,
+                                bool preserveLoops, bool preserveStutter, int reductiontype,
+                                std::vector<uint32_t> &reductions) {
 
         _startTime = std::chrono::high_resolution_clock::now();
         if (timeout <= 0) return false;
@@ -74,9 +60,9 @@ namespace PetriEngine::Colored::Reduction {
 
             for (auto &rule: reductionsToUse) {
                 if (rule->canBeAppliedRepeatedly())
-                    while (rule->apply(*this, inQuery, preserveDeadlocks, explosion_limiter)) changed = true;
+                    while (rule->apply(*this, inQuery, queryType, preserveLoops, preserveStutter)) changed = true;
                 else
-                    changed |= rule->apply(*this, inQuery, preserveDeadlocks);
+                    changed |= rule->apply(*this, inQuery, queryType, preserveLoops, preserveStutter);
             }
 
             explosion_limiter *= 2;
@@ -93,7 +79,6 @@ namespace PetriEngine::Colored::Reduction {
                             [&pid](const Colored::Arc &arc) { return arc.place == pid; });
     }
 
-    // todo: getOutArc of const Transition& ?
     CArcIter ColoredReducer::getOutArc(const Colored::Transition &tran, uint32_t pid) const {
         return std::find_if(tran.output_arcs.begin(), tran.output_arcs.end(),
                             [&pid](const Colored::Arc &arc) { return arc.place == pid; });
@@ -147,7 +132,6 @@ namespace PetriEngine::Colored::Reduction {
                      inhibs.end());
         tran.input_arcs.clear();
         tran.output_arcs.clear();
-        consistent();
     }
 
     void ColoredReducer::consistent() {
@@ -171,8 +155,8 @@ namespace PetriEngine::Colored::Reduction {
                 }
                 assert(found);
             }
-            //assert(std::is_sorted(place._pre.begin(), place._pre.end()));
-            //assert(std::is_sorted(place._post.begin(), place._post.end()));
+            assert(std::is_sorted(place._pre.begin(), place._pre.end()));
+            assert(std::is_sorted(place._post.begin(), place._post.end()));
 
             for (uint32_t t : place._pre) {
                 Transition &tran = _builder._transitions[t];

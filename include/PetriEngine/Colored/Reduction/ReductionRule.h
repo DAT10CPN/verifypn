@@ -15,6 +15,10 @@
 namespace PetriEngine::Colored::Reduction {
     class ColoredReducer;
 
+    enum QueryType {
+        Reach, LTL, CTL
+    };
+
     class ReductionRule {
     public:
         virtual std::string name() = 0;
@@ -25,7 +29,7 @@ namespace PetriEngine::Colored::Reduction {
             return _applications;
         }
 
-        virtual bool apply(ColoredReducer &red, const std::vector<bool> &inQuery, bool preserveDeadlocks, bool onlyReach, uint32_t explosion_limiter) = 0;
+        virtual bool apply(ColoredReducer &red, const std::vector<bool> &inQuery, QueryType queryType, bool preserveLoops, bool preserveStutter, bool onlyReach, uint32_t explosion_limiter) = 0;
 
     protected:
         uint32_t _applications = 0;
