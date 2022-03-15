@@ -84,8 +84,6 @@ namespace PetriEngine::Colored {
                 return _builder.inhibitors();
             }
 
-            CArcIter getInArc(uint32_t pid, const Colored::Transition &tran) const;
-
             PetriEngine::Colored::Transition &alterableTransitionReference(uint32_t id) const {
                 return _builder._transitions[id];
             }

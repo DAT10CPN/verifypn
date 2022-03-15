@@ -37,7 +37,7 @@ namespace PetriEngine::Colored::Reduction {
     }
 
     bool ColoredReducer::reduce(uint32_t timeout, const std::vector<bool> &inQuery, QueryType queryType,
-                                bool preserveLoops, bool preserveStutter, int reductiontype,
+                                bool preserveLoops, bool preserveStutter, uint32_t reductiontype,
                                 std::vector<uint32_t> &reductions) {
 
         _startTime = std::chrono::high_resolution_clock::now();
@@ -60,9 +60,9 @@ namespace PetriEngine::Colored::Reduction {
 
             for (auto &rule: reductionsToUse) {
                 if (rule->canBeAppliedRepeatedly())
-                    while (rule->apply(*this, inQuery, queryType, preserveLoops, preserveStutter)) changed = true;
+                    while (rule->apply(*this, inQuery, queryType, preserveLoops, preserveStutter, explosion_limiter)) changed = true;
                 else
-                    changed |= rule->apply(*this, inQuery, queryType, preserveLoops, preserveStutter);
+                    changed |= rule->apply(*this, inQuery, queryType, preserveLoops, preserveStutter, explosion_limiter);
             }
 
             explosion_limiter *= 2;

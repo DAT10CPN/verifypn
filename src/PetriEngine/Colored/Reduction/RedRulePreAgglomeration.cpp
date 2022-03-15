@@ -10,7 +10,7 @@
 
 namespace PetriEngine::Colored::Reduction {
     bool RedRulePreAgglomeration::apply(ColoredReducer &red, const std::vector<bool> &inQuery,
-                                bool preserveDeadlocks, bool onlyReach, uint32_t explosion_limiter) {
+                                        QueryType queryType, bool preserveLoops, bool preserveStutter, uint32_t explosion_limiter) {
         bool continueReductions = false;
 
         for (uint32_t pid = 0; pid < red.placeCount(); pid++) {
@@ -107,7 +107,7 @@ namespace PetriEngine::Colored::Reduction {
                     if (preplace.inhibitor || inQuery[prearc.place] > 0){
                         ok = false;
                         break;
-                    } else if (preserveDeadlocks) {
+                    } else if (queryType != Reach) {
                         // For reachability, we can do free agglomeration which avoids this condition
                         // X10
                         for(uint32_t alternative : preplace._post){
@@ -140,7 +140,7 @@ namespace PetriEngine::Colored::Reduction {
 
                 const Transition &consumer = red.transitions()[originalConsumers[n]];
                 // (S8 || S11)
-                if ((preserveDeadlocks || !kIsAlwaysOne[n]) && consumer.input_arcs.size() != 1) {
+                if ((queryType != Reach || !kIsAlwaysOne[n]) && consumer.input_arcs.size() != 1) {
                     continue;
                 }
                 // S10
@@ -197,8 +197,9 @@ namespace PetriEngine::Colored::Reduction {
             }
 
             if (place._post.empty()) {
-                if (!preserveConsumers){
+                if (!preserveStutter){
                     // The producers of place will become purely consuming transitions when it is gone, which can sometimes be removed
+                    // The places they consume from aren't allowed to be in the query, but if they were we couldn't reach this point either.
                     auto transitions = place._pre;
                     for (auto tran_id : transitions)
                         red.skipTransition(tran_id);
