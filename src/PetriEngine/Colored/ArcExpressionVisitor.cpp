@@ -26,23 +26,23 @@ namespace PetriEngine {
         }
 
         void ArcExpressionVisitor::accept(const NumberOfExpression* e) {
-            _colorblindWeight += e->number();
+            _singleColor = e->is_single_color();
+            _colorblindWeight = e->singleton_product_weight();
         }
 
         void ArcExpressionVisitor::accept(const AddExpression* e) {
-            _singleColor = false;
-            for (uint32_t i = 0; i < e->size(); i++){
-                e[i].visit(*this);
-            }
+            _singleColor = e->is_single_color();
+            _colorblindWeight = e->singleton_product_weight();
         }
 
         void ArcExpressionVisitor::accept(const SubtractExpression* e) {
+            // todo: Maybe add support for this?
             _ok = false;
         }
 
         void ArcExpressionVisitor::accept(const ScalarProductExpression* e) {
-            e->child()->visit(*this);
-            _colorblindWeight *= e->scalar();
+            _singleColor = e->is_single_color();
+            _colorblindWeight = e->singleton_product_weight();
         }
     }
 }
