@@ -17,7 +17,7 @@ namespace PetriEngine::Colored {
         PetriEngine::ColoredPetriNetBuilder &_builder;
         std::ostream& _out;
         std::uint32_t _tabs;
-        std::vector<Arc> _arcs;
+        std::vector <Arc> _arcs;
 
         void metaInfo();
 
@@ -48,7 +48,9 @@ namespace PetriEngine::Colored {
 
         std::string decreaseTabs() {
             if (_tabs == 0) {
-                throw base_error("About to make way too many tabs, aborting");
+                std::cout << "Underflow in tabs" << std::endl;
+                return getTabs();
+                //throw base_error("About to make way too many tabs, aborting");
             }
             _tabs -= 1;
             return getTabs();
@@ -68,13 +70,11 @@ namespace PetriEngine::Colored {
 
         void handleType(const Place &place);
 
-        void handleCondition(Transition &transition);
-
         void add_arcs_from_transition(Transition &transition);
 
-        void handleArcExpression(ArcExpression_ptr arcExpression);
+        void handleCondition(Colored::Transition& transition);
 
-        void handleGuardExpression(GuardExpression_ptr guard);
+        void handleColorExpression();
     };
 }
 

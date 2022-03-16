@@ -140,27 +140,27 @@ namespace PetriEngine {
             _out << decreaseTabs() << "</declaration>\n";
         }
 
-        void PnmlWriter::handleGuardExpression(GuardExpression_ptr guard) {
-            _out << increaseTabs() << "cool guard expression visitor here\n";
-        }
-
         void PnmlWriter::handleCondition(Colored::Transition& transition){
             _out << getTabs() << "<condition>\n";
-            auto text = "placeholde text";
+            auto text = "placeholder text";
             _out << increaseTabs() << "<text>" << text << "</text>\n";
             _out << getTabs() << "<structure>\n";
-            handleGuardExpression(transition.guard);
+            handleColorExpression();
             _out << decreaseTabs() << "</structure>\n";
             _out << decreaseTabs() << "</condition>\n";
         }
 
         void PnmlWriter::add_arcs_from_transition(Colored::Transition& transition) {
-            // todo handle duplicates. Check we get all
             for (auto &arc: transition.input_arcs) {
-                _arcs.push_back(arc);
+                if (!(std::count(_arcs.begin(), _arcs.end(), arc))) {
+                    _arcs.push_back(arc);
+                }
+
             }
             for (auto &arc: transition.output_arcs) {
-                _arcs.push_back(arc);
+                if (!(std::count(_arcs.begin(), _arcs.end(), arc))) {
+                    _arcs.push_back(arc);
+                }
             }
         }
 
@@ -199,10 +199,10 @@ namespace PetriEngine {
 
         void PnmlWriter::handlehlinitialMarking(Multiset marking) {
             _out << getTabs() << "<hlinitialMarking>\n";
-            auto tokens = "get the tokens here";
+            auto tokens = "placeholder text";
             _out << increaseTabs() << "<text>" << tokens << "</text>\n";
             _out << getTabs() << "<structure>\n";
-            _out << increaseTabs() << "cool visitor color expression here\n";
+            handleColorExpression();
             _out << decreaseTabs() << "</structure>\n";
             _out << decreaseTabs() << "</hlinitialMarking>\n";
         }
@@ -247,7 +247,7 @@ namespace PetriEngine {
                 _out << getTabs() << "<hlinscription>\n";
                 auto arcText = "get the text for arcs here";
                 _out << increaseTabs() << "<text>" << arcText << "</text>\n";
-                handleArcExpression(arc.expr);
+                handleColorExpression();
                 _out << decreaseTabs() << "</hlinscription>\n";
                 _out << decreaseTabs() << "</arc>\n";
                 index++;
@@ -260,9 +260,9 @@ namespace PetriEngine {
                  << increaseTabs() << "<name>\n"
                  << increaseTabs() << "<text>DefaultPage</text>\n"
                  << decreaseTabs() << "</name>\n";
+            //places();
             transitions();
-            places();
-            arcs();
+            //arcs();
             _out << decreaseTabs() << "</page>\n";
         }
 
@@ -273,8 +273,8 @@ namespace PetriEngine {
             metaInfoClose();
         }
 
-        void PnmlWriter::handleArcExpression(ArcExpression_ptr arcExpression) {
-            _out << getTabs() << "a cool arc expression visitor\n";
+        void PnmlWriter::handleColorExpression() {
+            _out << getTabs() << "hello\n";
         }
     }
 }

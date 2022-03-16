@@ -36,7 +36,14 @@ namespace PetriEngine {
             ArcExpression_ptr expr;
             bool input;
             uint32_t inhib_weight; // inhibitor arc if >0
+
+            bool operator == (const Arc& other) const
+            {
+                return place == other.place && transition == other.transition && inhib_weight == other.inhib_weight && to_string(*expr) == to_string(*other.expr);
+            }
         };
+
+
 
         struct Transition {
             std::string name;
