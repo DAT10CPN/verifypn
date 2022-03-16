@@ -2,6 +2,7 @@
 // Created by mathi on 09/03/2022.
 //
 
+#include <PetriEngine/Colored/PnmlWriterColorExprVisitor.h>
 #include "PetriEngine/Colored/PnmlWriter.h"
 
 namespace PetriEngine {
@@ -86,6 +87,65 @@ namespace PetriEngine {
         }
 
         void PnmlWriter::handleNamedSorts() {
+            std::vector<uint32_t> toHandleLater;
+            uint32_t index = 0;
+            for (auto &namedSort: _builder._colors) {
+                //find all finiteint ranges first
+                ColorType *colortype = const_cast<ColorType *>(namedSort.second);
+                std::vector<const ColorType *> types;
+                colortype->getColortypes(types);
+                if (colortype->productSize() > 1) {
+                    toHandleLater.push_back(index);
+                    index++;
+                    continue;
+                    //this if is a hack
+                } else if (is_number(types[0]->operator[](0).getColorName())) {
+                    _out << getTabs() << "<namedsort id=\"" << colortype->getName() << "\" name=\"" << colortype->getName()
+                     << "\">\n";
+                    if (types[0]->getName() == "dot") {
+                        _out << increaseTabs() << "<dot/>\n";
+                        _out << decreaseTabs() << "</namedsort>\n";
+                        continue;
+                    }
+                    handleFiniteRange(types);
+                    _out << decreaseTabs() << "</namedsort>\n";
+                    continue;
+                }
+                toHandleLater.push_back(index);
+                index ++;
+            }
+            handleLater(toHandleLater);
+        }
+
+        void PnmlWriter::handleLater(std::vector<uint32_t> toHandleLater){
+            uint32_t index = 0;
+            for (auto &namedSort: _builder._colors) {
+                if ( !(std::find(toHandleLater.begin(), toHandleLater.end(), index) != toHandleLater.end() ))
+                    continue;
+                ColorType *colortype = const_cast<ColorType *>(namedSort.second);
+                _out << getTabs() << "<namedsort id=\"" << colortype->getName() << "\" name=\"" << colortype->getName()
+                     << "\">\n";
+                std::vector<const ColorType *> types;
+                colortype->getColortypes(types);
+
+                if (colortype->productSize() > 1) {
+                    handleProductSort(types);
+                    //this if is a hack
+                } else {
+                    if (types[0]->getName() == "dot") {
+                        _out << increaseTabs() << "<dot/>\n";
+                        _out << decreaseTabs() << "</namedsort>\n";
+                        continue;
+                    }
+                    handleCyclicEnumeration(types);
+                }
+                _out << decreaseTabs() << "</namedsort>\n";
+                index ++;
+            }
+        }
+
+        /*
+         * void PnmlWriter::handleNamedSorts() {
             for (auto &namedSort: _builder._colors) {
                 ColorType *colortype = const_cast<ColorType *>(namedSort.second);
                 _out << getTabs() << "<namedsort id=\"" << colortype->getName() << "\" name=\"" << colortype->getName()
@@ -110,11 +170,11 @@ namespace PetriEngine {
                         continue;
                     }
                     handleCyclicEnumeration(types);
-
                 }
                 _out << decreaseTabs() << "</namedsort>\n";
             }
         }
+         */
 
         void PnmlWriter::handleVariables() {
             _out << getTabs() << "<!-- Declaration of user-defined color variables -->\n";
@@ -142,11 +202,10 @@ namespace PetriEngine {
 
         void PnmlWriter::handleCondition(Colored::Transition& transition){
             _out << getTabs() << "<condition>\n";
-            auto text = "placeholder text";
-            _out << increaseTabs() << "<text>" << text << "</text>\n";
+            _out << increaseTabs() << "<text>" << to_string(*transition.guard) << "</text>\n";
             _out << getTabs() << "<structure>\n";
-            handleColorExpression();
-            _out << decreaseTabs() << "</structure>\n";
+            writeExpressionToPnml(_out, getTabsCount(), *transition.guard);
+            _out << getTabs() << "</structure>\n";
             _out << decreaseTabs() << "</condition>\n";
         }
 
@@ -181,7 +240,9 @@ namespace PetriEngine {
                 _out << getTabs() << "<graphics>\n";
                 _out << increaseTabs() << "<position x=\"" << transition._x << "\" y=\"" << transition._y << "\"/>\n";
                 _out << decreaseTabs() << "</graphics>\n";
-                handleCondition(transition);
+                if (nullptr != transition.guard) {
+                    handleCondition(transition);
+                }
                 _out << decreaseTabs() << "</transition>\n";
             }
         }
@@ -202,7 +263,7 @@ namespace PetriEngine {
             auto tokens = "placeholder text";
             _out << increaseTabs() << "<text>" << tokens << "</text>\n";
             _out << getTabs() << "<structure>\n";
-            handleColorExpression();
+            _out << increaseTabs() << "todo\n";
             _out << decreaseTabs() << "</structure>\n";
             _out << decreaseTabs() << "</hlinitialMarking>\n";
         }
@@ -222,7 +283,8 @@ namespace PetriEngine {
                 _out << increaseTabs() << "<position x=\"" << place._x << "\" y=\"" << place._y << "\"/>\n";
                 _out << decreaseTabs() << "</graphics>\n";
                 handleType(place);
-                handlehlinitialMarking(place.marking);
+                //todo
+                //handlehlinitialMarking(place.marking);
                 _out << decreaseTabs() << "</place>\n";
             }
         }
@@ -245,9 +307,8 @@ namespace PetriEngine {
                 _out << increaseTabs() << "<text>" << index << "</text>\n";
                 _out << decreaseTabs() << "</name>\n";
                 _out << getTabs() << "<hlinscription>\n";
-                auto arcText = "get the text for arcs here";
-                _out << increaseTabs() << "<text>" << arcText << "</text>\n";
-                handleColorExpression();
+                _out << increaseTabs() << "<text>" << to_string(*arc.expr) << "</text>\n";
+                writeExpressionToPnml(_out, getTabsCount(), *arc.expr);
                 _out << decreaseTabs() << "</hlinscription>\n";
                 _out << decreaseTabs() << "</arc>\n";
                 index++;
@@ -260,7 +321,7 @@ namespace PetriEngine {
                  << increaseTabs() << "<name>\n"
                  << increaseTabs() << "<text>DefaultPage</text>\n"
                  << decreaseTabs() << "</name>\n";
-            //places();
+            places();
             transitions();
             //arcs();
             _out << decreaseTabs() << "</page>\n";
@@ -271,10 +332,6 @@ namespace PetriEngine {
             declarations();
             page();
             metaInfoClose();
-        }
-
-        void PnmlWriter::handleColorExpression() {
-            _out << getTabs() << "hello\n";
         }
     }
 }

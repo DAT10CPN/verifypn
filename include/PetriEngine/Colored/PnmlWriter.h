@@ -33,6 +33,10 @@ namespace PetriEngine::Colored {
 
         void page();
 
+        uint32_t getTabsCount() {
+            return _tabs;
+        }
+
         std::string getTabs() {
             std::string tabsString;
             for (uint32_t i=0; i<_tabs;i++) {
@@ -48,9 +52,7 @@ namespace PetriEngine::Colored {
 
         std::string decreaseTabs() {
             if (_tabs == 0) {
-                std::cout << "Underflow in tabs" << std::endl;
-                return getTabs();
-                //throw base_error("About to make way too many tabs, aborting");
+                throw base_error("About to make way too many tabs, aborting");
             }
             _tabs -= 1;
             return getTabs();
@@ -74,7 +76,7 @@ namespace PetriEngine::Colored {
 
         void handleCondition(Colored::Transition& transition);
 
-        void handleColorExpression();
+        void handleLater(std::vector<uint32_t> toHandleLater);
     };
 }
 

@@ -7,6 +7,7 @@
 
 
 #include <ostream>
+#include "utils/errors.h"
 #include "ColorExpressionVisitor.h"
 
 namespace PetriEngine::Colored {
@@ -70,8 +71,7 @@ namespace PetriEngine::Colored {
 
         std::string decreaseTabs() {
             if (_tabs == 0) {
-                return getTabs();
-                //throw base_error("About to make way too many tabs, aborting");
+                throw base_error("About to make way too many tabs, aborting");
             }
             _tabs -= 1;
             return getTabs();
