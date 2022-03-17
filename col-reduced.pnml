@@ -58,6 +58,265 @@
 				<hlinitialMarking>
 					<text>1'((1,1))</text>
 					<structure>
-						<numberof>
-							<tuple>
-								is tuple 
+						<add>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<finiteintrangeconstant value="1">
+													<finiteintrange end="1" start="1"/>
+												</finiteintrangeconstant>
+											</subterm>
+											<subterm>
+												<finiteintrangeconstant value="1">
+													<finiteintrange end="1" start="1"/>
+												</finiteintrangeconstant>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+						</add>
+					</structure>
+				</hlinitialMarking>
+			</place>
+			<place id="Board">
+				<name>
+					<text>Board</text>
+				</name>
+				<graphics>
+					<position x="280" y="170"/>
+				</graphics>
+				<type>
+					<text>N3</text>
+					<structure>
+						<usersort declaration="N3"/>
+					</structure>
+				</type>
+			</place>
+			<place id="Cells">
+				<name>
+					<text>Cells</text>
+				</name>
+				<graphics>
+					<position x="360" y="70"/>
+				</graphics>
+				<type>
+					<text>N2</text>
+					<structure>
+						<usersort declaration="N2"/>
+					</structure>
+				</type>
+				<hlinitialMarking>
+					<text>1'((1,1))</text>
+					<structure>
+						<add>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<finiteintrangeconstant value="1">
+													<finiteintrange end="1" start="1"/>
+												</finiteintrangeconstant>
+											</subterm>
+											<subterm>
+												<finiteintrangeconstant value="1">
+													<finiteintrange end="1" start="1"/>
+												</finiteintrangeconstant>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+						</add>
+					</structure>
+				</hlinitialMarking>
+			</place>
+			<place id="Columns">
+				<name>
+					<text>Columns</text>
+				</name>
+				<graphics>
+					<position x="310" y="30"/>
+				</graphics>
+				<type>
+					<text>N2</text>
+					<structure>
+						<usersort declaration="N2"/>
+					</structure>
+				</type>
+				<hlinitialMarking>
+					<text>1'((1,1))</text>
+					<structure>
+						<add>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<finiteintrangeconstant value="1">
+													<finiteintrange end="1" start="1"/>
+												</finiteintrangeconstant>
+											</subterm>
+											<subterm>
+												<finiteintrangeconstant value="1">
+													<finiteintrange end="1" start="1"/>
+												</finiteintrangeconstant>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+						</add>
+					</structure>
+				</hlinitialMarking>
+			</place>
+			<!-- List of transitions -->
+			<transition id="select">
+				<name>
+					<text>select</text>
+				</name>
+				<graphics>
+					<position x="285" y="110"/>
+				</graphics>
+			</transition>
+			<!-- List of arcs -->
+			<arc id="arc0" source="Rows" target="select">
+				<name>
+					<text>0</text>
+				</name>
+				<hlinscription>
+					<text>(1'((x,v)))</text>
+					<structure>
+						<subterm>
+							<numberof>
+								<subterm>
+									<numberconstant value="1">
+										<positive/>
+									</numberconstant>
+								</subterm>
+								<subterm>
+									<tuple>
+										<subterm>
+											<variable refvariable="x"/>
+										</subterm>
+										<subterm>
+											<variable refvariable="v"/>
+										</subterm>
+									</tuple>
+								</subterm>
+							</numberof>
+						</subterm>
+					</structure>
+				</hlinscription>
+			</arc>
+			<arc id="arc1" source="Cells" target="select">
+				<name>
+					<text>1</text>
+				</name>
+				<hlinscription>
+					<text>(1'((x,y)))</text>
+					<structure>
+						<subterm>
+							<numberof>
+								<subterm>
+									<numberconstant value="1">
+										<positive/>
+									</numberconstant>
+								</subterm>
+								<subterm>
+									<tuple>
+										<subterm>
+											<variable refvariable="x"/>
+										</subterm>
+										<subterm>
+											<variable refvariable="y"/>
+										</subterm>
+									</tuple>
+								</subterm>
+							</numberof>
+						</subterm>
+					</structure>
+				</hlinscription>
+			</arc>
+			<arc id="arc2" source="Columns" target="select">
+				<name>
+					<text>2</text>
+				</name>
+				<hlinscription>
+					<text>(1'((y,v)))</text>
+					<structure>
+						<subterm>
+							<numberof>
+								<subterm>
+									<numberconstant value="1">
+										<positive/>
+									</numberconstant>
+								</subterm>
+								<subterm>
+									<tuple>
+										<subterm>
+											<variable refvariable="y"/>
+										</subterm>
+										<subterm>
+											<variable refvariable="v"/>
+										</subterm>
+									</tuple>
+								</subterm>
+							</numberof>
+						</subterm>
+					</structure>
+				</hlinscription>
+			</arc>
+			<arc id="arc3" source="select" target="Board">
+				<name>
+					<text>3</text>
+				</name>
+				<hlinscription>
+					<text>(1'((x,y,v)))</text>
+					<structure>
+						<subterm>
+							<numberof>
+								<subterm>
+									<numberconstant value="1">
+										<positive/>
+									</numberconstant>
+								</subterm>
+								<subterm>
+									<tuple>
+										<subterm>
+											<variable refvariable="x"/>
+										</subterm>
+										<subterm>
+											<variable refvariable="y"/>
+										</subterm>
+										<subterm>
+											<variable refvariable="v"/>
+										</subterm>
+									</tuple>
+								</subterm>
+							</numberof>
+						</subterm>
+					</structure>
+				</hlinscription>
+			</arc>
+		</page>
+	</net>
+</pnml>

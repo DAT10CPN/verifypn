@@ -132,6 +132,445 @@
 						<usersort declaration="distance"/>
 					</structure>
 				</type>
+				<hlinitialMarking>
+					<text>1'(distance40) + 1'(distance39) + 1'(distance38) + 1'(distance37) + 1'(distance36) + 1'(distance35) + 1'(distance34) + 1'(distance33) + 1'(distance32) + 1'(distance31) + 1'(distance30) + 1'(distance29) + 1'(distance28) + 1'(distance27) + 1'(distance26) + 1'(distance25) + 1'(distance24) + 1'(distance23) + 1'(distance22) + 1'(distance21) + 1'(distance20) + 1'(distance19) + 1'(distance18) + 1'(distance17) + 1'(distance16) + 1'(distance15) + 1'(distance14) + 1'(distance13) + 1'(distance12) + 1'(distance11) + 1'(distance10) + 1'(distance9) + 1'(distance8) + 1'(distance7) + 1'(distance6) + 1'(distance5)</text>
+					<structure>
+						<add>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance40"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance39"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance38"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance37"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance36"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance35"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance34"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance33"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance32"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance31"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance30"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance29"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance28"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance27"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance26"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance25"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance24"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance23"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance22"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance21"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance20"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance19"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance18"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance17"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance16"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance15"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance14"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance13"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance12"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance11"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance10"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance9"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance8"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance7"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance6"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance5"/>
+									</subterm>
+								</numberof>
+							</subterm>
+						</add>
+					</structure>
+				</hlinitialMarking>
 			</place>
 			<place id="TrainState">
 				<name>
@@ -146,6 +585,57 @@
 						<usersort declaration="traincontext"/>
 					</structure>
 				</type>
+				<hlinitialMarking>
+					<text>1'((trainid1,speed0,distance0)) + 1'((trainid2,speed0,distance0))</text>
+					<structure>
+						<add>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="trainid1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance0"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="trainid2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance0"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+						</add>
+					</structure>
+				</hlinitialMarking>
 			</place>
 			<place id="StopTable">
 				<name>
@@ -160,6 +650,127 @@
 						<usersort declaration="speedxdist"/>
 					</structure>
 				</type>
+				<hlinitialMarking>
+					<text>1'((speed0,distance0)) + 1'((speed1,distance1)) + 1'((speed2,distance3)) + 1'((speed3,distance6)) + 1'((speed4,distance10)) + 1'((speed5,distance15))</text>
+					<structure>
+						<add>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance0"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance1"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance3"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance6"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance10"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="speed5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance15"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+						</add>
+					</structure>
+				</hlinitialMarking>
 			</place>
 			<place id="NewDistTable">
 				<name>
@@ -174,6 +785,5073 @@
 						<usersort declaration="distxspeedxdist"/>
 					</structure>
 				</type>
+				<hlinitialMarking>
+					<text>1'((distance1,speed0,distance1)) + 1'((distance1,speed1,distance0)) + 1'((distance2,speed0,distance2)) + 1'((distance2,speed1,distance1)) + 1'((distance2,speed2,distance0)) + 1'((distance3,speed2,distance1)) + 1'((distance3,speed3,distance0)) + 1'((distance4,speed0,distance4)) + 1'((distance4,speed1,distance3)) + 1'((distance4,speed2,distance2)) + 1'((distance4,speed3,distance1)) + 1'((distance5,speed1,distance4)) + 1'((distance5,speed2,distance3)) + 1'((distance5,speed3,distance2)) + 1'((distance5,speed4,distance1)) + 1'((distance5,speed5,distance0)) + 1'((distance6,speed0,distance6)) + 1'((distance6,speed3,distance3)) + 1'((distance6,speed4,distance2)) + 1'((distance6,speed5,distance1)) + 1'((distance7,speed0,distance7)) + 1'((distance7,speed1,distance6)) + 1'((distance7,speed2,distance5)) + 1'((distance7,speed5,distance2)) + 1'((distance8,speed0,distance8)) + 1'((distance8,speed1,distance7)) + 1'((distance8,speed2,distance6)) + 1'((distance8,speed3,distance5)) + 1'((distance8,speed4,distance4)) + 1'((distance9,speed1,distance8)) + 1'((distance9,speed2,distance7)) + 1'((distance9,speed3,distance6)) + 1'((distance9,speed4,distance5)) + 1'((distance9,speed5,distance4)) + 1'((distance10,speed0,distance10)) + 1'((distance7,speed3,distance4)) + 1'((distance7,speed4,distance3)) + 1'((distance6,speed1,distance5)) + 1'((distance6,speed2,distance4)) + 1'((distance4,speed4,distance0)) + 1'((distance5,speed0,distance5)) + 1'((distance3,speed0,distance3)) + 1'((distance3,speed1,distance2)) + 1'((distance12,speed4,distance8)) + 1'((distance11,speed3,distance8)) + 1'((distance10,speed1,distance9)) + 1'((distance10,speed2,distance8)) + 1'((distance8,speed5,distance3)) + 1'((distance9,speed0,distance9)) + 1'((distance10,speed3,distance7)) + 1'((distance10,speed4,distance6)) + 1'((distance10,speed5,distance5)) + 1'((distance11,speed0,distance11)) + 1'((distance11,speed1,distance10)) + 1'((distance11,speed2,distance9)) + 1'((distance11,speed4,distance7)) + 1'((distance11,speed5,distance6)) + 1'((distance12,speed0,distance12)) + 1'((distance12,speed1,distance11)) + 1'((distance12,speed2,distance10)) + 1'((distance12,speed3,distance9)) + 1'((distance12,speed5,distance7)) + 1'((distance13,speed0,distance13)) + 1'((distance13,speed1,distance12)) + 1'((distance13,speed2,distance11)) + 1'((distance13,speed3,distance10)) + 1'((distance13,speed4,distance9)) + 1'((distance14,speed0,distance14)) + 1'((distance14,speed1,distance13)) + 1'((distance14,speed2,distance12)) + 1'((distance14,speed3,distance11)) + 1'((distance14,speed4,distance10)) + 1'((distance14,speed5,distance9)) + 1'((distance15,speed0,distance15)) + 1'((distance15,speed1,distance14)) + 1'((distance15,speed2,distance13)) + 1'((distance15,speed3,distance12)) + 1'((distance15,speed4,distance11)) + 1'((distance15,speed5,distance10)) + 1'((distance16,speed0,distance16)) + 1'((distance16,speed1,distance15)) + 1'((distance16,speed2,distance14)) + 1'((distance16,speed3,distance13)) + 1'((distance16,speed4,distance12)) + 1'((distance16,speed5,distance11)) + 1'((distance17,speed0,distance17)) + 1'((distance17,speed1,distance16)) + 1'((distance17,speed2,distance15)) + 1'((distance17,speed3,distance14)) + 1'((distance17,speed4,distance13)) + 1'((distance17,speed5,distance12)) + 1'((distance18,speed0,distance18)) + 1'((distance18,speed1,distance17)) + 1'((distance18,speed2,distance16)) + 1'((distance18,speed3,distance15)) + 1'((distance18,speed4,distance14)) + 1'((distance18,speed5,distance13)) + 1'((distance19,speed0,distance19)) + 1'((distance19,speed1,distance18)) + 1'((distance19,speed2,distance17)) + 1'((distance19,speed3,distance16)) + 1'((distance19,speed4,distance15)) + 1'((distance19,speed5,distance14)) + 1'((distance20,speed0,distance20)) + 1'((distance20,speed1,distance19)) + 1'((distance20,speed2,distance18)) + 1'((distance20,speed3,distance17)) + 1'((distance20,speed4,distance16)) + 1'((distance20,speed5,distance15)) + 1'((distance21,speed0,distance21)) + 1'((distance21,speed1,distance20)) + 1'((distance21,speed2,distance19)) + 1'((distance21,speed3,distance18)) + 1'((distance21,speed4,distance17)) + 1'((distance21,speed5,distance16)) + 1'((distance22,speed0,distance22)) + 1'((distance22,speed1,distance21)) + 1'((distance22,speed2,distance20)) + 1'((distance22,speed3,distance19)) + 1'((distance22,speed4,distance18)) + 1'((distance22,speed5,distance17)) + 1'((distance23,speed0,distance23)) + 1'((distance23,speed1,distance22)) + 1'((distance23,speed2,distance21)) + 1'((distance23,speed3,distance20)) + 1'((distance23,speed4,distance19)) + 1'((distance23,speed5,distance18)) + 1'((distance24,speed0,distance24)) + 1'((distance24,speed1,distance23)) + 1'((distance24,speed2,distance22)) + 1'((distance24,speed3,distance21)) + 1'((distance24,speed4,distance20)) + 1'((distance24,speed5,distance19)) + 1'((distance25,speed0,distance25)) + 1'((distance25,speed1,distance24)) + 1'((distance25,speed2,distance23)) + 1'((distance25,speed3,distance22)) + 1'((distance25,speed4,distance21)) + 1'((distance25,speed5,distance20)) + 1'((distance26,speed0,distance26)) + 1'((distance26,speed1,distance25)) + 1'((distance26,speed2,distance24)) + 1'((distance26,speed3,distance23)) + 1'((distance26,speed4,distance22)) + 1'((distance26,speed5,distance21)) + 1'((distance27,speed0,distance27)) + 1'((distance27,speed1,distance26)) + 1'((distance27,speed2,distance25)) + 1'((distance27,speed3,distance24)) + 1'((distance27,speed4,distance23)) + 1'((distance27,speed5,distance22)) + 1'((distance28,speed0,distance28)) + 1'((distance28,speed1,distance27)) + 1'((distance28,speed2,distance26)) + 1'((distance28,speed3,distance25)) + 1'((distance28,speed4,distance24)) + 1'((distance28,speed5,distance23)) + 1'((distance29,speed0,distance29)) + 1'((distance29,speed1,distance28)) + 1'((distance29,speed2,distance27)) + 1'((distance29,speed3,distance26)) + 1'((distance29,speed4,distance25)) + 1'((distance29,speed5,distance24)) + 1'((distance30,speed0,distance30)) + 1'((distance30,speed1,distance29)) + 1'((distance30,speed2,distance28)) + 1'((distance30,speed3,distance27)) + 1'((distance30,speed4,distance26)) + 1'((distance30,speed5,distance25)) + 1'((distance31,speed0,distance31)) + 1'((distance31,speed1,distance30)) + 1'((distance31,speed2,distance29)) + 1'((distance31,speed3,distance28)) + 1'((distance31,speed4,distance27)) + 1'((distance31,speed5,distance26)) + 1'((distance32,speed0,distance32)) + 1'((distance32,speed1,distance31)) + 1'((distance32,speed2,distance30)) + 1'((distance32,speed3,distance29)) + 1'((distance32,speed4,distance28)) + 1'((distance32,speed5,distance27)) + 1'((distance33,speed0,distance33)) + 1'((distance33,speed1,distance32)) + 1'((distance33,speed2,distance31)) + 1'((distance33,speed3,distance30)) + 1'((distance33,speed4,distance29)) + 1'((distance33,speed5,distance28)) + 1'((distance34,speed0,distance34)) + 1'((distance34,speed1,distance33)) + 1'((distance34,speed2,distance32)) + 1'((distance34,speed3,distance31)) + 1'((distance34,speed4,distance30)) + 1'((distance34,speed5,distance29)) + 1'((distance35,speed0,distance35)) + 1'((distance35,speed1,distance34)) + 1'((distance35,speed2,distance33)) + 1'((distance35,speed3,distance32)) + 1'((distance35,speed4,distance31)) + 1'((distance35,speed5,distance30)) + 1'((distance36,speed0,distance36)) + 1'((distance36,speed1,distance35)) + 1'((distance36,speed2,distance34)) + 1'((distance36,speed3,distance33)) + 1'((distance36,speed4,distance32)) + 1'((distance36,speed5,distance31)) + 1'((distance37,speed0,distance37)) + 1'((distance37,speed1,distance36)) + 1'((distance37,speed2,distance35)) + 1'((distance37,speed3,distance34)) + 1'((distance37,speed4,distance33)) + 1'((distance37,speed5,distance32)) + 1'((distance38,speed0,distance38)) + 1'((distance38,speed1,distance37)) + 1'((distance38,speed2,distance36)) + 1'((distance38,speed3,distance35)) + 1'((distance38,speed4,distance34)) + 1'((distance38,speed5,distance33)) + 1'((distance39,speed0,distance39)) + 1'((distance39,speed1,distance38)) + 1'((distance39,speed2,distance37)) + 1'((distance39,speed3,distance36)) + 1'((distance39,speed4,distance35)) + 1'((distance39,speed5,distance34)) + 1'((distance40,speed0,distance40)) + 1'((distance40,speed1,distance39)) + 1'((distance40,speed2,distance38)) + 1'((distance40,speed3,distance37)) + 1'((distance40,speed4,distance36)) + 1'((distance40,speed5,distance35)) + 1'((distance13,speed5,distance8))</text>
+					<structure>
+						<add>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance1"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance0"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance2"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance1"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance0"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance1"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance0"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance4"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance3"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance2"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance1"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance4"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance3"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance2"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance1"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance0"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance6"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance6"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance6"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance3"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance6"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance2"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance6"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance1"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance7"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance7"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance7"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance6"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance7"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance5"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance7"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance2"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance8"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance8"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance8"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance7"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance8"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance6"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance8"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance5"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance8"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance4"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance9"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance8"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance9"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance7"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance9"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance6"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance9"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance5"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance9"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance4"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance10"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance10"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance7"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance4"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance7"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance3"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance6"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance5"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance6"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance4"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance0"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance5"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance3"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance2"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance12"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance8"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance11"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance8"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance10"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance9"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance10"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance8"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance8"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance3"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance9"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance9"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance10"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance7"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance10"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance6"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance10"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance5"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance11"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance11"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance11"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance10"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance11"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance9"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance11"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance7"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance11"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance6"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance12"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance12"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance12"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance11"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance12"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance10"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance12"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance9"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance12"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance7"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance13"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance13"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance13"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance12"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance13"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance11"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance13"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance10"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance13"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance9"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance14"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance14"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance14"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance13"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance14"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance12"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance14"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance11"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance14"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance10"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance14"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance9"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance15"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance15"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance15"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance14"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance15"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance13"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance15"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance12"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance15"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance11"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance15"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance10"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance16"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance16"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance16"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance15"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance16"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance14"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance16"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance13"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance16"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance12"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance16"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance11"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance17"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance17"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance17"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance16"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance17"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance15"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance17"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance14"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance17"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance13"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance17"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance12"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance18"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance18"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance18"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance17"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance18"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance16"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance18"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance15"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance18"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance14"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance18"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance13"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance19"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance19"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance19"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance18"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance19"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance17"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance19"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance16"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance19"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance15"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance19"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance14"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance20"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance20"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance20"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance19"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance20"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance18"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance20"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance17"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance20"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance16"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance20"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance15"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance21"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance21"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance21"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance20"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance21"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance19"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance21"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance18"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance21"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance17"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance21"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance16"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance22"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance22"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance22"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance21"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance22"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance20"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance22"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance19"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance22"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance18"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance22"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance17"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance23"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance23"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance23"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance22"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance23"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance21"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance23"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance20"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance23"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance19"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance23"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance18"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance24"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance24"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance24"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance23"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance24"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance22"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance24"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance21"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance24"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance20"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance24"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance19"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance25"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance25"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance25"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance24"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance25"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance23"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance25"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance22"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance25"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance21"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance25"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance20"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance26"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance26"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance26"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance25"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance26"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance24"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance26"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance23"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance26"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance22"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance26"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance21"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance27"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance27"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance27"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance26"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance27"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance25"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance27"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance24"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance27"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance23"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance27"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance22"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance28"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance28"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance28"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance27"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance28"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance26"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance28"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance25"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance28"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance24"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance28"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance23"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance29"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance29"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance29"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance28"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance29"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance27"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance29"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance26"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance29"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance25"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance29"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance24"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance30"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance30"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance30"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance29"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance30"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance28"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance30"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance27"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance30"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance26"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance30"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance25"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance31"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance31"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance31"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance30"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance31"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance29"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance31"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance28"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance31"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance27"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance31"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance26"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance32"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance32"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance32"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance31"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance32"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance30"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance32"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance29"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance32"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance28"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance32"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance27"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance33"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance33"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance33"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance32"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance33"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance31"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance33"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance30"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance33"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance29"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance33"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance28"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance34"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance34"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance34"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance33"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance34"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance32"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance34"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance31"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance34"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance30"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance34"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance29"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance35"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance35"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance35"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance34"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance35"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance33"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance35"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance32"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance35"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance31"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance35"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance30"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance36"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance36"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance36"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance35"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance36"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance34"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance36"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance33"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance36"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance32"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance36"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance31"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance37"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance37"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance37"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance36"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance37"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance35"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance37"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance34"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance37"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance33"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance37"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance32"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance38"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance38"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance38"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance37"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance38"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance36"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance38"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance35"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance38"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance34"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance38"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance33"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance39"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance39"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance39"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance38"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance39"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance37"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance39"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance36"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance39"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance35"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance39"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance34"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance40"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed0"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance40"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance40"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed1"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance39"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance40"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed2"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance38"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance40"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed3"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance37"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance40"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed4"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance36"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance40"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance35"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<usersort declaration="distance13"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="speed5"/>
+											</subterm>
+											<subterm>
+												<usersort declaration="distance8"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+						</add>
+					</structure>
+				</hlinitialMarking>
 			</place>
 			<!-- List of transitions -->
 			<transition id="TrainStable">

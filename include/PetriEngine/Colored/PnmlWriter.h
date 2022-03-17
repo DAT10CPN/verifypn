@@ -62,7 +62,7 @@ namespace PetriEngine::Colored {
 
         void handleCyclicEnumeration(std::vector<const ColorType *> types);
 
-        void handleFiniteRange(std::vector<const ColorType *> types);
+        void handleFiniteRange(const std::vector<const ColorType *>& types);
 
         void handleVariables();
 
@@ -76,13 +76,11 @@ namespace PetriEngine::Colored {
 
         void handleCondition(Colored::Transition& transition);
 
-        void handleNow(std::vector<uint32_t> toHandleLater);
-
-        void handleNow(std::vector<uint32_t> productSorts, std::vector<uint32_t> cyclicEnumerations);
-
         void handleNow(std::vector<std::string> productSorts, std::vector<std::string> cyclicEnumerations);
 
         std::string guardStringToPnml(std::string guard);
+
+        void handleMarking(Multiset multiset);
     };
 }
 

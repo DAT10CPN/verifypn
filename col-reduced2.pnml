@@ -74,6 +74,37 @@
 						<usersort declaration="Z"/>
 					</structure>
 				</type>
+				<hlinitialMarking>
+					<text>1'(1) + 1'(2)</text>
+					<structure>
+						<add>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="1"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="2"/>
+									</subterm>
+								</numberof>
+							</subterm>
+						</add>
+					</structure>
+				</hlinitialMarking>
 			</place>
 			<place id="Clients">
 				<name>
@@ -88,6 +119,109 @@
 						<usersort declaration="Cli"/>
 					</structure>
 				</type>
+				<hlinitialMarking>
+					<text>1'(1) + 1'(2) + 1'(3) + 1'(4) + 1'(5) + 1'(6) + 1'(7) + 1'(8)</text>
+					<structure>
+						<add>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="1"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="2"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="3"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="4"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="5"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="6"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="7"/>
+									</subterm>
+								</numberof>
+							</subterm>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<useroperator declaration="8"/>
+									</subterm>
+								</numberof>
+							</subterm>
+						</add>
+					</structure>
+				</hlinitialMarking>
 			</place>
 			<place id="OpenRequests">
 				<name>
@@ -172,6 +306,25 @@
 						<usersort declaration="dot"/>
 					</structure>
 				</type>
+				<hlinitialMarking>
+					<text>3'(dot)</text>
+					<structure>
+						<add>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="3">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<dotconstant/>
+									</subterm>
+								</numberof>
+							</subterm>
+						</add>
+					</structure>
+				</hlinitialMarking>
 			</place>
 			<place id="NumClientsReq">
 				<name>

@@ -95,7 +95,7 @@
 				<hlinitialMarking>
 					<text>1'(dot)</text>
 					<structure>
-						<numberof>
+						<add>
 							<subterm>
 								<numberof>
 									<subterm>
@@ -108,7 +108,7 @@
 									</subterm>
 								</numberof>
 							</subterm>
-						</numberof>
+						</add>
 					</structure>
 				</hlinitialMarking>
 			</place>
@@ -128,7 +128,7 @@
 				<hlinitialMarking>
 					<text>1'(dot)</text>
 					<structure>
-						<numberof>
+						<add>
 							<subterm>
 								<numberof>
 									<subterm>
@@ -141,7 +141,7 @@
 									</subterm>
 								</numberof>
 							</subterm>
-						</numberof>
+						</add>
 					</structure>
 				</hlinitialMarking>
 			</place>
@@ -161,7 +161,7 @@
 				<hlinitialMarking>
 					<text>1'(dot)</text>
 					<structure>
-						<numberof>
+						<add>
 							<subterm>
 								<numberof>
 									<subterm>
@@ -174,7 +174,7 @@
 									</subterm>
 								</numberof>
 							</subterm>
-						</numberof>
+						</add>
 					</structure>
 				</hlinitialMarking>
 			</place>
@@ -194,7 +194,7 @@
 				<hlinitialMarking>
 					<text>1'(dot)</text>
 					<structure>
-						<numberof>
+						<add>
 							<subterm>
 								<numberof>
 									<subterm>
@@ -207,7 +207,7 @@
 									</subterm>
 								</numberof>
 							</subterm>
-						</numberof>
+						</add>
 					</structure>
 				</hlinitialMarking>
 			</place>
@@ -227,7 +227,7 @@
 				<hlinitialMarking>
 					<text>1'(dot)</text>
 					<structure>
-						<numberof>
+						<add>
 							<subterm>
 								<numberof>
 									<subterm>
@@ -240,7 +240,7 @@
 									</subterm>
 								</numberof>
 							</subterm>
-						</numberof>
+						</add>
 					</structure>
 				</hlinitialMarking>
 			</place>
@@ -777,7 +777,7 @@
 				<hlinitialMarking>
 					<text>1'(dot)</text>
 					<structure>
-						<numberof>
+						<add>
 							<subterm>
 								<numberof>
 									<subterm>
@@ -790,7 +790,7 @@
 									</subterm>
 								</numberof>
 							</subterm>
-						</numberof>
+						</add>
 					</structure>
 				</hlinitialMarking>
 			</place>
