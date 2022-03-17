@@ -244,7 +244,51 @@ namespace PetriEngine {
             _out << getTabs() << "<hlinitialMarking>\n";
             _out << increaseTabs() << "<text>" << marking.toString() << "</text>\n";
             _out << getTabs() << "<structure>\n";
-            _out << increaseTabs() << marking.distinctSize() <<" todo\n";
+            if (marking.distinctSize() > 1) {
+                _out << increaseTabs() << "<add>\n";
+            } else {
+                _out << increaseTabs() << "<numberof>\n";
+            }
+            std::cout << "size: " << marking.distinctSize() << std::endl;
+            std::cout << "size: " << marking.size() << std::endl;
+            bool first = true;
+            for (auto [c, m] : marking) {
+                if (!(c->isTuple())) {
+                    if (first) {
+                        _out << increaseTabs() << "<subterm>\n";
+                    } else {
+                        _out << getTabs() << "<subterm>\n";
+                    }
+                    _out << increaseTabs() << "<numberof>\n";
+                    _out << increaseTabs() << "<subterm>\n";
+
+
+                    _out << increaseTabs() << "<numberconstant value=\"" << m << "\">\n";
+                    _out << increaseTabs() << "<positive/>\n";
+                    _out << decreaseTabs() << "</numberconstant>\n";
+                    _out << decreaseTabs() << "</subterm>\n";
+                    _out << getTabs() << "<subterm>\n";
+                    if (c->getColorName() == "Dot" || c->getColorName() == "dot") {
+                        _out << increaseTabs() << "<dotconstant/>\n";
+                    } else {
+                        _out << increaseTabs() << "<useroperator declaration=\"" <<c->getColorName() << "\"/>\n";
+                    }
+
+                    _out << decreaseTabs() << "</subterm>\n";
+                    _out << decreaseTabs() << "</numberof>\n";
+                    _out << decreaseTabs() << "</subterm>\n";
+                } else {
+                    _out << increaseTabs() << "<tuple>\n";
+                    _out << increaseTabs() << "is tuple " << c->getColorName() << "\n";
+                    _out << decreaseTabs() << "</tuple>\n";
+                }
+                first = false;
+            }
+            if (marking.distinctSize() > 1) {
+                _out << decreaseTabs() << "</add>\n";
+            } else {
+                _out << decreaseTabs() << "</numberof>\n";
+            }
             _out << decreaseTabs() << "</structure>\n";
             _out << decreaseTabs() << "</hlinitialMarking>\n";
         }

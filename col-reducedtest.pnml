@@ -1,0 +1,1475 @@
+<?xml version="1.0"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+	<net id="MODELID" type="http://www.pnml.org/version-2009/grammar/symmetricnet">
+		<name><text>MODELNAME</text></name>
+		<!-- List of declarations -->
+		<declaration>
+			<structure>
+				<declarations>
+					<!-- Declaration of user-defined color classes (sorts) -->
+					<namedsort id="distance" name="distance">
+						<cyclicenumeration>
+							<feconstant id="distance0" name= "0"/>
+							<feconstant id="distance1" name= "1"/>
+							<feconstant id="distance2" name= "2"/>
+							<feconstant id="distance3" name= "3"/>
+							<feconstant id="distance4" name= "4"/>
+							<feconstant id="distance5" name= "5"/>
+							<feconstant id="distance6" name= "6"/>
+							<feconstant id="distance7" name= "7"/>
+							<feconstant id="distance8" name= "8"/>
+							<feconstant id="distance9" name= "9"/>
+							<feconstant id="distance10" name= "10"/>
+							<feconstant id="distance11" name= "11"/>
+							<feconstant id="distance12" name= "12"/>
+							<feconstant id="distance13" name= "13"/>
+							<feconstant id="distance14" name= "14"/>
+							<feconstant id="distance15" name= "15"/>
+							<feconstant id="distance16" name= "16"/>
+							<feconstant id="distance17" name= "17"/>
+							<feconstant id="distance18" name= "18"/>
+							<feconstant id="distance19" name= "19"/>
+							<feconstant id="distance20" name= "20"/>
+							<feconstant id="distance21" name= "21"/>
+							<feconstant id="distance22" name= "22"/>
+							<feconstant id="distance23" name= "23"/>
+							<feconstant id="distance24" name= "24"/>
+							<feconstant id="distance25" name= "25"/>
+							<feconstant id="distance26" name= "26"/>
+							<feconstant id="distance27" name= "27"/>
+							<feconstant id="distance28" name= "28"/>
+							<feconstant id="distance29" name= "29"/>
+							<feconstant id="distance30" name= "30"/>
+							<feconstant id="distance31" name= "31"/>
+							<feconstant id="distance32" name= "32"/>
+							<feconstant id="distance33" name= "33"/>
+							<feconstant id="distance34" name= "34"/>
+							<feconstant id="distance35" name= "35"/>
+							<feconstant id="distance36" name= "36"/>
+							<feconstant id="distance37" name= "37"/>
+							<feconstant id="distance38" name= "38"/>
+							<feconstant id="distance39" name= "39"/>
+							<feconstant id="distance40" name= "40"/>
+						</cyclicenumeration>
+					</namedsort>
+					<namedsort id="speed" name="speed">
+						<cyclicenumeration>
+							<feconstant id="speed0" name= "0"/>
+							<feconstant id="speed1" name= "1"/>
+							<feconstant id="speed2" name= "2"/>
+							<feconstant id="speed3" name= "3"/>
+							<feconstant id="speed4" name= "4"/>
+							<feconstant id="speed5" name= "5"/>
+						</cyclicenumeration>
+					</namedsort>
+					<namedsort id="trainid" name="trainid">
+						<cyclicenumeration>
+							<feconstant id="trainid1" name= "1"/>
+							<feconstant id="trainid2" name= "2"/>
+						</cyclicenumeration>
+					</namedsort>
+					<namedsort id="distxspeedxdist" name="distxspeedxdist">
+						<productsort>
+							<usersort declaration="distance"/>
+							<usersort declaration="speed"/>
+							<usersort declaration="distance"/>
+						</productsort>
+					</namedsort>
+					<namedsort id="traincontext" name="traincontext">
+						<productsort>
+							<usersort declaration="trainid"/>
+							<usersort declaration="speed"/>
+							<usersort declaration="distance"/>
+						</productsort>
+					</namedsort>
+					<namedsort id="speedxdist" name="speedxdist">
+						<productsort>
+							<usersort declaration="speed"/>
+							<usersort declaration="distance"/>
+						</productsort>
+					</namedsort>
+					<!-- Declaration of user-defined color variables -->
+					<variabledecl id="vartid" name="vartid">
+						<usersort declaration="trainid"/>
+					</variabledecl>
+					<variabledecl id="vartsp" name="vartsp">
+						<usersort declaration="speed"/>
+					</variabledecl>
+					<variabledecl id="vards2" name="vards2">
+						<usersort declaration="distance"/>
+					</variabledecl>
+					<variabledecl id="varda2" name="varda2">
+						<usersort declaration="distance"/>
+					</variabledecl>
+					<variabledecl id="varda" name="varda">
+						<usersort declaration="distance"/>
+					</variabledecl>
+					<variabledecl id="vardb" name="vardb">
+						<usersort declaration="distance"/>
+					</variabledecl>
+					<variabledecl id="vards" name="vards">
+						<usersort declaration="distance"/>
+					</variabledecl>
+				</declarations>
+			</structure>
+		</declaration>
+		<!-- Page meta -->
+		<page id="page0">
+			<name>
+				<text>DefaultPage</text>
+			</name>
+			<!-- List of places -->
+			<place id="DistStation">
+				<name>
+					<text>DistStation</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<type>
+					<text>distance</text>
+					<structure>
+						<usersort declaration="distance"/>
+					</structure>
+				</type>
+			</place>
+			<place id="TrainState">
+				<name>
+					<text>TrainState</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<type>
+					<text>traincontext</text>
+					<structure>
+						<usersort declaration="traincontext"/>
+					</structure>
+				</type>
+			</place>
+			<place id="StopTable">
+				<name>
+					<text>StopTable</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<type>
+					<text>speedxdist</text>
+					<structure>
+						<usersort declaration="speedxdist"/>
+					</structure>
+				</type>
+			</place>
+			<place id="NewDistTable">
+				<name>
+					<text>NewDistTable</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<type>
+					<text>distxspeedxdist</text>
+					<structure>
+						<usersort declaration="distxspeedxdist"/>
+					</structure>
+				</type>
+			</place>
+			<!-- List of transitions -->
+			<transition id="TrainStable">
+				<name>
+					<text>TrainStable</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<condition>
+					<text>((varda2 lte vards2 and vards lt varda) or ((vards2 lt varda2 and vartsp eq speed4) or (vartsp eq speed1 and distance1 lt vardb)))</text>
+					<structure>
+						<or>
+							<subterm>
+								<and>
+									<subterm>
+										<lessthanorequal>
+											<subterm>
+												<variable refvariable="varda2"/>
+											</subterm>
+											<subterm>
+												<variable refvariable="vards2"/>
+											</subterm>
+										</lessthanorequal>
+									</subterm>
+									<subterm>
+										<lessthan>
+											<subterm>
+												<variable refvariable="vards"/>
+											</subterm>
+											<subterm>
+												<variable refvariable="varda"/>
+											</subterm>
+										</lessthan>
+									</subterm>
+								</and>
+							</subterm>
+							<subterm>
+								<or>
+									<subterm>
+										<and>
+											<subterm>
+												<lessthan>
+													<subterm>
+														<variable refvariable="vards2"/>
+													</subterm>
+													<subterm>
+														<variable refvariable="varda2"/>
+													</subterm>
+												</lessthan>
+											</subterm>
+											<subterm>
+												<equality>
+													<subterm>
+														<variable refvariable="vartsp"/>
+													</subterm>
+													<subterm>
+														<useroperator declaration="speed4"/>
+													</subterm>
+												</equality>
+											</subterm>
+										</and>
+									</subterm>
+									<subterm>
+										<and>
+											<subterm>
+												<equality>
+													<subterm>
+														<variable refvariable="vartsp"/>
+													</subterm>
+													<subterm>
+														<useroperator declaration="speed1"/>
+													</subterm>
+												</equality>
+											</subterm>
+											<subterm>
+												<lessthan>
+													<subterm>
+														<useroperator declaration="distance1"/>
+													</subterm>
+													<subterm>
+														<variable refvariable="vardb"/>
+													</subterm>
+												</lessthan>
+											</subterm>
+										</and>
+									</subterm>
+								</or>
+							</subterm>
+						</or>
+					</structure>
+				</condition>
+			</transition>
+			<transition id="TrainDecc">
+				<name>
+					<text>TrainDecc</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<condition>
+					<text>(varda lte vards and speed1 lt vartsp)</text>
+					<structure>
+						<and>
+							<subterm>
+								<lessthanorequal>
+									<subterm>
+										<variable refvariable="varda"/>
+									</subterm>
+									<subterm>
+										<variable refvariable="vards"/>
+									</subterm>
+								</lessthanorequal>
+							</subterm>
+							<subterm>
+								<lessthan>
+									<subterm>
+										<useroperator declaration="speed1"/>
+									</subterm>
+									<subterm>
+										<variable refvariable="vartsp"/>
+									</subterm>
+								</lessthan>
+							</subterm>
+						</and>
+					</structure>
+				</condition>
+			</transition>
+			<transition id="TrainAcc">
+				<name>
+					<text>TrainAcc</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<condition>
+					<text>(vards2 lt varda2 and vartsp lt speed4)</text>
+					<structure>
+						<and>
+							<subterm>
+								<lessthan>
+									<subterm>
+										<variable refvariable="vards2"/>
+									</subterm>
+									<subterm>
+										<variable refvariable="varda2"/>
+									</subterm>
+								</lessthan>
+							</subterm>
+							<subterm>
+								<lessthan>
+									<subterm>
+										<variable refvariable="vartsp"/>
+									</subterm>
+									<subterm>
+										<useroperator declaration="speed4"/>
+									</subterm>
+								</lessthan>
+							</subterm>
+						</and>
+					</structure>
+				</condition>
+			</transition>
+			<transition id="TooEarly">
+				<name>
+					<text>TooEarly</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<condition>
+					<text>(vartsp eq speed0 and distance0 lt vardb)</text>
+					<structure>
+						<and>
+							<subterm>
+								<equality>
+									<subterm>
+										<variable refvariable="vartsp"/>
+									</subterm>
+									<subterm>
+										<useroperator declaration="speed0"/>
+									</subterm>
+								</equality>
+							</subterm>
+							<subterm>
+								<lessthan>
+									<subterm>
+										<useroperator declaration="distance0"/>
+									</subterm>
+									<subterm>
+										<variable refvariable="vardb"/>
+									</subterm>
+								</lessthan>
+							</subterm>
+						</and>
+					</structure>
+				</condition>
+			</transition>
+			<transition id="MissStation">
+				<name>
+					<text>MissStation</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+				<condition>
+					<text>(speed0 lt vartsp and vardb eq distance0)</text>
+					<structure>
+						<and>
+							<subterm>
+								<lessthan>
+									<subterm>
+										<useroperator declaration="speed0"/>
+									</subterm>
+									<subterm>
+										<variable refvariable="vartsp"/>
+									</subterm>
+								</lessthan>
+							</subterm>
+							<subterm>
+								<equality>
+									<subterm>
+										<variable refvariable="vardb"/>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance0"/>
+									</subterm>
+								</equality>
+							</subterm>
+						</and>
+					</structure>
+				</condition>
+			</transition>
+			<transition id="AtStation">
+				<name>
+					<text>AtStation</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+			</transition>
+			<transition id="TrainStop">
+				<name>
+					<text>TrainStop</text>
+				</name>
+				<graphics>
+					<position x="0" y="0"/>
+				</graphics>
+			</transition>
+			<!-- List of arcs -->
+			<arc id="arc0" source="TrainState" target="TrainStable">
+				<name>
+					<text>0</text>
+				</name>
+				<hlinscription>
+					<text>1'((vartid,vartsp,vardb))</text>
+					<structure>
+						<numberof>
+							<subterm>
+								<numberconstant value="1">
+									<positive/>
+								</numberconstant>
+							</subterm>
+							<subterm>
+								<tuple>
+									<subterm>
+										<variable refvariable="vartid"/>
+									</subterm>
+									<subterm>
+										<variable refvariable="vartsp"/>
+									</subterm>
+									<subterm>
+										<variable refvariable="vardb"/>
+									</subterm>
+								</tuple>
+							</subterm>
+						</numberof>
+					</structure>
+				</hlinscription>
+			</arc>
+			<arc id="arc1" source="StopTable" target="TrainStable">
+				<name>
+					<text>1</text>
+				</name>
+				<hlinscription>
+					<text>(1'((vartsp++,vards2)) + 1'((vartsp,vards)))</text>
+					<structure>
+						<add>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<successor>
+													<subterm>
+														<variable refvariable="vartsp"/>
+													</subterm>
+												</successor>
+											</subterm>
+											<subterm>
+												<variable refvariable="vards2"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+								<subterm>
+									<numberof>
+										<subterm>
+											<numberconstant value="1">
+												<positive/>
+											</numberconstant>
+										</subterm>
+										<subterm>
+											<tuple>
+												<subterm>
+													<variable refvariable="vartsp"/>
+												</subterm>
+												<subterm>
+													<variable refvariable="vards"/>
+												</subterm>
+											</tuple>
+										</subterm>
+									</numberof>
+								</subterm>
+							</add>
+					</structure>
+				</hlinscription>
+			</arc>
+			<arc id="arc2" source="NewDistTable" target="TrainStable">
+				<name>
+					<text>2</text>
+				</name>
+				<hlinscription>
+					<text>(1'((vardb,vartsp++,varda2)) + 1'((vardb,vartsp,varda)))</text>
+					<structure>
+						<add>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<variable refvariable="vardb"/>
+											</subterm>
+											<subterm>
+												<successor>
+													<subterm>
+														<variable refvariable="vartsp"/>
+													</subterm>
+												</successor>
+											</subterm>
+											<subterm>
+												<variable refvariable="varda2"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+								<subterm>
+									<numberof>
+										<subterm>
+											<numberconstant value="1">
+												<positive/>
+											</numberconstant>
+										</subterm>
+										<subterm>
+											<tuple>
+												<subterm>
+													<variable refvariable="vardb"/>
+												</subterm>
+												<subterm>
+													<variable refvariable="vartsp"/>
+												</subterm>
+												<subterm>
+													<variable refvariable="varda"/>
+												</subterm>
+											</tuple>
+										</subterm>
+									</numberof>
+								</subterm>
+							</add>
+					</structure>
+				</hlinscription>
+			</arc>
+			<arc id="arc3" source="TrainStable" target="TrainState">
+				<name>
+					<text>3</text>
+				</name>
+				<hlinscription>
+					<text>1'((vartid,vartsp,varda))</text>
+					<structure>
+						<numberof>
+							<subterm>
+								<numberconstant value="1">
+									<positive/>
+								</numberconstant>
+							</subterm>
+							<subterm>
+								<tuple>
+									<subterm>
+										<variable refvariable="vartid"/>
+									</subterm>
+									<subterm>
+										<variable refvariable="vartsp"/>
+									</subterm>
+									<subterm>
+										<variable refvariable="varda"/>
+									</subterm>
+								</tuple>
+							</subterm>
+						</numberof>
+					</structure>
+				</hlinscription>
+			</arc>
+			<arc id="arc4" source="TrainStable" target="StopTable">
+				<name>
+					<text>4</text>
+				</name>
+				<hlinscription>
+					<text>(1'((vartsp++,vards2)) + 1'((vartsp,vards)))</text>
+					<structure>
+						<add>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<successor>
+													<subterm>
+														<variable refvariable="vartsp"/>
+													</subterm>
+												</successor>
+											</subterm>
+											<subterm>
+												<variable refvariable="vards2"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+								<subterm>
+									<numberof>
+										<subterm>
+											<numberconstant value="1">
+												<positive/>
+											</numberconstant>
+										</subterm>
+										<subterm>
+											<tuple>
+												<subterm>
+													<variable refvariable="vartsp"/>
+												</subterm>
+												<subterm>
+													<variable refvariable="vards"/>
+												</subterm>
+											</tuple>
+										</subterm>
+									</numberof>
+								</subterm>
+							</add>
+					</structure>
+				</hlinscription>
+			</arc>
+			<arc id="arc5" source="TrainStable" target="NewDistTable">
+				<name>
+					<text>5</text>
+				</name>
+				<hlinscription>
+					<text>(1'((vardb,vartsp++,varda2)) + 1'((vardb,vartsp,varda)))</text>
+					<structure>
+						<add>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<variable refvariable="vardb"/>
+											</subterm>
+											<subterm>
+												<successor>
+													<subterm>
+														<variable refvariable="vartsp"/>
+													</subterm>
+												</successor>
+											</subterm>
+											<subterm>
+												<variable refvariable="varda2"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+								<subterm>
+									<numberof>
+										<subterm>
+											<numberconstant value="1">
+												<positive/>
+											</numberconstant>
+										</subterm>
+										<subterm>
+											<tuple>
+												<subterm>
+													<variable refvariable="vardb"/>
+												</subterm>
+												<subterm>
+													<variable refvariable="vartsp"/>
+												</subterm>
+												<subterm>
+													<variable refvariable="varda"/>
+												</subterm>
+											</tuple>
+										</subterm>
+									</numberof>
+								</subterm>
+							</add>
+					</structure>
+				</hlinscription>
+			</arc>
+			<arc id="arc6" source="TrainState" target="TrainDecc">
+				<name>
+					<text>6</text>
+				</name>
+				<hlinscription>
+					<text>1'((vartid,vartsp,vardb))</text>
+					<structure>
+						<numberof>
+							<subterm>
+								<numberconstant value="1">
+									<positive/>
+								</numberconstant>
+							</subterm>
+							<subterm>
+								<tuple>
+									<subterm>
+										<variable refvariable="vartid"/>
+									</subterm>
+									<subterm>
+										<variable refvariable="vartsp"/>
+									</subterm>
+									<subterm>
+										<variable refvariable="vardb"/>
+									</subterm>
+								</tuple>
+							</subterm>
+						</numberof>
+					</structure>
+				</hlinscription>
+			</arc>
+			<arc id="arc7" source="StopTable" target="TrainDecc">
+				<name>
+					<text>7</text>
+				</name>
+				<hlinscription>
+					<text>(1'((vartsp++,vards2)) + 1'((vartsp,vards)))</text>
+					<structure>
+						<add>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<successor>
+													<subterm>
+														<variable refvariable="vartsp"/>
+													</subterm>
+												</successor>
+											</subterm>
+											<subterm>
+												<variable refvariable="vards2"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+								<subterm>
+									<numberof>
+										<subterm>
+											<numberconstant value="1">
+												<positive/>
+											</numberconstant>
+										</subterm>
+										<subterm>
+											<tuple>
+												<subterm>
+													<variable refvariable="vartsp"/>
+												</subterm>
+												<subterm>
+													<variable refvariable="vards"/>
+												</subterm>
+											</tuple>
+										</subterm>
+									</numberof>
+								</subterm>
+							</add>
+					</structure>
+				</hlinscription>
+			</arc>
+			<arc id="arc8" source="NewDistTable" target="TrainDecc">
+				<name>
+					<text>8</text>
+				</name>
+				<hlinscription>
+					<text>(1'((vardb,vartsp++,varda2)) + 1'((vardb,vartsp,varda)))</text>
+					<structure>
+						<add>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<variable refvariable="vardb"/>
+											</subterm>
+											<subterm>
+												<successor>
+													<subterm>
+														<variable refvariable="vartsp"/>
+													</subterm>
+												</successor>
+											</subterm>
+											<subterm>
+												<variable refvariable="varda2"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+								<subterm>
+									<numberof>
+										<subterm>
+											<numberconstant value="1">
+												<positive/>
+											</numberconstant>
+										</subterm>
+										<subterm>
+											<tuple>
+												<subterm>
+													<variable refvariable="vardb"/>
+												</subterm>
+												<subterm>
+													<variable refvariable="vartsp"/>
+												</subterm>
+												<subterm>
+													<variable refvariable="varda"/>
+												</subterm>
+											</tuple>
+										</subterm>
+									</numberof>
+								</subterm>
+							</add>
+					</structure>
+				</hlinscription>
+			</arc>
+			<arc id="arc9" source="TrainDecc" target="TrainState">
+				<name>
+					<text>9</text>
+				</name>
+				<hlinscription>
+					<text>1'((vartid,vartsp--,varda))</text>
+					<structure>
+						<numberof>
+							<subterm>
+								<numberconstant value="1">
+									<positive/>
+								</numberconstant>
+							</subterm>
+							<subterm>
+								<tuple>
+									<subterm>
+										<variable refvariable="vartid"/>
+									</subterm>
+									<subterm>
+										<predecessor>
+											<subterm>
+												<variable refvariable="vartsp"/>
+											</subterm>
+										</predecessor>
+									</subterm>
+									<subterm>
+										<variable refvariable="varda"/>
+									</subterm>
+								</tuple>
+							</subterm>
+						</numberof>
+					</structure>
+				</hlinscription>
+			</arc>
+			<arc id="arc10" source="TrainDecc" target="StopTable">
+				<name>
+					<text>10</text>
+				</name>
+				<hlinscription>
+					<text>(1'((vartsp++,vards2)) + 1'((vartsp,vards)))</text>
+					<structure>
+						<add>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<successor>
+													<subterm>
+														<variable refvariable="vartsp"/>
+													</subterm>
+												</successor>
+											</subterm>
+											<subterm>
+												<variable refvariable="vards2"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+								<subterm>
+									<numberof>
+										<subterm>
+											<numberconstant value="1">
+												<positive/>
+											</numberconstant>
+										</subterm>
+										<subterm>
+											<tuple>
+												<subterm>
+													<variable refvariable="vartsp"/>
+												</subterm>
+												<subterm>
+													<variable refvariable="vards"/>
+												</subterm>
+											</tuple>
+										</subterm>
+									</numberof>
+								</subterm>
+							</add>
+					</structure>
+				</hlinscription>
+			</arc>
+			<arc id="arc11" source="TrainDecc" target="NewDistTable">
+				<name>
+					<text>11</text>
+				</name>
+				<hlinscription>
+					<text>(1'((vardb,vartsp++,varda2)) + 1'((vardb,vartsp,varda)))</text>
+					<structure>
+						<add>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<variable refvariable="vardb"/>
+											</subterm>
+											<subterm>
+												<successor>
+													<subterm>
+														<variable refvariable="vartsp"/>
+													</subterm>
+												</successor>
+											</subterm>
+											<subterm>
+												<variable refvariable="varda2"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+								<subterm>
+									<numberof>
+										<subterm>
+											<numberconstant value="1">
+												<positive/>
+											</numberconstant>
+										</subterm>
+										<subterm>
+											<tuple>
+												<subterm>
+													<variable refvariable="vardb"/>
+												</subterm>
+												<subterm>
+													<variable refvariable="vartsp"/>
+												</subterm>
+												<subterm>
+													<variable refvariable="varda"/>
+												</subterm>
+											</tuple>
+										</subterm>
+									</numberof>
+								</subterm>
+							</add>
+					</structure>
+				</hlinscription>
+			</arc>
+			<arc id="arc12" source="TrainState" target="TrainAcc">
+				<name>
+					<text>12</text>
+				</name>
+				<hlinscription>
+					<text>1'((vartid,vartsp,vardb))</text>
+					<structure>
+						<numberof>
+							<subterm>
+								<numberconstant value="1">
+									<positive/>
+								</numberconstant>
+							</subterm>
+							<subterm>
+								<tuple>
+									<subterm>
+										<variable refvariable="vartid"/>
+									</subterm>
+									<subterm>
+										<variable refvariable="vartsp"/>
+									</subterm>
+									<subterm>
+										<variable refvariable="vardb"/>
+									</subterm>
+								</tuple>
+							</subterm>
+						</numberof>
+					</structure>
+				</hlinscription>
+			</arc>
+			<arc id="arc13" source="StopTable" target="TrainAcc">
+				<name>
+					<text>13</text>
+				</name>
+				<hlinscription>
+					<text>1'((vartsp++,vards2))</text>
+					<structure>
+						<numberof>
+							<subterm>
+								<numberconstant value="1">
+									<positive/>
+								</numberconstant>
+							</subterm>
+							<subterm>
+								<tuple>
+									<subterm>
+										<successor>
+											<subterm>
+												<variable refvariable="vartsp"/>
+											</subterm>
+										</successor>
+									</subterm>
+									<subterm>
+										<variable refvariable="vards2"/>
+									</subterm>
+								</tuple>
+							</subterm>
+						</numberof>
+					</structure>
+				</hlinscription>
+			</arc>
+			<arc id="arc14" source="NewDistTable" target="TrainAcc">
+				<name>
+					<text>14</text>
+				</name>
+				<hlinscription>
+					<text>(1'((vardb,vartsp++,varda2)) + 1'((vardb,vartsp,varda)))</text>
+					<structure>
+						<add>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<variable refvariable="vardb"/>
+											</subterm>
+											<subterm>
+												<successor>
+													<subterm>
+														<variable refvariable="vartsp"/>
+													</subterm>
+												</successor>
+											</subterm>
+											<subterm>
+												<variable refvariable="varda2"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+								<subterm>
+									<numberof>
+										<subterm>
+											<numberconstant value="1">
+												<positive/>
+											</numberconstant>
+										</subterm>
+										<subterm>
+											<tuple>
+												<subterm>
+													<variable refvariable="vardb"/>
+												</subterm>
+												<subterm>
+													<variable refvariable="vartsp"/>
+												</subterm>
+												<subterm>
+													<variable refvariable="varda"/>
+												</subterm>
+											</tuple>
+										</subterm>
+									</numberof>
+								</subterm>
+							</add>
+					</structure>
+				</hlinscription>
+			</arc>
+			<arc id="arc15" source="TrainAcc" target="TrainState">
+				<name>
+					<text>15</text>
+				</name>
+				<hlinscription>
+					<text>1'((vartid,vartsp++,varda))</text>
+					<structure>
+						<numberof>
+							<subterm>
+								<numberconstant value="1">
+									<positive/>
+								</numberconstant>
+							</subterm>
+							<subterm>
+								<tuple>
+									<subterm>
+										<variable refvariable="vartid"/>
+									</subterm>
+									<subterm>
+										<successor>
+											<subterm>
+												<variable refvariable="vartsp"/>
+											</subterm>
+										</successor>
+									</subterm>
+									<subterm>
+										<variable refvariable="varda"/>
+									</subterm>
+								</tuple>
+							</subterm>
+						</numberof>
+					</structure>
+				</hlinscription>
+			</arc>
+			<arc id="arc16" source="TrainAcc" target="StopTable">
+				<name>
+					<text>16</text>
+				</name>
+				<hlinscription>
+					<text>1'((vartsp++,vards2))</text>
+					<structure>
+						<numberof>
+							<subterm>
+								<numberconstant value="1">
+									<positive/>
+								</numberconstant>
+							</subterm>
+							<subterm>
+								<tuple>
+									<subterm>
+										<successor>
+											<subterm>
+												<variable refvariable="vartsp"/>
+											</subterm>
+										</successor>
+									</subterm>
+									<subterm>
+										<variable refvariable="vards2"/>
+									</subterm>
+								</tuple>
+							</subterm>
+						</numberof>
+					</structure>
+				</hlinscription>
+			</arc>
+			<arc id="arc17" source="TrainAcc" target="NewDistTable">
+				<name>
+					<text>17</text>
+				</name>
+				<hlinscription>
+					<text>(1'((vardb,vartsp++,varda2)) + 1'((vardb,vartsp,varda)))</text>
+					<structure>
+						<add>
+							<subterm>
+								<numberof>
+									<subterm>
+										<numberconstant value="1">
+											<positive/>
+										</numberconstant>
+									</subterm>
+									<subterm>
+										<tuple>
+											<subterm>
+												<variable refvariable="vardb"/>
+											</subterm>
+											<subterm>
+												<successor>
+													<subterm>
+														<variable refvariable="vartsp"/>
+													</subterm>
+												</successor>
+											</subterm>
+											<subterm>
+												<variable refvariable="varda2"/>
+											</subterm>
+										</tuple>
+									</subterm>
+								</numberof>
+							</subterm>
+								<subterm>
+									<numberof>
+										<subterm>
+											<numberconstant value="1">
+												<positive/>
+											</numberconstant>
+										</subterm>
+										<subterm>
+											<tuple>
+												<subterm>
+													<variable refvariable="vardb"/>
+												</subterm>
+												<subterm>
+													<variable refvariable="vartsp"/>
+												</subterm>
+												<subterm>
+													<variable refvariable="varda"/>
+												</subterm>
+											</tuple>
+										</subterm>
+									</numberof>
+								</subterm>
+							</add>
+					</structure>
+				</hlinscription>
+			</arc>
+			<arc id="arc18" source="TrainState" target="TooEarly">
+				<name>
+					<text>18</text>
+				</name>
+				<hlinscription>
+					<text>1'((vartid,vartsp,vardb))</text>
+					<structure>
+						<numberof>
+							<subterm>
+								<numberconstant value="1">
+									<positive/>
+								</numberconstant>
+							</subterm>
+							<subterm>
+								<tuple>
+									<subterm>
+										<variable refvariable="vartid"/>
+									</subterm>
+									<subterm>
+										<variable refvariable="vartsp"/>
+									</subterm>
+									<subterm>
+										<variable refvariable="vardb"/>
+									</subterm>
+								</tuple>
+							</subterm>
+						</numberof>
+					</structure>
+				</hlinscription>
+			</arc>
+			<arc id="arc19" source="TrainState" target="MissStation">
+				<name>
+					<text>19</text>
+				</name>
+				<hlinscription>
+					<text>1'((vartid,vartsp,vardb))</text>
+					<structure>
+						<numberof>
+							<subterm>
+								<numberconstant value="1">
+									<positive/>
+								</numberconstant>
+							</subterm>
+							<subterm>
+								<tuple>
+									<subterm>
+										<variable refvariable="vartid"/>
+									</subterm>
+									<subterm>
+										<variable refvariable="vartsp"/>
+									</subterm>
+									<subterm>
+										<variable refvariable="vardb"/>
+									</subterm>
+								</tuple>
+							</subterm>
+						</numberof>
+					</structure>
+				</hlinscription>
+			</arc>
+			<arc id="arc20" source="DistStation" target="AtStation">
+				<name>
+					<text>20</text>
+				</name>
+				<hlinscription>
+					<text>1'(varda)</text>
+					<structure>
+						<numberof>
+							<subterm>
+								<numberconstant value="1">
+									<positive/>
+								</numberconstant>
+							</subterm>
+							<subterm>
+								<variable refvariable="varda"/>
+							</subterm>
+						</numberof>
+					</structure>
+				</hlinscription>
+			</arc>
+			<arc id="arc21" source="TrainState" target="AtStation">
+				<name>
+					<text>21</text>
+				</name>
+				<hlinscription>
+					<text>1'((vartid,speed0,distance0))</text>
+					<structure>
+						<numberof>
+							<subterm>
+								<numberconstant value="1">
+									<positive/>
+								</numberconstant>
+							</subterm>
+							<subterm>
+								<tuple>
+									<subterm>
+										<variable refvariable="vartid"/>
+									</subterm>
+									<subterm>
+										<useroperator declaration="speed0"/>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance0"/>
+									</subterm>
+								</tuple>
+							</subterm>
+						</numberof>
+					</structure>
+				</hlinscription>
+			</arc>
+			<arc id="arc22" source="AtStation" target="DistStation">
+				<name>
+					<text>22</text>
+				</name>
+				<hlinscription>
+					<text>1'(varda)</text>
+					<structure>
+						<numberof>
+							<subterm>
+								<numberconstant value="1">
+									<positive/>
+								</numberconstant>
+							</subterm>
+							<subterm>
+								<variable refvariable="varda"/>
+							</subterm>
+						</numberof>
+					</structure>
+				</hlinscription>
+			</arc>
+			<arc id="arc23" source="AtStation" target="TrainState">
+				<name>
+					<text>23</text>
+				</name>
+				<hlinscription>
+					<text>1'((vartid,speed1,varda))</text>
+					<structure>
+						<numberof>
+							<subterm>
+								<numberconstant value="1">
+									<positive/>
+								</numberconstant>
+							</subterm>
+							<subterm>
+								<tuple>
+									<subterm>
+										<variable refvariable="vartid"/>
+									</subterm>
+									<subterm>
+										<useroperator declaration="speed1"/>
+									</subterm>
+									<subterm>
+										<variable refvariable="varda"/>
+									</subterm>
+								</tuple>
+							</subterm>
+						</numberof>
+					</structure>
+				</hlinscription>
+			</arc>
+			<arc id="arc24" source="TrainState" target="TrainStop">
+				<name>
+					<text>24</text>
+				</name>
+				<hlinscription>
+					<text>1'((vartid,speed1,distance1))</text>
+					<structure>
+						<numberof>
+							<subterm>
+								<numberconstant value="1">
+									<positive/>
+								</numberconstant>
+							</subterm>
+							<subterm>
+								<tuple>
+									<subterm>
+										<variable refvariable="vartid"/>
+									</subterm>
+									<subterm>
+										<useroperator declaration="speed1"/>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance1"/>
+									</subterm>
+								</tuple>
+							</subterm>
+						</numberof>
+					</structure>
+				</hlinscription>
+			</arc>
+			<arc id="arc25" source="TrainStop" target="TrainState">
+				<name>
+					<text>25</text>
+				</name>
+				<hlinscription>
+					<text>1'((vartid,speed0,distance0))</text>
+					<structure>
+						<numberof>
+							<subterm>
+								<numberconstant value="1">
+									<positive/>
+								</numberconstant>
+							</subterm>
+							<subterm>
+								<tuple>
+									<subterm>
+										<variable refvariable="vartid"/>
+									</subterm>
+									<subterm>
+										<useroperator declaration="speed0"/>
+									</subterm>
+									<subterm>
+										<useroperator declaration="distance0"/>
+									</subterm>
+								</tuple>
+							</subterm>
+						</numberof>
+					</structure>
+				</hlinscription>
+			</arc>
+		</page>
+	</net>
+</pnml>

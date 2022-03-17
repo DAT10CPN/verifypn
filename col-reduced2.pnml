@@ -7,6 +7,15 @@
 			<structure>
 				<declarations>
 					<!-- Declaration of user-defined color classes (sorts) -->
+					<namedsort id="Cli" name="Cli">
+						<finiteintrange start="1" end="8"/>
+					</namedsort>
+					<namedsort id="Z" name="Z">
+						<finiteintrange start="1" end="2"/>
+					</namedsort>
+					<namedsort id="dot" name="dot">
+						<dot/>
+					</namedsort>
 					<namedsort id="CxZxZ" name="CxZxZ">
 						<productsort>
 							<usersort declaration="Cli"/>
@@ -20,17 +29,11 @@
 							<usersort declaration="Z"/>
 						</productsort>
 					</namedsort>
-					<namedsort id="Cli" name="Cli">
-						<finiteintrange start="1" end="8"/>
-					</namedsort>
 					<namedsort id="ZxZ" name="ZxZ">
 						<productsort>
 							<usersort declaration="Z"/>
 							<usersort declaration="Z"/>
 						</productsort>
-					</namedsort>
-					<namedsort id="Z" name="Z">
-						<finiteintrange start="1" end="2"/>
 					</namedsort>
 					<namedsort id="AxZ1xZ" name="AxZ1xZ">
 						<productsort>
@@ -38,9 +41,6 @@
 							<usersort declaration="Z"/>
 							<usersort declaration="Z"/>
 						</productsort>
-					</namedsort>
-					<namedsort id="dot" name="dot">
-						<dot/>
 					</namedsort>
 					<!-- Declaration of user-defined color variables -->
 					<variabledecl id="a" name="a">
@@ -60,175 +60,6 @@
 			<name>
 				<text>DefaultPage</text>
 			</name>
-			<!-- List of transitions -->
-			<transition id="calls">
-				<name>
-					<text>calls</text>
-				</name>
-				<graphics>
-					<position x="185" y="30"/>
-				</graphics>
-				<condition>
-					<text>placeholde text</text>
-					<structure>
-						cool guard expression visitor here
-					</structure>
-				</condition>
-			</transition>
-			<transition id="assignSameZone">
-				<name>
-					<text>assignSameZone</text>
-				</name>
-				<graphics>
-					<position x="238" y="180"/>
-				</graphics>
-				<condition>
-					<text>placeholde text</text>
-					<structure>
-						cool guard expression visitor here
-					</structure>
-				</condition>
-			</transition>
-			<transition id="assignNearZone">
-				<name>
-					<text>assignNearZone</text>
-				</name>
-				<graphics>
-					<position x="298" y="200"/>
-				</graphics>
-				<condition>
-					<text>placeholde text</text>
-					<structure>
-						cool guard expression visitor here
-					</structure>
-				</condition>
-			</transition>
-			<transition id="move_between_Municipalities">
-				<name>
-					<text>move_between_Municipalities</text>
-				</name>
-				<graphics>
-					<position x="285" y="310"/>
-				</graphics>
-				<condition>
-					<text>placeholde text</text>
-					<structure>
-						cool guard expression visitor here
-					</structure>
-				</condition>
-			</transition>
-			<transition id="reachLocation">
-				<name>
-					<text>reachLocation</text>
-				</name>
-				<graphics>
-					<position x="235" y="295"/>
-				</graphics>
-				<condition>
-					<text>placeholde text</text>
-					<structure>
-						cool guard expression visitor here
-					</structure>
-				</condition>
-			</transition>
-			<transition id="securing">
-				<name>
-					<text>securing</text>
-				</name>
-				<graphics>
-					<position x="155" y="410"/>
-				</graphics>
-				<condition>
-					<text>placeholde text</text>
-					<structure>
-						cool guard expression visitor here
-					</structure>
-				</condition>
-			</transition>
-			<transition id="assignMunicipality">
-				<name>
-					<text>assignMunicipality</text>
-				</name>
-				<graphics>
-					<position x="238" y="60"/>
-				</graphics>
-				<condition>
-					<text>placeholde text</text>
-					<structure>
-						cool guard expression visitor here
-					</structure>
-				</condition>
-			</transition>
-			<transition id="assignFar">
-				<name>
-					<text>assignFar</text>
-				</name>
-				<graphics>
-					<position x="378" y="230"/>
-				</graphics>
-				<condition>
-					<text>placeholde text</text>
-					<structure>
-						cool guard expression visitor here
-					</structure>
-				</condition>
-			</transition>
-			<transition id="end">
-				<name>
-					<text>end</text>
-				</name>
-				<graphics>
-					<position x="108" y="350"/>
-				</graphics>
-				<condition>
-					<text>placeholde text</text>
-					<structure>
-						cool guard expression visitor here
-					</structure>
-				</condition>
-			</transition>
-			<transition id="Timeout">
-				<name>
-					<text>Timeout</text>
-				</name>
-				<graphics>
-					<position x="105" y="150"/>
-				</graphics>
-				<condition>
-					<text>placeholde text</text>
-					<structure>
-						cool guard expression visitor here
-					</structure>
-				</condition>
-			</transition>
-			<transition id="timeout">
-				<name>
-					<text>timeout</text>
-				</name>
-				<graphics>
-					<position x="198" y="370"/>
-				</graphics>
-				<condition>
-					<text>placeholde text</text>
-					<structure>
-						cool guard expression visitor here
-					</structure>
-				</condition>
-			</transition>
-			<transition id="securingInTime">
-				<name>
-					<text>securingInTime</text>
-				</name>
-				<graphics>
-					<position x="278" y="370"/>
-				</graphics>
-				<condition>
-					<text>placeholde text</text>
-					<structure>
-						cool guard expression visitor here
-					</structure>
-				</condition>
-			</transition>
 			<!-- List of places -->
 			<place id="IdleTechs">
 				<name>
@@ -243,12 +74,6 @@
 						<usersort declaration="Z"/>
 					</structure>
 				</type>
-				<hlinitialMarking>
-					<text>get the tokens here</text>
-					<structure>
-						cool visitor color expression here
-					</structure>
-				</hlinitialMarking>
 			</place>
 			<place id="Clients">
 				<name>
@@ -263,12 +88,6 @@
 						<usersort declaration="Cli"/>
 					</structure>
 				</type>
-				<hlinitialMarking>
-					<text>get the tokens here</text>
-					<structure>
-						cool visitor color expression here
-					</structure>
-				</hlinitialMarking>
 			</place>
 			<place id="OpenRequests">
 				<name>
@@ -283,12 +102,6 @@
 						<usersort declaration="CxZ"/>
 					</structure>
 				</type>
-				<hlinitialMarking>
-					<text>get the tokens here</text>
-					<structure>
-						cool visitor color expression here
-					</structure>
-				</hlinitialMarking>
 			</place>
 			<place id="Assigned">
 				<name>
@@ -303,12 +116,6 @@
 						<usersort declaration="CxZ"/>
 					</structure>
 				</type>
-				<hlinitialMarking>
-					<text>get the tokens here</text>
-					<structure>
-						cool visitor color expression here
-					</structure>
-				</hlinitialMarking>
 			</place>
 			<place id="MovetoZ">
 				<name>
@@ -323,12 +130,6 @@
 						<usersort declaration="CxZxZ"/>
 					</structure>
 				</type>
-				<hlinitialMarking>
-					<text>get the tokens here</text>
-					<structure>
-						cool visitor color expression here
-					</structure>
-				</hlinitialMarking>
 			</place>
 			<place id="StartSecuring">
 				<name>
@@ -343,12 +144,6 @@
 						<usersort declaration="CxZ"/>
 					</structure>
 				</type>
-				<hlinitialMarking>
-					<text>get the tokens here</text>
-					<structure>
-						cool visitor color expression here
-					</structure>
-				</hlinitialMarking>
 			</place>
 			<place id="ControlRoomDispatch">
 				<name>
@@ -363,12 +158,6 @@
 						<usersort declaration="Cli"/>
 					</structure>
 				</type>
-				<hlinitialMarking>
-					<text>get the tokens here</text>
-					<structure>
-						cool visitor color expression here
-					</structure>
-				</hlinitialMarking>
 			</place>
 			<place id="Idles">
 				<name>
@@ -383,12 +172,6 @@
 						<usersort declaration="dot"/>
 					</structure>
 				</type>
-				<hlinitialMarking>
-					<text>get the tokens here</text>
-					<structure>
-						cool visitor color expression here
-					</structure>
-				</hlinitialMarking>
 			</place>
 			<place id="NumClientsReq">
 				<name>
@@ -403,12 +186,6 @@
 						<usersort declaration="dot"/>
 					</structure>
 				</type>
-				<hlinitialMarking>
-					<text>get the tokens here</text>
-					<structure>
-						cool visitor color expression here
-					</structure>
-				</hlinitialMarking>
 			</place>
 			<place id="Finished">
 				<name>
@@ -423,12 +200,6 @@
 						<usersort declaration="Cli"/>
 					</structure>
 				</type>
-				<hlinitialMarking>
-					<text>get the tokens here</text>
-					<structure>
-						cool visitor color expression here
-					</structure>
-				</hlinitialMarking>
 			</place>
 			<place id="ClientsWaiting">
 				<name>
@@ -443,12 +214,6 @@
 						<usersort declaration="Cli"/>
 					</structure>
 				</type>
-				<hlinitialMarking>
-					<text>get the tokens here</text>
-					<structure>
-						cool visitor color expression here
-					</structure>
-				</hlinitialMarking>
 			</place>
 			<place id="ClientsTimeout">
 				<name>
@@ -463,12 +228,6 @@
 						<usersort declaration="Cli"/>
 					</structure>
 				</type>
-				<hlinitialMarking>
-					<text>get the tokens here</text>
-					<structure>
-						cool visitor color expression here
-					</structure>
-				</hlinitialMarking>
 			</place>
 			<place id="DoSecuring">
 				<name>
@@ -483,21 +242,125 @@
 						<usersort declaration="CxZ"/>
 					</structure>
 				</type>
-				<hlinitialMarking>
-					<text>get the tokens here</text>
-					<structure>
-						cool visitor color expression here
-					</structure>
-				</hlinitialMarking>
 			</place>
+			<!-- List of transitions -->
+			<transition id="calls">
+				<name>
+					<text>calls</text>
+				</name>
+				<graphics>
+					<position x="185" y="30"/>
+				</graphics>
+			</transition>
+			<transition id="assignSameZone">
+				<name>
+					<text>assignSameZone</text>
+				</name>
+				<graphics>
+					<position x="238" y="180"/>
+				</graphics>
+			</transition>
+			<transition id="assignNearZone">
+				<name>
+					<text>assignNearZone</text>
+				</name>
+				<graphics>
+					<position x="298" y="200"/>
+				</graphics>
+			</transition>
+			<transition id="move_between_Municipalities">
+				<name>
+					<text>move_between_Municipalities</text>
+				</name>
+				<graphics>
+					<position x="285" y="310"/>
+				</graphics>
+			</transition>
+			<transition id="reachLocation">
+				<name>
+					<text>reachLocation</text>
+				</name>
+				<graphics>
+					<position x="235" y="295"/>
+				</graphics>
+			</transition>
+			<transition id="securing">
+				<name>
+					<text>securing</text>
+				</name>
+				<graphics>
+					<position x="155" y="410"/>
+				</graphics>
+			</transition>
+			<transition id="assignMunicipality">
+				<name>
+					<text>assignMunicipality</text>
+				</name>
+				<graphics>
+					<position x="238" y="60"/>
+				</graphics>
+			</transition>
+			<transition id="assignFar">
+				<name>
+					<text>assignFar</text>
+				</name>
+				<graphics>
+					<position x="378" y="230"/>
+				</graphics>
+			</transition>
+			<transition id="end">
+				<name>
+					<text>end</text>
+				</name>
+				<graphics>
+					<position x="108" y="350"/>
+				</graphics>
+			</transition>
+			<transition id="Timeout">
+				<name>
+					<text>Timeout</text>
+				</name>
+				<graphics>
+					<position x="105" y="150"/>
+				</graphics>
+			</transition>
+			<transition id="timeout">
+				<name>
+					<text>timeout</text>
+				</name>
+				<graphics>
+					<position x="198" y="370"/>
+				</graphics>
+			</transition>
+			<transition id="securingInTime">
+				<name>
+					<text>securingInTime</text>
+				</name>
+				<graphics>
+					<position x="278" y="370"/>
+				</graphics>
+			</transition>
 			<!-- List of arcs -->
 			<arc id="arc0" source="Clients" target="calls">
 				<name>
 					<text>0</text>
 				</name>
 				<hlinscription>
-					<text>get the text for arcs here</text>
-					a cool arc expression visitor
+					<text>(1'(c))</text>
+					<structure>
+						<subterm>
+							<numberof>
+								<subterm>
+									<numberconstant value="1">
+										<positive/>
+									</numberconstant>
+								</subterm>
+								<subterm>
+									<variable refvariable="c"/>
+								</subterm>
+							</numberof>
+						</subterm>
+					</structure>
 				</hlinscription>
 			</arc>
 			<arc id="arc1" source="calls" target="NumClientsReq">
@@ -505,8 +368,19 @@
 					<text>1</text>
 				</name>
 				<hlinscription>
-					<text>get the text for arcs here</text>
-					a cool arc expression visitor
+					<text>1'(dot)</text>
+					<structure>
+						<numberof>
+							<subterm>
+								<numberconstant value="1">
+									<positive/>
+								</numberconstant>
+							</subterm>
+							<subterm>
+								<dotconstant/>
+							</subterm>
+						</numberof>
+					</structure>
 				</hlinscription>
 			</arc>
 			<arc id="arc2" source="calls" target="ControlRoomDispatch">
@@ -514,8 +388,21 @@
 					<text>2</text>
 				</name>
 				<hlinscription>
-					<text>get the text for arcs here</text>
-					a cool arc expression visitor
+					<text>(1'(c))</text>
+					<structure>
+						<subterm>
+							<numberof>
+								<subterm>
+									<numberconstant value="1">
+										<positive/>
+									</numberconstant>
+								</subterm>
+								<subterm>
+									<variable refvariable="c"/>
+								</subterm>
+							</numberof>
+						</subterm>
+					</structure>
 				</hlinscription>
 			</arc>
 			<arc id="arc3" source="calls" target="ClientsWaiting">
@@ -523,8 +410,21 @@
 					<text>3</text>
 				</name>
 				<hlinscription>
-					<text>get the text for arcs here</text>
-					a cool arc expression visitor
+					<text>(1'(c))</text>
+					<structure>
+						<subterm>
+							<numberof>
+								<subterm>
+									<numberconstant value="1">
+										<positive/>
+									</numberconstant>
+								</subterm>
+								<subterm>
+									<variable refvariable="c"/>
+								</subterm>
+							</numberof>
+						</subterm>
+					</structure>
 				</hlinscription>
 			</arc>
 			<arc id="arc4" source="OpenRequests" target="assignSameZone">
@@ -532,8 +432,28 @@
 					<text>4</text>
 				</name>
 				<hlinscription>
-					<text>get the text for arcs here</text>
-					a cool arc expression visitor
+					<text>(1'((c,a)))</text>
+					<structure>
+						<subterm>
+							<numberof>
+								<subterm>
+									<numberconstant value="1">
+										<positive/>
+									</numberconstant>
+								</subterm>
+								<subterm>
+									<tuple>
+										<subterm>
+											<variable refvariable="c"/>
+										</subterm>
+										<subterm>
+											<variable refvariable="a"/>
+										</subterm>
+									</tuple>
+								</subterm>
+							</numberof>
+						</subterm>
+					</structure>
 				</hlinscription>
 			</arc>
 			<arc id="arc5" source="IdleTechs" target="assignSameZone">
@@ -541,8 +461,21 @@
 					<text>5</text>
 				</name>
 				<hlinscription>
-					<text>get the text for arcs here</text>
-					a cool arc expression visitor
+					<text>(1'(a))</text>
+					<structure>
+						<subterm>
+							<numberof>
+								<subterm>
+									<numberconstant value="1">
+										<positive/>
+									</numberconstant>
+								</subterm>
+								<subterm>
+									<variable refvariable="a"/>
+								</subterm>
+							</numberof>
+						</subterm>
+					</structure>
 				</hlinscription>
 			</arc>
 			<arc id="arc6" source="Idles" target="assignSameZone">
@@ -550,8 +483,19 @@
 					<text>6</text>
 				</name>
 				<hlinscription>
-					<text>get the text for arcs here</text>
-					a cool arc expression visitor
+					<text>1'(dot)</text>
+					<structure>
+						<numberof>
+							<subterm>
+								<numberconstant value="1">
+									<positive/>
+								</numberconstant>
+							</subterm>
+							<subterm>
+								<dotconstant/>
+							</subterm>
+						</numberof>
+					</structure>
 				</hlinscription>
 			</arc>
 			<arc id="arc7" source="assignSameZone" target="Assigned">
@@ -559,8 +503,28 @@
 					<text>7</text>
 				</name>
 				<hlinscription>
-					<text>get the text for arcs here</text>
-					a cool arc expression visitor
+					<text>(1'((c,a)))</text>
+					<structure>
+						<subterm>
+							<numberof>
+								<subterm>
+									<numberconstant value="1">
+										<positive/>
+									</numberconstant>
+								</subterm>
+								<subterm>
+									<tuple>
+										<subterm>
+											<variable refvariable="c"/>
+										</subterm>
+										<subterm>
+											<variable refvariable="a"/>
+										</subterm>
+									</tuple>
+								</subterm>
+							</numberof>
+						</subterm>
+					</structure>
 				</hlinscription>
 			</arc>
 			<arc id="arc8" source="OpenRequests" target="assignNearZone">
@@ -568,8 +532,28 @@
 					<text>8</text>
 				</name>
 				<hlinscription>
-					<text>get the text for arcs here</text>
-					a cool arc expression visitor
+					<text>(1'((c,r)))</text>
+					<structure>
+						<subterm>
+							<numberof>
+								<subterm>
+									<numberconstant value="1">
+										<positive/>
+									</numberconstant>
+								</subterm>
+								<subterm>
+									<tuple>
+										<subterm>
+											<variable refvariable="c"/>
+										</subterm>
+										<subterm>
+											<variable refvariable="r"/>
+										</subterm>
+									</tuple>
+								</subterm>
+							</numberof>
+						</subterm>
+					</structure>
 				</hlinscription>
 			</arc>
 			<arc id="arc9" source="IdleTechs" target="assignNearZone">
@@ -577,8 +561,21 @@
 					<text>9</text>
 				</name>
 				<hlinscription>
-					<text>get the text for arcs here</text>
-					a cool arc expression visitor
+					<text>(1'(a))</text>
+					<structure>
+						<subterm>
+							<numberof>
+								<subterm>
+									<numberconstant value="1">
+										<positive/>
+									</numberconstant>
+								</subterm>
+								<subterm>
+									<variable refvariable="a"/>
+								</subterm>
+							</numberof>
+						</subterm>
+					</structure>
 				</hlinscription>
 			</arc>
 			<arc id="arc10" source="Idles" target="assignNearZone">
@@ -586,8 +583,19 @@
 					<text>10</text>
 				</name>
 				<hlinscription>
-					<text>get the text for arcs here</text>
-					a cool arc expression visitor
+					<text>1'(dot)</text>
+					<structure>
+						<numberof>
+							<subterm>
+								<numberconstant value="1">
+									<positive/>
+								</numberconstant>
+							</subterm>
+							<subterm>
+								<dotconstant/>
+							</subterm>
+						</numberof>
+					</structure>
 				</hlinscription>
 			</arc>
 			<arc id="arc11" source="assignNearZone" target="MovetoZ">
@@ -595,8 +603,31 @@
 					<text>11</text>
 				</name>
 				<hlinscription>
-					<text>get the text for arcs here</text>
-					a cool arc expression visitor
+					<text>(1'((c,a,r)))</text>
+					<structure>
+						<subterm>
+							<numberof>
+								<subterm>
+									<numberconstant value="1">
+										<positive/>
+									</numberconstant>
+								</subterm>
+								<subterm>
+									<tuple>
+										<subterm>
+											<variable refvariable="c"/>
+										</subterm>
+										<subterm>
+											<variable refvariable="a"/>
+										</subterm>
+										<subterm>
+											<variable refvariable="r"/>
+										</subterm>
+									</tuple>
+								</subterm>
+							</numberof>
+						</subterm>
+					</structure>
 				</hlinscription>
 			</arc>
 			<arc id="arc12" source="MovetoZ" target="move_between_Municipalities">
@@ -604,8 +635,31 @@
 					<text>12</text>
 				</name>
 				<hlinscription>
-					<text>get the text for arcs here</text>
-					a cool arc expression visitor
+					<text>(1'((c,a,r)))</text>
+					<structure>
+						<subterm>
+							<numberof>
+								<subterm>
+									<numberconstant value="1">
+										<positive/>
+									</numberconstant>
+								</subterm>
+								<subterm>
+									<tuple>
+										<subterm>
+											<variable refvariable="c"/>
+										</subterm>
+										<subterm>
+											<variable refvariable="a"/>
+										</subterm>
+										<subterm>
+											<variable refvariable="r"/>
+										</subterm>
+									</tuple>
+								</subterm>
+							</numberof>
+						</subterm>
+					</structure>
 				</hlinscription>
 			</arc>
 			<arc id="arc13" source="move_between_Municipalities" target="Assigned">
@@ -613,8 +667,28 @@
 					<text>13</text>
 				</name>
 				<hlinscription>
-					<text>get the text for arcs here</text>
-					a cool arc expression visitor
+					<text>(1'((c,r)))</text>
+					<structure>
+						<subterm>
+							<numberof>
+								<subterm>
+									<numberconstant value="1">
+										<positive/>
+									</numberconstant>
+								</subterm>
+								<subterm>
+									<tuple>
+										<subterm>
+											<variable refvariable="c"/>
+										</subterm>
+										<subterm>
+											<variable refvariable="r"/>
+										</subterm>
+									</tuple>
+								</subterm>
+							</numberof>
+						</subterm>
+					</structure>
 				</hlinscription>
 			</arc>
 			<arc id="arc14" source="Assigned" target="reachLocation">
@@ -622,8 +696,28 @@
 					<text>14</text>
 				</name>
 				<hlinscription>
-					<text>get the text for arcs here</text>
-					a cool arc expression visitor
+					<text>(1'((c,r)))</text>
+					<structure>
+						<subterm>
+							<numberof>
+								<subterm>
+									<numberconstant value="1">
+										<positive/>
+									</numberconstant>
+								</subterm>
+								<subterm>
+									<tuple>
+										<subterm>
+											<variable refvariable="c"/>
+										</subterm>
+										<subterm>
+											<variable refvariable="r"/>
+										</subterm>
+									</tuple>
+								</subterm>
+							</numberof>
+						</subterm>
+					</structure>
 				</hlinscription>
 			</arc>
 			<arc id="arc15" source="reachLocation" target="StartSecuring">
@@ -631,8 +725,28 @@
 					<text>15</text>
 				</name>
 				<hlinscription>
-					<text>get the text for arcs here</text>
-					a cool arc expression visitor
+					<text>(1'((c,r)))</text>
+					<structure>
+						<subterm>
+							<numberof>
+								<subterm>
+									<numberconstant value="1">
+										<positive/>
+									</numberconstant>
+								</subterm>
+								<subterm>
+									<tuple>
+										<subterm>
+											<variable refvariable="c"/>
+										</subterm>
+										<subterm>
+											<variable refvariable="r"/>
+										</subterm>
+									</tuple>
+								</subterm>
+							</numberof>
+						</subterm>
+					</structure>
 				</hlinscription>
 			</arc>
 			<arc id="arc16" source="DoSecuring" target="securing">
@@ -640,8 +754,28 @@
 					<text>16</text>
 				</name>
 				<hlinscription>
-					<text>get the text for arcs here</text>
-					a cool arc expression visitor
+					<text>(1'((c,r)))</text>
+					<structure>
+						<subterm>
+							<numberof>
+								<subterm>
+									<numberconstant value="1">
+										<positive/>
+									</numberconstant>
+								</subterm>
+								<subterm>
+									<tuple>
+										<subterm>
+											<variable refvariable="c"/>
+										</subterm>
+										<subterm>
+											<variable refvariable="r"/>
+										</subterm>
+									</tuple>
+								</subterm>
+							</numberof>
+						</subterm>
+					</structure>
 				</hlinscription>
 			</arc>
 			<arc id="arc17" source="NumClientsReq" target="securing">
@@ -649,8 +783,19 @@
 					<text>17</text>
 				</name>
 				<hlinscription>
-					<text>get the text for arcs here</text>
-					a cool arc expression visitor
+					<text>1'(dot)</text>
+					<structure>
+						<numberof>
+							<subterm>
+								<numberconstant value="1">
+									<positive/>
+								</numberconstant>
+							</subterm>
+							<subterm>
+								<dotconstant/>
+							</subterm>
+						</numberof>
+					</structure>
 				</hlinscription>
 			</arc>
 			<arc id="arc18" source="securing" target="IdleTechs">
@@ -658,8 +803,21 @@
 					<text>18</text>
 				</name>
 				<hlinscription>
-					<text>get the text for arcs here</text>
-					a cool arc expression visitor
+					<text>(1'(r))</text>
+					<structure>
+						<subterm>
+							<numberof>
+								<subterm>
+									<numberconstant value="1">
+										<positive/>
+									</numberconstant>
+								</subterm>
+								<subterm>
+									<variable refvariable="r"/>
+								</subterm>
+							</numberof>
+						</subterm>
+					</structure>
 				</hlinscription>
 			</arc>
 			<arc id="arc19" source="securing" target="Finished">
@@ -667,8 +825,21 @@
 					<text>19</text>
 				</name>
 				<hlinscription>
-					<text>get the text for arcs here</text>
-					a cool arc expression visitor
+					<text>(1'(c))</text>
+					<structure>
+						<subterm>
+							<numberof>
+								<subterm>
+									<numberconstant value="1">
+										<positive/>
+									</numberconstant>
+								</subterm>
+								<subterm>
+									<variable refvariable="c"/>
+								</subterm>
+							</numberof>
+						</subterm>
+					</structure>
 				</hlinscription>
 			</arc>
 			<arc id="arc20" source="ControlRoomDispatch" target="assignMunicipality">
@@ -676,8 +847,21 @@
 					<text>20</text>
 				</name>
 				<hlinscription>
-					<text>get the text for arcs here</text>
-					a cool arc expression visitor
+					<text>(1'(c))</text>
+					<structure>
+						<subterm>
+							<numberof>
+								<subterm>
+									<numberconstant value="1">
+										<positive/>
+									</numberconstant>
+								</subterm>
+								<subterm>
+									<variable refvariable="c"/>
+								</subterm>
+							</numberof>
+						</subterm>
+					</structure>
 				</hlinscription>
 			</arc>
 			<arc id="arc21" source="assignMunicipality" target="OpenRequests">
@@ -685,8 +869,28 @@
 					<text>21</text>
 				</name>
 				<hlinscription>
-					<text>get the text for arcs here</text>
-					a cool arc expression visitor
+					<text>(1'((c,r)))</text>
+					<structure>
+						<subterm>
+							<numberof>
+								<subterm>
+									<numberconstant value="1">
+										<positive/>
+									</numberconstant>
+								</subterm>
+								<subterm>
+									<tuple>
+										<subterm>
+											<variable refvariable="c"/>
+										</subterm>
+										<subterm>
+											<variable refvariable="r"/>
+										</subterm>
+									</tuple>
+								</subterm>
+							</numberof>
+						</subterm>
+					</structure>
 				</hlinscription>
 			</arc>
 			<arc id="arc22" source="OpenRequests" target="assignFar">
@@ -694,8 +898,28 @@
 					<text>22</text>
 				</name>
 				<hlinscription>
-					<text>get the text for arcs here</text>
-					a cool arc expression visitor
+					<text>(1'((c,r)))</text>
+					<structure>
+						<subterm>
+							<numberof>
+								<subterm>
+									<numberconstant value="1">
+										<positive/>
+									</numberconstant>
+								</subterm>
+								<subterm>
+									<tuple>
+										<subterm>
+											<variable refvariable="c"/>
+										</subterm>
+										<subterm>
+											<variable refvariable="r"/>
+										</subterm>
+									</tuple>
+								</subterm>
+							</numberof>
+						</subterm>
+					</structure>
 				</hlinscription>
 			</arc>
 			<arc id="arc23" source="IdleTechs" target="assignFar">
@@ -703,8 +927,21 @@
 					<text>23</text>
 				</name>
 				<hlinscription>
-					<text>get the text for arcs here</text>
-					a cool arc expression visitor
+					<text>(1'(a))</text>
+					<structure>
+						<subterm>
+							<numberof>
+								<subterm>
+									<numberconstant value="1">
+										<positive/>
+									</numberconstant>
+								</subterm>
+								<subterm>
+									<variable refvariable="a"/>
+								</subterm>
+							</numberof>
+						</subterm>
+					</structure>
 				</hlinscription>
 			</arc>
 			<arc id="arc24" source="Idles" target="assignFar">
@@ -712,8 +949,19 @@
 					<text>24</text>
 				</name>
 				<hlinscription>
-					<text>get the text for arcs here</text>
-					a cool arc expression visitor
+					<text>1'(dot)</text>
+					<structure>
+						<numberof>
+							<subterm>
+								<numberconstant value="1">
+									<positive/>
+								</numberconstant>
+							</subterm>
+							<subterm>
+								<dotconstant/>
+							</subterm>
+						</numberof>
+					</structure>
 				</hlinscription>
 			</arc>
 			<arc id="arc25" source="assignFar" target="MovetoZ">
@@ -721,8 +969,31 @@
 					<text>25</text>
 				</name>
 				<hlinscription>
-					<text>get the text for arcs here</text>
-					a cool arc expression visitor
+					<text>(1'((c,a,r)))</text>
+					<structure>
+						<subterm>
+							<numberof>
+								<subterm>
+									<numberconstant value="1">
+										<positive/>
+									</numberconstant>
+								</subterm>
+								<subterm>
+									<tuple>
+										<subterm>
+											<variable refvariable="c"/>
+										</subterm>
+										<subterm>
+											<variable refvariable="a"/>
+										</subterm>
+										<subterm>
+											<variable refvariable="r"/>
+										</subterm>
+									</tuple>
+								</subterm>
+							</numberof>
+						</subterm>
+					</structure>
 				</hlinscription>
 			</arc>
 			<arc id="arc26" source="Finished" target="end">
@@ -730,8 +1001,21 @@
 					<text>26</text>
 				</name>
 				<hlinscription>
-					<text>get the text for arcs here</text>
-					a cool arc expression visitor
+					<text>(1'(c))</text>
+					<structure>
+						<subterm>
+							<numberof>
+								<subterm>
+									<numberconstant value="1">
+										<positive/>
+									</numberconstant>
+								</subterm>
+								<subterm>
+									<variable refvariable="c"/>
+								</subterm>
+							</numberof>
+						</subterm>
+					</structure>
 				</hlinscription>
 			</arc>
 			<arc id="arc27" source="end" target="Idles">
@@ -739,8 +1023,19 @@
 					<text>27</text>
 				</name>
 				<hlinscription>
-					<text>get the text for arcs here</text>
-					a cool arc expression visitor
+					<text>1'(dot)</text>
+					<structure>
+						<numberof>
+							<subterm>
+								<numberconstant value="1">
+									<positive/>
+								</numberconstant>
+							</subterm>
+							<subterm>
+								<dotconstant/>
+							</subterm>
+						</numberof>
+					</structure>
 				</hlinscription>
 			</arc>
 			<arc id="arc28" source="end" target="Clients">
@@ -748,8 +1043,21 @@
 					<text>28</text>
 				</name>
 				<hlinscription>
-					<text>get the text for arcs here</text>
-					a cool arc expression visitor
+					<text>(1'(c))</text>
+					<structure>
+						<subterm>
+							<numberof>
+								<subterm>
+									<numberconstant value="1">
+										<positive/>
+									</numberconstant>
+								</subterm>
+								<subterm>
+									<variable refvariable="c"/>
+								</subterm>
+							</numberof>
+						</subterm>
+					</structure>
 				</hlinscription>
 			</arc>
 			<arc id="arc29" source="ClientsWaiting" target="Timeout">
@@ -757,8 +1065,21 @@
 					<text>29</text>
 				</name>
 				<hlinscription>
-					<text>get the text for arcs here</text>
-					a cool arc expression visitor
+					<text>(1'(c))</text>
+					<structure>
+						<subterm>
+							<numberof>
+								<subterm>
+									<numberconstant value="1">
+										<positive/>
+									</numberconstant>
+								</subterm>
+								<subterm>
+									<variable refvariable="c"/>
+								</subterm>
+							</numberof>
+						</subterm>
+					</structure>
 				</hlinscription>
 			</arc>
 			<arc id="arc30" source="Timeout" target="ClientsTimeout">
@@ -766,8 +1087,21 @@
 					<text>30</text>
 				</name>
 				<hlinscription>
-					<text>get the text for arcs here</text>
-					a cool arc expression visitor
+					<text>(1'(c))</text>
+					<structure>
+						<subterm>
+							<numberof>
+								<subterm>
+									<numberconstant value="1">
+										<positive/>
+									</numberconstant>
+								</subterm>
+								<subterm>
+									<variable refvariable="c"/>
+								</subterm>
+							</numberof>
+						</subterm>
+					</structure>
 				</hlinscription>
 			</arc>
 			<arc id="arc31" source="StartSecuring" target="timeout">
@@ -775,8 +1109,28 @@
 					<text>31</text>
 				</name>
 				<hlinscription>
-					<text>get the text for arcs here</text>
-					a cool arc expression visitor
+					<text>(1'((c,r)))</text>
+					<structure>
+						<subterm>
+							<numberof>
+								<subterm>
+									<numberconstant value="1">
+										<positive/>
+									</numberconstant>
+								</subterm>
+								<subterm>
+									<tuple>
+										<subterm>
+											<variable refvariable="c"/>
+										</subterm>
+										<subterm>
+											<variable refvariable="r"/>
+										</subterm>
+									</tuple>
+								</subterm>
+							</numberof>
+						</subterm>
+					</structure>
 				</hlinscription>
 			</arc>
 			<arc id="arc32" source="ClientsTimeout" target="timeout">
@@ -784,8 +1138,21 @@
 					<text>32</text>
 				</name>
 				<hlinscription>
-					<text>get the text for arcs here</text>
-					a cool arc expression visitor
+					<text>(1'(c))</text>
+					<structure>
+						<subterm>
+							<numberof>
+								<subterm>
+									<numberconstant value="1">
+										<positive/>
+									</numberconstant>
+								</subterm>
+								<subterm>
+									<variable refvariable="c"/>
+								</subterm>
+							</numberof>
+						</subterm>
+					</structure>
 				</hlinscription>
 			</arc>
 			<arc id="arc33" source="timeout" target="DoSecuring">
@@ -793,8 +1160,28 @@
 					<text>33</text>
 				</name>
 				<hlinscription>
-					<text>get the text for arcs here</text>
-					a cool arc expression visitor
+					<text>(1'((c,r)))</text>
+					<structure>
+						<subterm>
+							<numberof>
+								<subterm>
+									<numberconstant value="1">
+										<positive/>
+									</numberconstant>
+								</subterm>
+								<subterm>
+									<tuple>
+										<subterm>
+											<variable refvariable="c"/>
+										</subterm>
+										<subterm>
+											<variable refvariable="r"/>
+										</subterm>
+									</tuple>
+								</subterm>
+							</numberof>
+						</subterm>
+					</structure>
 				</hlinscription>
 			</arc>
 			<arc id="arc34" source="StartSecuring" target="securingInTime">
@@ -802,8 +1189,28 @@
 					<text>34</text>
 				</name>
 				<hlinscription>
-					<text>get the text for arcs here</text>
-					a cool arc expression visitor
+					<text>(1'((c,r)))</text>
+					<structure>
+						<subterm>
+							<numberof>
+								<subterm>
+									<numberconstant value="1">
+										<positive/>
+									</numberconstant>
+								</subterm>
+								<subterm>
+									<tuple>
+										<subterm>
+											<variable refvariable="c"/>
+										</subterm>
+										<subterm>
+											<variable refvariable="r"/>
+										</subterm>
+									</tuple>
+								</subterm>
+							</numberof>
+						</subterm>
+					</structure>
 				</hlinscription>
 			</arc>
 			<arc id="arc35" source="ClientsWaiting" target="securingInTime">
@@ -811,8 +1218,21 @@
 					<text>35</text>
 				</name>
 				<hlinscription>
-					<text>get the text for arcs here</text>
-					a cool arc expression visitor
+					<text>(1'(c))</text>
+					<structure>
+						<subterm>
+							<numberof>
+								<subterm>
+									<numberconstant value="1">
+										<positive/>
+									</numberconstant>
+								</subterm>
+								<subterm>
+									<variable refvariable="c"/>
+								</subterm>
+							</numberof>
+						</subterm>
+					</structure>
 				</hlinscription>
 			</arc>
 			<arc id="arc36" source="securingInTime" target="DoSecuring">
@@ -820,8 +1240,28 @@
 					<text>36</text>
 				</name>
 				<hlinscription>
-					<text>get the text for arcs here</text>
-					a cool arc expression visitor
+					<text>(1'((c,r)))</text>
+					<structure>
+						<subterm>
+							<numberof>
+								<subterm>
+									<numberconstant value="1">
+										<positive/>
+									</numberconstant>
+								</subterm>
+								<subterm>
+									<tuple>
+										<subterm>
+											<variable refvariable="c"/>
+										</subterm>
+										<subterm>
+											<variable refvariable="r"/>
+										</subterm>
+									</tuple>
+								</subterm>
+							</numberof>
+						</subterm>
+					</structure>
 				</hlinscription>
 			</arc>
 		</page>

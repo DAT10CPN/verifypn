@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+	<net id="MODELID" type="http://www.pnml.org/version-2009/grammar/symmetricnet">
+		<name><text>MODELNAME</text></name>
+		<!-- List of declarations -->
+		<declaration>
+			<structure>
+				<declarations>
+					<!-- Declaration of user-defined color classes (sorts) -->
+					<namedsort id="N" name="N">
+						<finiteintrange start="1" end="1"/>
+					</namedsort>
+					<namedsort id="N2" name="N2">
+						<productsort>
+							<usersort declaration="N"/>
+							<usersort declaration="N"/>
+						</productsort>
+					</namedsort>
+					<namedsort id="N3" name="N3">
+						<productsort>
+							<usersort declaration="N"/>
+							<usersort declaration="N"/>
+							<usersort declaration="N"/>
+						</productsort>
+					</namedsort>
+					<!-- Declaration of user-defined color variables -->
+					<variabledecl id="x" name="x">
+						<usersort declaration="N"/>
+					</variabledecl>
+					<variabledecl id="y" name="y">
+						<usersort declaration="N"/>
+					</variabledecl>
+					<variabledecl id="v" name="v">
+						<usersort declaration="N"/>
+					</variabledecl>
+				</declarations>
+			</structure>
+		</declaration>
+		<!-- Page meta -->
+		<page id="page0">
+			<name>
+				<text>DefaultPage</text>
+			</name>
+			<!-- List of places -->
+			<place id="Rows">
+				<name>
+					<text>Rows</text>
+				</name>
+				<graphics>
+					<position x="240" y="30"/>
+				</graphics>
+				<type>
+					<text>N2</text>
+					<structure>
+						<usersort declaration="N2"/>
+					</structure>
+				</type>
+				<hlinitialMarking>
+					<text>1'((1,1))</text>
+					<structure>
+						<numberof>
+							<tuple>
+								is tuple 
