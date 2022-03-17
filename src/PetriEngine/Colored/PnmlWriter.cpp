@@ -247,17 +247,18 @@ namespace PetriEngine {
             if (marking.distinctSize() > 1) {
                 _out << increaseTabs() << "<add>\n";
             } else {
-                _out << increaseTabs() << "<numberof>\n";
+            //bare altid add
+                _out << increaseTabs() << "<tuple>\n";
             }
-            std::cout << "size: " << marking.distinctSize() << std::endl;
-            std::cout << "size: " << marking.size() << std::endl;
             bool first = true;
             for (auto [c, m] : marking) {
                 if (!(c->isTuple())) {
-                    if (first) {
-                        _out << increaseTabs() << "<subterm>\n";
-                    } else {
-                        _out << getTabs() << "<subterm>\n";
+                    if (marking.distinctSize() > 1) {
+                        if (first) {
+                            _out << increaseTabs() << "<subterm>\n";
+                        } else {
+                            _out << getTabs() << "<subterm>\n";
+                        }
                     }
                     _out << increaseTabs() << "<numberof>\n";
                     _out << increaseTabs() << "<subterm>\n";
@@ -276,18 +277,29 @@ namespace PetriEngine {
 
                     _out << decreaseTabs() << "</subterm>\n";
                     _out << decreaseTabs() << "</numberof>\n";
-                    _out << decreaseTabs() << "</subterm>\n";
+                    if (marking.distinctSize() > 1) {
+                        _out << decreaseTabs() << "</subterm>\n";
+                    }
                 } else {
-                    _out << increaseTabs() << "<tuple>\n";
-                    _out << increaseTabs() << "is tuple " << c->getColorName() << "\n";
-                    _out << decreaseTabs() << "</tuple>\n";
+                    auto &colors = c->getTupleColors();
+                    bool secondFalse = true;
+                    for (auto &color : colors) {
+                        if (secondFalse) {
+                            _out << increaseTabs() << "<subterm>" << "\n";
+                        } else {
+                            _out << getTabs() << "<subterm>" << "\n";
+                        }
+                        _out << increaseTabs() << "<usersort declaration=\"" << color->getColorName() << "\"/>\n";
+                        _out << decreaseTabs() << "</subterm>" << "\n";
+                        secondFalse = false;
+                    }
                 }
                 first = false;
             }
             if (marking.distinctSize() > 1) {
                 _out << decreaseTabs() << "</add>\n";
             } else {
-                _out << decreaseTabs() << "</numberof>\n";
+                _out << decreaseTabs() << "</tuple>\n";
             }
             _out << decreaseTabs() << "</structure>\n";
             _out << decreaseTabs() << "</hlinitialMarking>\n";
