@@ -129,7 +129,7 @@ namespace PetriEngine {
         std::vector<Colored::Place> _places;
         std::vector<Colored::Transition> _transitions;
         std::vector<Colored::Arc> _inhibitorArcs;
-        std::vector<Colored::mehlVariable> _variables;
+        std::vector<Colored::Variable> _variables;
 
         Colored::ColorTypeMap _colors;
         PetriNetBuilder _ptBuilder;
@@ -139,7 +139,7 @@ namespace PetriEngine {
                 const Colored::ArcExpression_ptr& expr,
                 bool input, int inhib_weight);
 
-        void addVariable(Colored::mehlVariable& variable);
+        void addVariable(Colored::Variable& variable);
     };
 
     enum ExpressionType {

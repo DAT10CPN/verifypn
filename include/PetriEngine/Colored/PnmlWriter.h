@@ -76,7 +76,13 @@ namespace PetriEngine::Colored {
 
         void handleCondition(Colored::Transition& transition);
 
-        void handleLater(std::vector<uint32_t> toHandleLater);
+        void handleNow(std::vector<uint32_t> toHandleLater);
+
+        void handleNow(std::vector<uint32_t> productSorts, std::vector<uint32_t> cyclicEnumerations);
+
+        void handleNow(std::vector<std::string> productSorts, std::vector<std::string> cyclicEnumerations);
+
+        std::string guardStringToPnml(std::string guard);
     };
 }
 

@@ -39,11 +39,9 @@ namespace PetriEngine {
 
             bool operator == (const Arc& other) const
             {
-                return place == other.place && transition == other.transition && inhib_weight == other.inhib_weight && to_string(*expr) == to_string(*other.expr);
+                return place == other.place && transition == other.transition && inhib_weight == other.inhib_weight && to_string(*expr) == to_string(*other.expr) && input == other.input;
             }
         };
-
-
 
         struct Transition {
             std::string name;

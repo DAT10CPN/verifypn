@@ -141,13 +141,8 @@ void PNMLParser::parseDeclarations(rapidxml::xml_node<>* element) {
                 it->first_attribute("id")->value(),
                 parseUserSort(it)
             };
-            auto mehlVar = new PetriEngine::Colored::mehlVariable {
-                    it->first_attribute("id")->value(),
-                    parseUserSort(it),
-                    it->first_attribute("name")->value()
-            };
             variables[it->first_attribute("id")->value()] = var;
-            builder->addVariable(*mehlVar);
+            builder->addVariable(*var);
         } else if (strcmp(it->name(), "partition") == 0) {
             parsePartitions(it);
         } else {
