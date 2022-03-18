@@ -54,12 +54,12 @@ namespace PetriEngine {
                          << colortype->getName()
                          << "\">\n";
                     handleFiniteRange(types);
-                    //_out << decreaseTabs() << "</namedsort>\n";
                 } else {
                     if (types[0]->getName() == "dot") {
-                        _out << increaseTabs() << "<namedsort>\n";
+                        _out << getTabs() << "<namedsort id=\"" << colortype->getName() << "\" name=\""
+                             << colortype->getName()
+                             << "\">\n";
                         _out << increaseTabs() << "<dot/>\n";
-                        //_out << decreaseTabs() << "</namedsort>\n";
                     } else {
                         handleCyclicEnumeration(types);
                     }
