@@ -10,13 +10,13 @@
 namespace PetriEngine::Colored {
     class PnmlWriter {
     public:
-        PnmlWriter(PetriEngine::ColoredPetriNetBuilder &b, std::ostream& out) : _builder(b), _out(out), _tabs(0) {}
+        PnmlWriter(PetriEngine::ColoredPetriNetBuilder &b, std::ostream& out) : _builder(b), _out(out), _tabsCount(0) {}
         void toColPNML();
 
     private:
         PetriEngine::ColoredPetriNetBuilder &_builder;
         std::ostream& _out;
-        std::uint32_t _tabs;
+        std::uint32_t _tabsCount;
         std::vector <Arc> _arcs;
 
         void metaInfo();
@@ -34,27 +34,27 @@ namespace PetriEngine::Colored {
         void page();
 
         uint32_t getTabsCount() {
-            return _tabs;
+            return _tabsCount;
         }
 
         std::string getTabs() {
             std::string tabsString;
-            for (uint32_t i=0; i<_tabs;i++) {
+            for (uint32_t i=0; i < _tabsCount; i++) {
                 tabsString += '\t';
             }
             return tabsString;
         }
 
         std::string increaseTabs() {
-            _tabs += 1;
+            _tabsCount += 1;
             return getTabs();
         }
 
         std::string decreaseTabs() {
-            if (_tabs == 0) {
-                throw base_error("About to make way too many tabs, aborting");
+            if (_tabsCount == 0) {
+                throw base_error("Something went wrong with exporting colored model to PNML - underflow in number of tabs");
             }
-            _tabs -= 1;
+            _tabsCount -= 1;
             return getTabs();
         }
 
