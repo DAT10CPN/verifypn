@@ -168,7 +168,7 @@ namespace PetriEngine {
         }
 
         void ColorType::addColorTest(const char* colorName, const char* colorName1) {
-            std::cout << colorName1 << std::endl;
+            //std::cout << colorName1 << std::endl;
             _colors.emplace_back(this, _colors.size(), colorName, colorName1);
         }
 
