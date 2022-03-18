@@ -47,6 +47,10 @@ namespace PetriEngine::Colored {
             return getTabs();
         }
 
+        bool is_number(const std::string &s);
+
+        std::string guardStringToPnml(std::string guard);
+
         void metaInfo();
 
         void declarations();
@@ -79,17 +83,13 @@ namespace PetriEngine::Colored {
 
         void handleCondition(Colored::Transition &transition);
 
-        void handleNow(std::vector<std::string> productSorts, std::vector<std::string> cyclicEnumerations);
-
-        std::string guardStringToPnml(std::string guard);
+        void handleProducts(std::vector<std::string> productSorts);
 
         void handleMarking(Multiset multiset);
 
         void handleTuple(const PetriEngine::Colored::Color *const c);
 
         void handleOtherColor(const Color *const c);
-
-        bool is_number(const std::string &s);
     };
 }
 

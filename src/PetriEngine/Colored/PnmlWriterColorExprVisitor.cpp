@@ -167,7 +167,6 @@ namespace PetriEngine::Colored {
         }
     }
 
-    //todo cannot find any example of this yet
     void PnmlWriterColorExprVisitor::accept(const SubtractExpression *sub) {
         _out << increaseTabs() << "<subtract>" << "\n";
         _out << increaseTabs() << "<subterm>" << "\n";
@@ -179,9 +178,14 @@ namespace PetriEngine::Colored {
         _out << decreaseTabs() << "</subtract>" << "\n";
     }
 
-    //todo cannot find any example of this yet
     void PnmlWriterColorExprVisitor::accept(const ScalarProductExpression *scalar) {
-        throw base_error("Found a scalarexpression while creating pnml");
-        _out << increaseTabs() << "todo: ScalarProductExpression" << "\n";
+        _out << increaseTabs() << "<scalarproduct>" << "\n";
+        _out << increaseTabs() << "<subterm>" << "\n";
+        _out << increaseTabs() << "<numberconstant value=\"" << scalar->scalar() << "\"/>\n";
+        _out << decreaseTabs() << "</subterm>" << "\n";
+        _out << getTabs() << "<subterm>" << "\n";
+        scalar->child()->visit(*this);
+        _out << decreaseTabs() << "</subterm>" << "\n";
+        _out << decreaseTabs() << "</scalarproduct>" << "\n";
     }
 }
