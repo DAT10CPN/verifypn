@@ -24,7 +24,7 @@ namespace PetriEngine::Colored::Reduction {
         bool hasOtherEmptyTrans = !preserveLoops && !preserveStutter;
         for (size_t t = 0; t < transitions.size(); t++) {
             auto &trans = transitions[t];
-            if (!trans.skipped && trans.input_arcs.empty() && trans.output_arcs.empty()) {
+            if (!trans.skipped && trans.input_arcs.empty() && trans.output_arcs.empty() && (!trans.inhibited || hasOtherEmptyTrans)) {
                 if (hasOtherEmptyTrans) {
                     _applications++;
                     red.skipTransition(t);
@@ -41,7 +41,7 @@ namespace PetriEngine::Colored::Reduction {
                 red._tflags[touter] = 1;
                 const Transition &tout = transitions[touter];
 
-                if (tout.skipped || tout.inhibited) continue;
+                if (tout.skipped) continue;
 
                 for (size_t inner = outer + 1; inner < op._post.size(); inner++) {
                     if (tout.skipped) break;
@@ -49,7 +49,7 @@ namespace PetriEngine::Colored::Reduction {
                     auto tinner = op._post[inner];
                     const Transition &tin = transitions[tinner];
 
-                    if (tin.skipped || tin.inhibited) continue;
+                    if (tin.skipped) continue;
 
                     for (size_t swp = 0; swp < 2; swp++) {
 
@@ -69,6 +69,8 @@ namespace PetriEngine::Colored::Reduction {
                         if (trans1.guard != nullptr && trans2.guard != nullptr &&
                             to_string(*trans1.guard) != to_string(*trans2.guard))
                             break;
+
+                        if (trans1.inhibited) continue; // TODO Can be generalized
 
                         bool ok = true;
                         // TODO Check if t2 is k times t1 once we have variable multisets
