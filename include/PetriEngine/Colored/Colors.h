@@ -51,7 +51,7 @@ namespace PetriEngine {
             const ColorType * const _colorType;
             std::string _colorName;
             uint32_t _id;
-            std::string _actualColorName;
+            std::string _displayName;
 
         public:
             Color(const ColorType* colorType, uint32_t id, std::vector<const Color*>& colors);
@@ -78,11 +78,11 @@ namespace PetriEngine {
                 return _colorName;
             }
 
-            const std::string& getActualColorName() const {
+            const std::string& getDisplayName() const {
                 if (this->isTuple()) {
                     throw base_error("Cannot get color from a tuple color.");
                 }
-                return _actualColorName;
+                return _displayName;
             }
 
             const ColorType* getColorType() const {
@@ -127,7 +127,7 @@ namespace PetriEngine {
 
             static const ColorType* dotInstance();
             virtual void addColor(const char* colorName);
-            virtual void addColorTest(const char* colorName, const char* colorName1);
+            virtual void addColor(const char* colorName, const char* colorName1);
 
             virtual size_t size() const {
                 return _colors.size();
@@ -297,14 +297,6 @@ namespace PetriEngine {
             const ColorType* colorType;
 
         };
-
-        struct mehlVariable {
-            std::string name;
-            const ColorType* colorType;
-            std::string id;
-        };
-
-
 
         struct ColorFixpoint {
             Colored::interval_vector_t constraints;

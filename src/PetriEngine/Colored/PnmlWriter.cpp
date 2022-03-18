@@ -45,9 +45,9 @@ namespace PetriEngine {
                     _out << getTabs() << "ColorName: " << nestedType.getColorName() << "\n";
                     _out << getTabs() << "ToString: " << nestedType.toString() << "\n";
                     _out << getTabs() << "GetID: " << nestedType.getId() << "\n";
-                    _out << getTabs() << "Actual color name " << nestedType.getActualColorName() << "\n";*/
+                    _out << getTabs() << "Actual color name " << nestedType.getDisplayName() << "\n";*/
                     _out << (first ? increaseTabs() : getTabs()) << "<feconstant id=\"" << nestedType.getColorName()
-                         << "\" name= \"" << nestedType.getActualColorName() << "\"/>" << "\n";
+                         << "\" name= \"" << nestedType.getDisplayName() << "\"/>" << "\n";
                     first = false;
                 }
             }

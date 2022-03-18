@@ -221,7 +221,7 @@ void PNMLParser::parseNamedSort(rapidxml::xml_node<>* element) {
                     auto id = it->first_attribute("id");
                     auto name = it->first_attribute("name");
                     assert(id != nullptr);
-                    ct->addColorTest(id->value(), name->value());
+                    ct->addColor(id->value(), name->value());
                 }
             }
             fct = ct;
