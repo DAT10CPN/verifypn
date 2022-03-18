@@ -32,13 +32,13 @@ namespace PetriEngine::Colored::Reduction {
 
                 const Place &pout = places[pouter];
 
-                if (pout.skipped || pout.inhibitor) continue;
+                if (pout.skipped) continue;
 
                 for (uint32_t inner = outer + 1; inner < transitions[touter].output_arcs.size(); inner++) {
                     if (pout.skipped) break;
 
                     auto pinner = transitions[touter].output_arcs[inner].place;
-                    if (places[pinner].skipped || places[pinner].inhibitor) continue;
+                    if (places[pinner].skipped) continue;
 
                     if (pouter == pinner) continue;
                     if (places[inner].type != places[outer].type) continue;
@@ -62,6 +62,8 @@ namespace PetriEngine::Colored::Reduction {
                         if (place1._pre.size() > place2._pre.size() ||
                             place1._post.size() < place2._post.size())
                             continue;
+
+                        if (place2.inhibitor) continue; // TODO can be generalized, also with k scaling
 
                         // TODO Check if p2 is k times p1 once we have variable multisets
 
