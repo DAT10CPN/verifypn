@@ -85,7 +85,7 @@ namespace PetriEngine::Colored {
             }
 
             void addInputArc(const Place& place, const Transition& transition, ArcExpression_ptr& expr, uint32_t inhib_weight);
-            void addOutputArc(const Transition& transition, const Place& place, ArcExpression_ptr& expr);
+            void addOutputArc(const Transition& transition, const Place& place, ArcExpression_ptr expr);
 
             CArcIter getInArc(uint32_t pid, const Colored::Transition &tran) const;
             CArcIter getOutArc(const Colored::Transition &tran, uint32_t pid) const;

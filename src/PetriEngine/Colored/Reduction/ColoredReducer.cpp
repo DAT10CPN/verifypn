@@ -260,7 +260,7 @@ namespace PetriEngine::Colored::Reduction {
     void ColoredReducer::addInputArc(const Place& place, const Transition& transition, ArcExpression_ptr& expr, uint32_t inhib_weight){
         _builder.addInputArc(place.name, transition.name, expr, inhib_weight);
     }
-    void ColoredReducer::addOutputArc( const Transition& transition, const Place& place, ArcExpression_ptr& expr){
+    void ColoredReducer::addOutputArc( const Transition& transition, const Place& place, ArcExpression_ptr expr){
         _builder.addOutputArc(transition.name, place.name, expr);
     }
 

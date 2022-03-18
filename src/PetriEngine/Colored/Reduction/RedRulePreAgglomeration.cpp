@@ -22,7 +22,7 @@ namespace PetriEngine::Colored::Reduction {
 
             const Place &place = red.places()[pid];
 
-            // S5.1, S6.1
+            // X4, X7.1, X1
             if (place.skipped || place.inhibitor || inQuery[pid] > 0 || !place.marking.empty() || place._pre.empty() ||
                 place._post.empty())
                 continue;
@@ -34,7 +34,7 @@ namespace PetriEngine::Colored::Reduction {
             }
 
             // Check that producers and consumers are disjoint
-            // S3
+            // X3
             const auto presize = place._pre.size();
             const auto postsize = place._post.size();
             bool ok = true;
@@ -52,17 +52,17 @@ namespace PetriEngine::Colored::Reduction {
 
             if (!ok) continue;
 
-            // S2
             std::vector<bool> todo (postsize, true);
             bool todoAllGood = true;
-            // S10-11; Do we need to check?
+            // X14, not supported yet
             std::vector<bool> kIsAlwaysOne (postsize, true);
+
             // Visitor for translating ArcExpressions into the info we need.
             ArcExpressionVisitor arvis = ArcExpressionVisitor();
 
             for (const auto& prod : place._pre){
                 const Transition& producer = red.transitions()[prod];
-                // S4, S6.2
+                // X8.1, X6
                 if(producer.inhibited || producer.input_arcs.size() != 1){
                     ok = false;
                     break;
@@ -73,6 +73,7 @@ namespace PetriEngine::Colored::Reduction {
                 red.getOutArc(producer, pid)->expr->visit(arvis);
                 uint32_t kw = 1;
 
+                // X5
                 if(arvis.ok() && arvis.singleColor()){
                     kw = arvis.colorblindWeight();
                 } else {
@@ -80,16 +81,14 @@ namespace PetriEngine::Colored::Reduction {
                     break;
                 }
 
-                // S1, S9
                 for (uint32_t n = 0; n < place._post.size(); n++) {
                     arvis.reset();
                     red.getInArc(pid, red.transitions()[place._post[n]])->expr->visit(arvis);
                     uint32_t w = arvis.colorblindWeight();
-                    // S1, S9
+                    // X9, (X5)
                     if (!arvis.ok() || !arvis.singleColor() || kw % w != 0) {
                         todo[n] = false;
                         todoAllGood = false;
-                        continue;
                     } else if (kw != w) {
                         kIsAlwaysOne[n] = false;
                     }
@@ -103,7 +102,7 @@ namespace PetriEngine::Colored::Reduction {
 
                 for (const auto& prearc : producer.input_arcs){
                     const Place& preplace = red.places()[prearc.place];
-                    // S6.3, S5.2
+                    // X8.2, X7.2
                     if (preplace.inhibitor || inQuery[prearc.place] > 0){
                         ok = false;
                         break;
@@ -139,25 +138,36 @@ namespace PetriEngine::Colored::Reduction {
                     continue;
 
                 const Transition &consumer = red.transitions()[originalConsumers[n]];
-                // (S8 || S11)
+                // (X10 || X15)
                 if ((queryType != Reach || !kIsAlwaysOne[n]) && consumer.input_arcs.size() != 1) {
                     continue;
                 }
-                // S10
-                if (consumer.inhibited) {
-                    continue;
+                // X16?
+                if (!kIsAlwaysOne[n]) {
+                    for (const auto& conspost : consumer.output_arcs) {
+                        if (red.places()[conspost.place].inhibitor)
+                            continue;
+                    }
                 }
+
+                arvis.reset();
+                CArcIter consArc = red.getInArc(pid, consumer);
+                consArc->expr->visit(arvis);
+                uint32_t w = arvis.colorblindWeight();
 
                 // Update
                 for (const auto& prod : originalProducers){
-                    const Transition &producer = red.transitions()[prod];
-//                    uint32_t k = 1;
-//                    if (!kIsAlwaysOne[n]){
-//                        k = red.getOutArc(producer, pid)->expr / w;
-//                    }
+                    arvis.reset();
+                    const Transition& producer = red.transitions()[prod];
+                    CArcIter proArc = red.getOutArc(producer, pid);
+                    uint32_t k = 1;
+                    if (!kIsAlwaysOne[n]){
+                        proArc->expr->visit(arvis);
+                        k = arvis.colorblindWeight() / w;
+                    }
 
                     // One for each number of firings of consumer possible after one firing of producer
-//                    for (uint32_t k_i = 1; k_i <= k; k_i++){
+                    for (uint32_t k_i = 1; k_i <= k; k_i++){
                         // Create new transition with effect of firing the producer, and then the consumer k_i times
                         auto id = red.newTransition(nullptr);
 
@@ -169,7 +179,7 @@ namespace PetriEngine::Colored::Reduction {
                         // Arcs from consumer
                         for (const auto& arc : consumerPrime.output_arcs) {
                             ArcExpression_ptr expr = arc.expr;
-                            red.addOutputArc(newtran, red.places()[arc.place], expr);
+                            red.addOutputArc(newtran, red.places()[arc.place], std::make_shared<PetriEngine::Colored::ScalarProductExpression>(std::shared_ptr(expr), k_i));
                         }
                         for (const auto& arc : consumerPrime.input_arcs){
                             if (arc.place != pid){
@@ -183,11 +193,10 @@ namespace PetriEngine::Colored::Reduction {
                             red.addInputArc(red.places()[arc.place], newtran, expr, arc.inhib_weight);
                         }
 
-//                        if (k_i != k){
-//                            ArcExpression_ptr k_expr = (k-k_i)*w;
-//                            red.addOutputArc(newtran, place, k_expr);
-//                        }
-//                    }
+                        if (k_i != k){
+                            red.addOutputArc(newtran, place, std::make_shared<PetriEngine::Colored::ScalarProductExpression>(std::shared_ptr(proArc->expr), k-k_i));
+                        }
+                    }
                 }
                 red.skipTransition(originalConsumers[n]);
                 continueReductions = true;
