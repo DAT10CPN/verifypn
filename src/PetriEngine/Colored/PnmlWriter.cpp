@@ -320,9 +320,48 @@ namespace PetriEngine {
             metaInfoClose();
         }
 
+        void PnmlWriter::handleTuple(const PetriEngine::Colored::Color *const c) {
+            auto &colors = c->getTupleColors();
+
+            _out << increaseTabs() << "<tuple>\n";
+            bool firstTuple = true;
+            for (auto &color: colors) {
+                if (firstTuple) {
+                    _out << increaseTabs() << "<subterm>" << "\n";
+                } else {
+                    _out << getTabs() << "<subterm>" << "\n";
+                }
+                if (is_number(color->toString())) {
+                    std::string start = color->getColorType()->operator[](0).getColorName();
+                    std::string end = color->getColorType()->operator[](
+                            color->getColorType()->size() - 1).getColorName();
+                    _out << increaseTabs() << "<finiteintrangeconstant value=\"" << color->getColorName()
+                         << "\">\n";
+                    _out << increaseTabs() << "<finiteintrange end=\"" << end << "\" start=\"" << start
+                         << "\"/>\n";
+                    _out << decreaseTabs() << "</finiteintrangeconstant>\n";
+                } else {
+                    _out << increaseTabs() << "<usersort declaration=\"" << color->getColorName() << "\"/>\n";
+                }
+                _out << decreaseTabs() << "</subterm>" << "\n";
+                firstTuple = false;
+            }
+            _out << decreaseTabs() << "</tuple>\n";
+        }
+
+        void PnmlWriter::handleOtherColor(const PetriEngine::Colored::Color *const c) {
+            if (c->getColorName() == "Dot" || c->getColorName() == "dot") {
+                _out << increaseTabs() << "<dotconstant/>\n";
+            } else {
+                _out << increaseTabs() << "<useroperator declaration=\"" << c->getColorName() << "\"/>\n";
+            }
+        }
+
         void PnmlWriter::handleMarking(Multiset marking) {
             bool first = true;
-            for (auto[c, m]: marking) {
+            for (const auto &p: marking) {
+                const auto &c = p.first;
+                const auto &m = p.second;
                 if (first) {
                     _out << increaseTabs() << "<subterm>\n";
                 } else {
@@ -335,41 +374,12 @@ namespace PetriEngine {
                 _out << decreaseTabs() << "</numberconstant>\n";
                 _out << decreaseTabs() << "</subterm>" << "\n";
                 if (c->isTuple()) {
-                    //handleTuple(c);
-                    auto &colors = c->getTupleColors();
                     _out << getTabs() << "<subterm>" << "\n";
-                    _out << increaseTabs() << "<tuple>\n";
-                    bool firstTuple = true;
-                    for (auto &color: colors) {
-                        if (firstTuple) {
-                            _out << increaseTabs() << "<subterm>" << "\n";
-                        } else {
-                            _out << getTabs() << "<subterm>" << "\n";
-                        }
-                        if (is_number(color->toString())) {
-                            std::string start = color->getColorType()->operator[](0).getColorName();
-                            std::string end = color->getColorType()->operator[](
-                                    color->getColorType()->size() - 1).getColorName();
-                            _out << increaseTabs() << "<finiteintrangeconstant value=\"" << color->getColorName()
-                                 << "\">\n";
-                            _out << increaseTabs() << "<finiteintrange end=\"" << end << "\" start=\"" << start
-                                 << "\"/>\n";
-                            _out << decreaseTabs() << "</finiteintrangeconstant>\n";
-                        } else {
-                            _out << increaseTabs() << "<usersort declaration=\"" << color->getColorName() << "\"/>\n";
-                        }
-                        _out << decreaseTabs() << "</subterm>" << "\n";
-                        firstTuple = false;
-                    }
-                    _out << decreaseTabs() << "</tuple>\n";
+                    handleTuple(c);
                     _out << decreaseTabs() << "</subterm>" << "\n";
                 } else {
                     _out << getTabs() << "<subterm>\n";
-                    if (c->getColorName() == "Dot" || c->getColorName() == "dot") {
-                        _out << increaseTabs() << "<dotconstant/>\n";
-                    } else {
-                        _out << increaseTabs() << "<useroperator declaration=\"" << c->getColorName() << "\"/>\n";
-                    }
+                    handleOtherColor(c);
                     _out << decreaseTabs() << "</subterm>\n";
                 }
                 _out << decreaseTabs() << "</numberof>\n";

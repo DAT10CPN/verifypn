@@ -81,6 +81,10 @@ namespace PetriEngine::Colored {
         std::string guardStringToPnml(std::string guard);
 
         void handleMarking(Multiset multiset);
+
+        void handleTuple(const PetriEngine::Colored::Color *const c);
+
+        void handleOtherColor(const Color *const c);
     };
 }
 
