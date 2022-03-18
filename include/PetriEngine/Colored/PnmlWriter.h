@@ -88,6 +88,8 @@ namespace PetriEngine::Colored {
         void handleTuple(const PetriEngine::Colored::Color *const c);
 
         void handleOtherColor(const Color *const c);
+
+        bool is_number(const std::string &s);
     };
 }
 
