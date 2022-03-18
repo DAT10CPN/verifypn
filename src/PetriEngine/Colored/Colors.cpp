@@ -67,7 +67,7 @@ namespace PetriEngine {
         Color::Color(const ColorType *colorType, uint32_t id, const char *color, const char *colorname)
             : _tuple(), _colorType(colorType), _colorName(color), _id(id), _actualColorName(colorname)
         {
-            std::cout << _actualColorName << std::endl;
+            //std::cout << _actualColorName << std::endl;
         }
 
         const Color& Color::operator++ () const {
