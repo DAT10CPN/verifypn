@@ -17,7 +17,7 @@
 
 
 namespace PetriEngine::Colored {
-    using CArcIter = std::vector<Arc>::iterator;
+    using CArcIter = __gnu_cxx::__normal_iterator<const Arc *, std::vector<Arc>>;
 
     namespace Reduction {
 
@@ -33,23 +33,11 @@ namespace PetriEngine::Colored {
 
         class ColoredReducer {
         public:
-            ColoredReducer(PetriEngine::ColoredPetriNetBuilder &b) : _builder(b),
-                                                                     _origPlaceCount(b.getPlaceCount()),
-                                                                     _origTransitionCount(
-                                                                             b.getTransitionCount()) {
-#ifndef NDEBUG
-                // All rule names must be unique
-                std::set<std::string> names;
-                for (auto &rule : _reductions) {
-                    assert(names.find(rule->name()) == names.end());
-                    names.insert(rule->name());
-                }
-#endif
-            }
+            ColoredReducer(PetriEngine::ColoredPetriNetBuilder &b);
 
             std::vector<ApplicationSummary> createApplicationSummary() const;
 
-            bool reduce(uint32_t timeout, const std::vector<bool> &inQuery, bool preserveDeadlocks,int reductiontype,std::vector<uint32_t>& reductions);
+            bool reduce(uint32_t timeout, const std::vector<bool> &inQuery, QueryType queryType, bool preserveLoops, bool preserveStutter, int reductiontype,std::vector<uint32_t>& reductions);
 
             double time() const {
                 return _timeSpent;
@@ -88,9 +76,9 @@ namespace PetriEngine::Colored {
                 return _builder.inhibitors();
             }
 
-            CArcIter getInArc(uint32_t pid, Colored::Transition &tran) const;
+            CArcIter getInArc(uint32_t pid, const Colored::Transition &tran) const;
 
-            CArcIter getOutArc(Colored::Transition &tran, uint32_t pid) const;
+            CArcIter getOutArc(const Colored::Transition &tran, uint32_t pid) const;
 
             void skipPlace(uint32_t pid);
 
@@ -120,6 +108,8 @@ namespace PetriEngine::Colored {
                     // TODO Actually useful reductions. This is just a test rule to guide implementation
                     &_reduceFirstPlace
             };
+
+            void consistent();
         };
     }
 }

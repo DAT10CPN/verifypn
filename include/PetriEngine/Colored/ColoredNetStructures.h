@@ -43,6 +43,13 @@ namespace PetriEngine {
             }
         };
 
+        struct {
+            bool operator()(const Arc &a, const Arc &b) const
+            {
+                return a.place < b.place;
+            }
+        } ArcLessThanByPlace;
+
         struct Transition {
             std::string name;
             GuardExpression_ptr guard;
