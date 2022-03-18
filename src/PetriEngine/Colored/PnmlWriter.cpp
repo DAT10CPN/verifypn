@@ -42,23 +42,27 @@ namespace PetriEngine {
             //Products must be handled lastly, after finite ranges and cyclic enumerations
             std::vector<std::string> productSorts;
             for (auto &namedSort: _builder._colors) {
+
                 ColorType *colortype = const_cast<ColorType *>(namedSort.second);
                 std::vector<const ColorType *> types;
                 colortype->getColortypes(types);
+                if (types.size() > 1 && colortype->productSize() == 1) {
+                        std::cout << colortype->getName();
+                        throw base_error("types.size was over 1");
+                }
                 if (colortype->productSize() > 1) {
                     productSorts.push_back(namedSort.first);
                     continue;
-                    //this is a hack, better way to find if a color is a finite int range?
-                } else if (is_number(types[0]->operator[](0).getColorName())) {
-                    _out << getTabs() << "<namedsort id=\"" << colortype->getName() << "\" name=\""
-                         << colortype->getName()
-                         << "\">\n";
+                }
+                _out << getTabs() << "<namedsort id=\"" << colortype->getName() << "\" name=\""
+                     << colortype->getName()
+                     << "\">\n";
+
+                //this is a hack, better way to find if a color is a finite int range?
+                if (is_number(types[0]->operator[](0).getDisplayName())) {
                     handleFiniteRange(types);
                 } else {
                     if (types[0]->getName() == "dot") {
-                        _out << getTabs() << "<namedsort id=\"" << colortype->getName() << "\" name=\""
-                             << colortype->getName()
-                             << "\">\n";
                         _out << increaseTabs() << "<dot/>\n";
                     } else {
                         handleCyclicEnumeration(types);
@@ -66,6 +70,7 @@ namespace PetriEngine {
                 }
                 _out << decreaseTabs() << "</namedsort>\n";
             }
+            //Handle products after everything else
             handleProducts(productSorts);
         }
 
@@ -79,9 +84,10 @@ namespace PetriEngine {
         }
 
         void PnmlWriter::handleProducts(std::vector<std::string> productSorts) {
-            for (auto name: productSorts) {
-                auto *colortype = _builder._colors[name];
-                _out << getTabs() << "<namedsort id=\"" << colortype->getName() << "\" name=\"" << colortype->getName()
+            for (auto productName: productSorts) {
+                auto *colortype = _builder._colors[productName];
+                _out << getTabs() << "<namedsort id=\"" << colortype->getName() << "\" name=\""
+                     << colortype->getName()
                      << "\">\n";
                 std::vector<const ColorType *> types;
                 colortype->getColortypes(types);
@@ -107,7 +113,7 @@ namespace PetriEngine {
                     auto nestedType = type->operator[](i);
 
                     _out << (first ? increaseTabs() : getTabs()) << "<feconstant id=\"" << nestedType.getColorName()
-                         << "\" name= \"" << nestedType.getDisplayName() << "\"/>" << "\n";
+                         << "\" name=\"" << nestedType.getDisplayName() << "\"/>" << "\n";
                     first = false;
                 }
             }
