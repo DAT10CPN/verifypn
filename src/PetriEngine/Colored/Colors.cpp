@@ -67,7 +67,8 @@ namespace PetriEngine {
         Color::Color(const ColorType *colorType, uint32_t id, const char *color, const char *colorname)
             : _tuple(), _colorType(colorType), _colorName(color), _id(id), _displayName(colorname)
         {
-            //std::cout << _displayName << std::endl;
+            if (colorType != nullptr)
+                assert(id <= colorType->size());
         }
 
         const Color& Color::operator++ () const {
@@ -167,9 +168,8 @@ namespace PetriEngine {
             _colors.emplace_back(this, _colors.size(), colorName);
         }
 
-        void ColorType::addColor(const char* colorName, const char* colorName1) {
-            //std::cout << colorName1 << std::endl;
-            _colors.emplace_back(this, _colors.size(), colorName, colorName1);
+        void ColorType::addColor(const char* colorName, const char* displayName) {
+            _colors.emplace_back(this, _colors.size(), colorName, displayName);
         }
 
         const Color* ColorType::operator[] (const char* index) const {
