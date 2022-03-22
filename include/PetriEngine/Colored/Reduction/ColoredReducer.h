@@ -19,7 +19,7 @@
 
 namespace PetriEngine::Colored {
 
-    using CArcIter = __gnu_cxx::__normal_iterator<const Arc *, std::vector<Arc>>;;
+    using CArcIter = __gnu_cxx::__normal_iterator<const Arc *, std::vector<Arc>>;
 
     namespace Reduction {
 
