@@ -31,10 +31,14 @@ namespace PetriEngine {
     namespace Colored::Reduction {
         class ColoredReducer;
     }
+    namespace Colored {
+        class PnmlWriter;
+    }
 
     class ColoredPetriNetBuilder : public AbstractPetriNetBuilder {
     public:
         friend class Colored::Reduction::ColoredReducer;
+        friend class Colored::PnmlWriter;
 
         ColoredPetriNetBuilder();
         ColoredPetriNetBuilder(const ColoredPetriNetBuilder& orig);
@@ -74,7 +78,6 @@ namespace PetriEngine {
                 const Colored::ArcExpression_ptr& expr) override;
         void addColorType(const std::string& id,
                 const Colored::ColorType* type) override;
-
 
         void sort() override;
 
@@ -130,6 +133,7 @@ namespace PetriEngine {
         std::vector<Colored::Place> _places;
         std::vector<Colored::Transition> _transitions;
         std::vector<Colored::Arc> _inhibitorArcs;
+        std::vector<Colored::Variable> _variables;
 
         Colored::ColorTypeMap _colors;
         PetriNetBuilder _ptBuilder;
@@ -139,6 +143,7 @@ namespace PetriEngine {
                 const Colored::ArcExpression_ptr& expr,
                 bool input, uint32_t inhib_weight);
 
+        void addVariable(Colored::Variable& variable);
     };
 
     enum ExpressionType {

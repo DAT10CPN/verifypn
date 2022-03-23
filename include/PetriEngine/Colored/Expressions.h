@@ -278,7 +278,6 @@ namespace PetriEngine {
             virtual void visit(ColorExpressionVisitor& visitor) const = 0;
             virtual void visit(ArcExpressionVisitor& visitor) const = 0;
             virtual uint32_t weight() const = 0;
-            virtual uint32_t singleton_product_weight() const = 0;
             virtual bool is_single_color() const = 0;
         };
 
@@ -316,14 +315,7 @@ namespace PetriEngine {
         public:
             uint32_t weight() const override {
                 if (_all == nullptr)
-                    return _number;
-                else
-                    return _number * _all->size();
-            }
-
-            uint32_t singleton_product_weight() const override {
-                if (_all == nullptr)
-                    return _number;
+                    return _number * _color.size();
                 else
                     return _number * _all->size();
             }
@@ -333,10 +325,6 @@ namespace PetriEngine {
             }
 
             bool is_single_color() const {
-                return true;
-            }
-
-            bool is_singleton() const {
                 return !is_all() && _color.size() == 1;
             }
 
@@ -387,14 +375,6 @@ namespace PetriEngine {
                 return res;
             }
 
-            uint32_t singleton_product_weight() const override {
-                uint32_t res = 0;
-                for (const auto& expr : _constituents) {
-                    res += expr->singleton_product_weight();
-                }
-                return res;
-            }
-
             bool is_single_color() const {
                 return false;
             }
@@ -434,26 +414,12 @@ namespace PetriEngine {
                     throw base_error("Left constituent of subtract is not an all expression!");
                 }
                 auto* right = dynamic_cast<NumberOfExpression*>(_right.get());
-                if (!right || !right->is_singleton()) {
+                if (!right || !right->is_single_color()) {
                     throw base_error("Right constituent of subtract is not a single color number of expression!");
                 }
 
                 uint32_t val = std::min(left->number(), right->number());
                 return _left->weight() - val;
-            }
-
-            uint32_t singleton_product_weight() const override {
-                auto* left = dynamic_cast<NumberOfExpression*>(_left.get());
-                if (!left || !left->is_all()) {
-                    throw base_error("Left constituent of subtract is not an all expression!");
-                }
-                auto* right = dynamic_cast<NumberOfExpression*>(_right.get());
-                if (!right || !right->is_singleton()) {
-                    throw base_error("Right constituent of subtract is not a single color number of expression!");
-                }
-
-                uint32_t val = std::min(left->number(), right->number());
-                return _left->singleton_product_weight() - val;
             }
 
             bool is_single_color() const {
@@ -485,10 +451,6 @@ namespace PetriEngine {
 
             uint32_t weight() const override {
                 return _scalar * _expr->weight();
-            }
-
-            uint32_t singleton_product_weight() const override {
-                return _scalar * _expr->singleton_product_weight();
             }
 
             bool is_single_color() const {

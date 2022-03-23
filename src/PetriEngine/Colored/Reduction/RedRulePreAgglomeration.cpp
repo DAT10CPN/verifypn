@@ -9,6 +9,10 @@
 #include "PetriEngine/Colored/Reduction/ColoredReducer.h"
 
 namespace PetriEngine::Colored::Reduction {
+    bool RedRulePreAgglomeration::isApplicable(QueryType queryType, bool preserveLoops, bool preserveStutter) const {
+        return true;
+    }
+
     bool RedRulePreAgglomeration::apply(ColoredReducer &red, const std::vector<bool> &inQuery,
                                         QueryType queryType, bool preserveLoops, bool preserveStutter, uint32_t explosion_limiter) {
         bool continueReductions = false;
@@ -54,11 +58,8 @@ namespace PetriEngine::Colored::Reduction {
 
             std::vector<bool> todo (postsize, true);
             bool todoAllGood = true;
-            // X14, not supported yet
+            // X14/15
             std::vector<bool> kIsAlwaysOne (postsize, true);
-
-            // Visitor for translating ArcExpressions into the info we need.
-            ArcExpressionVisitor arvis = ArcExpressionVisitor();
 
             for (const auto& prod : place._pre){
                 const Transition& producer = red.transitions()[prod];
@@ -68,25 +69,22 @@ namespace PetriEngine::Colored::Reduction {
                     break;
                 }
 
-                // Have arvis visit the arc from producer to place
-                arvis.reset();
-                red.getOutArc(producer, pid)->expr->visit(arvis);
+                const CArcIter& prodArc = red.getOutArc(producer, pid);
                 uint32_t kw = 1;
 
                 // X5
-                if(arvis.ok() && arvis.singleColor()){
-                    kw = arvis.colorblindWeight();
+                if(prodArc->expr->is_single_color()){
+                    kw = prodArc->expr->weight();
                 } else {
                     ok = false;
                     break;
                 }
 
                 for (uint32_t n = 0; n < place._post.size(); n++) {
-                    arvis.reset();
-                    red.getInArc(pid, red.transitions()[place._post[n]])->expr->visit(arvis);
-                    uint32_t w = arvis.colorblindWeight();
+                    const CArcIter& consArc = red.getInArc(pid, red.transitions()[place._post[n]]);
+                    uint32_t w = consArc->expr->weight();
                     // X9, (X5)
-                    if (!arvis.ok() || !arvis.singleColor() || kw % w != 0) {
+                    if (!consArc->expr->is_single_color() || kw % w != 0) {
                         todo[n] = false;
                         todoAllGood = false;
                     } else if (kw != w) {
@@ -142,28 +140,23 @@ namespace PetriEngine::Colored::Reduction {
                 if ((queryType != Reach || !kIsAlwaysOne[n]) && consumer.input_arcs.size() != 1) {
                     continue;
                 }
-                // X16?
+                // X14, X16
                 if (!kIsAlwaysOne[n]) {
                     for (const auto& conspost : consumer.output_arcs) {
-                        if (red.places()[conspost.place].inhibitor)
+                        if (red.places()[conspost.place].inhibitor || (queryType != Reach && inQuery[conspost.place] > 0))
                             continue;
                     }
                 }
 
-                arvis.reset();
-                CArcIter consArc = red.getInArc(pid, consumer);
-                consArc->expr->visit(arvis);
-                uint32_t w = arvis.colorblindWeight();
+                uint32_t w = red.getInArc(pid, consumer)->expr->weight();
 
                 // Update
                 for (const auto& prod : originalProducers){
-                    arvis.reset();
                     const Transition& producer = red.transitions()[prod];
-                    CArcIter proArc = red.getOutArc(producer, pid);
+                    const CArcIter proArc = red.getOutArc(producer, pid);
                     uint32_t k = 1;
                     if (!kIsAlwaysOne[n]){
-                        proArc->expr->visit(arvis);
-                        k = arvis.colorblindWeight() / w;
+                        k = proArc->expr->weight() / w;
                     }
 
                     // One for each number of firings of consumer possible after one firing of producer
@@ -205,10 +198,10 @@ namespace PetriEngine::Colored::Reduction {
 
             if (place._post.empty()) {
                 if (!preserveStutter){
-                    // The producers of place will become purely consuming transitions when it is gone, which can sometimes be removed
+                    // The original producers of place will become purely consuming transitions when it is gone, which can sometimes be removed
                     // The places they consume from aren't allowed to be in the query, but if they were we couldn't reach this point either.
-                    auto transitions = place._pre;
-                    for (auto tran_id : transitions)
+                    // For k > 1 the newly made transitions need to stay, hence originalProducers instead of place._pre
+                    for (auto tran_id : originalProducers)
                         red.skipTransition(tran_id);
                 }
                 red.skipPlace(pid);
