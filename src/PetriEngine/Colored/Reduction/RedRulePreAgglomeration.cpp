@@ -26,16 +26,18 @@ namespace PetriEngine::Colored::Reduction {
 
             const Place &place = red.places()[pid];
 
+            // Start small
+//            if (place._pre.size() > explosion_limiter){
+//                continueReductions = true;
+//                continue;
+//            } else if (explosion_limiter > 8){
+//                return false;
+//            }
+
             // X4, X7.1, X1
             if (place.skipped || place.inhibitor || inQuery[pid] > 0 || !place.marking.empty() || place._pre.empty() ||
                 place._post.empty())
                 continue;
-
-            // Start small
-            if (place._pre.size() > explosion_limiter){
-                continueReductions = true;
-                continue;
-            }
 
             // Check that producers and consumers are disjoint
             // X3
@@ -134,6 +136,7 @@ namespace PetriEngine::Colored::Reduction {
                     return false;
                 if (!todo[n])
                     continue;
+                ok = true;
 
                 const Transition &consumer = red.transitions()[originalConsumers[n]];
                 // (X10 || X15)
@@ -143,9 +146,12 @@ namespace PetriEngine::Colored::Reduction {
                 // X14, X16
                 if (!kIsAlwaysOne[n]) {
                     for (const auto& conspost : consumer.output_arcs) {
-                        if (red.places()[conspost.place].inhibitor || (queryType != Reach && inQuery[conspost.place] > 0))
-                            continue;
+                        if (red.places()[conspost.place].inhibitor || (queryType != Reach && inQuery[conspost.place] > 0)){
+                            ok = false;
+                            break;
+                        }
                     }
+                    if (!ok) continue;
                 }
 
                 uint32_t w = red.getInArc(pid, consumer)->expr->weight();
@@ -197,7 +203,7 @@ namespace PetriEngine::Colored::Reduction {
             }
 
             if (place._post.empty()) {
-                if (!preserveStutter){
+                if (!preserveLoops){
                     // The original producers of place will become purely consuming transitions when it is gone, which can sometimes be removed
                     // The places they consume from aren't allowed to be in the query, but if they were we couldn't reach this point either.
                     // For k > 1 the newly made transitions need to stay, hence originalProducers instead of place._pre
