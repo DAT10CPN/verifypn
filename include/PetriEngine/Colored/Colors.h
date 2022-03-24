@@ -80,7 +80,7 @@ namespace PetriEngine {
 
             const std::string& getDisplayName() const {
                 if (this->isTuple()) {
-                    throw base_error("Cannot get color from a tuple color.");
+                    throw base_error("Cannot get display name from a tuple color.");
                 }
                 return _displayName;
             }
