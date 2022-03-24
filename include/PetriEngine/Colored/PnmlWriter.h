@@ -40,8 +40,7 @@ namespace PetriEngine::Colored {
 
         std::string decreaseTabs() {
             if (_tabsCount == 0) {
-                throw base_error(
-                        "Something went wrong with exporting colored model to PNML - underflow in number of tabs");
+                throw base_error("Underflow in number of tabs when writing colored PNML");
             }
             _tabsCount -= 1;
             return getTabs();
