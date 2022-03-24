@@ -92,7 +92,7 @@ namespace PetriEngine::Colored::Reduction {
 
                         if (!ok) break;
 
-                        if (place1.marking.isSubsetOf(place2.marking)) continue;
+                        if (!place1.marking.isSubsetOrEqTo(place2.marking)) continue; // TODO k-scaling
 
                         j = 0;
                         for (size_t i = 0; i < place1._pre.size(); i++) {

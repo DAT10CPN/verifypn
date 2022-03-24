@@ -130,6 +130,12 @@ namespace PetriEngine {
             return thisMinusOther.empty() && !otherMinusThis.empty();
         }
 
+        bool Multiset::isSubsetOrEqTo(const Multiset &other) const {
+            Multiset thisMinusOther(*this);
+            thisMinusOther -= other;
+            return thisMinusOther.empty();
+        }
+
         bool Multiset::empty() const {
             for (auto & e : _set) {
                 if (e.second > 0) return false;
