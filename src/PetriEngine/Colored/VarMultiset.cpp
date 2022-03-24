@@ -111,6 +111,27 @@ namespace PetriEngine::Colored {
         return thisMinusOther.empty();
     }
 
+    uint32_t VarMultiset::numberOfTimesThisFitsInto(const VarMultiset &other) const {
+        if (_types.empty())
+            return std::numeric_limits<uint32_t>::max();
+        if (_types != other._types)
+            throw base_error("You cannot compare variable multisets of different types");
+        if (!this->isSubsetOrEqTo(other)) return 0;
+        uint32_t k = std::numeric_limits<uint32_t>::max();
+        for (const auto &pair : other) {
+            if ((*this)[pair.first] != 0) {
+                k = std::min(k, pair.second / (*this)[pair.first]);
+            }
+        }
+        return k;
+    }
+
+    bool VarMultiset::divides(const VarMultiset &other) const {
+        VarMultiset ms(*this);
+        auto k = ms.numberOfTimesThisFitsInto(other);
+        return (other - (*this) * k).empty();
+    }
+
     std::string VarMultiset::toString() const {
         std::ostringstream oss;
         for (size_t i = 0; i < _set.size(); ++i) {
