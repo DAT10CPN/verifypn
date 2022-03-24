@@ -28,7 +28,4 @@ namespace PetriEngine {
         PNMLParser parser;
         parser.parse(model, this);
     }
-
-    void AbstractPetriNetBuilder::addVariable(Colored::Variable &variable) {}
-
 }

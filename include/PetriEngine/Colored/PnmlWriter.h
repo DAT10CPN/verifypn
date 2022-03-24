@@ -40,12 +40,15 @@ namespace PetriEngine::Colored {
 
         std::string decreaseTabs() {
             if (_tabsCount == 0) {
-                throw base_error(
-                        "Something went wrong with exporting colored model to PNML - underflow in number of tabs");
+                throw base_error("Underflow in number of tabs when writing colored PNML");
             }
             _tabsCount -= 1;
             return getTabs();
         }
+
+        bool is_number(const std::string &s);
+
+        std::string guardStringToPnml(std::string guard);
 
         void metaInfo();
 
@@ -79,9 +82,7 @@ namespace PetriEngine::Colored {
 
         void handleCondition(Colored::Transition &transition);
 
-        void handleNow(std::vector<std::string> productSorts, std::vector<std::string> cyclicEnumerations);
-
-        std::string guardStringToPnml(std::string guard);
+        void handleProducts(std::vector<std::string> productSorts);
 
         void handleMarking(Multiset multiset);
 

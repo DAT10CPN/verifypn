@@ -167,7 +167,6 @@ namespace PetriEngine::Colored {
         }
     }
 
-    //todo cannot find any example of this yet
     void PnmlWriterColorExprVisitor::accept(const SubtractExpression *sub) {
         _out << increaseTabs() << "<subtract>" << "\n";
         _out << increaseTabs() << "<subterm>" << "\n";
