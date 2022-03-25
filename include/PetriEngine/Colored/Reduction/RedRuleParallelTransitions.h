@@ -21,7 +21,7 @@ namespace PetriEngine::Colored::Reduction {
             return !preserveStutter;
         }
 
-        bool apply(ColoredReducer &red, const std::vector<bool> &inQuery, QueryType queryType, bool preserveLoops, bool preserveStutter) override;
+        bool apply(ColoredReducer &red, const std::vector<bool> &inQuery, QueryType queryType, bool preserveLoops, bool preserveStutter, uint32_t explosion_limiter) override;
     };
 }
 

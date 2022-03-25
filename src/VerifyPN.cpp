@@ -62,6 +62,12 @@ bool reduceColored(ColoredPetriNetBuilder &cpnBuilder, std::vector<std::shared_p
                    std::vector<uint32_t>& reductions) {
     if (!cpnBuilder.isColored()) return false;
 
+    if (reductiontype == 0) {
+        out << "\nSkipping colored structural reductions (-R 0)" << std::endl;
+        out << "Net consists of " << cpnBuilder.getPlaceCount() << " places and " << cpnBuilder.getTransitionCount() << " transitions" << std::endl;
+        return false;
+    }
+
     ColoredPlaceUseVisitor placeUseVisitor(cpnBuilder.colored_placenames(), cpnBuilder.getPlaceCount());
     bool preserveLoops = false;
     bool preserveStutter = false;
@@ -136,17 +142,17 @@ unfold(ColoredPetriNetBuilder& cpnBuilder, bool compute_partiton, bool compute_s
         }
 
         out << "Size of colored net: " <<
-            cpnBuilder.getPlaceCount() << " places, " <<
-            cpnBuilder.getTransitionCount() << " transitions, and " <<
+            cpnBuilder.unskippedPlacesCount() << " places, " <<
+            cpnBuilder.unskippedTransitionsCount() << " transitions, and " <<
             cpnBuilder.getArcCount() << " arcs" << std::endl;
         out << "Size of unfolded net: " <<
             r.numberOfPlaces() << " places, " <<
             r.numberOfTransitions() << " transitions, and " <<
             unfolder.number_of_arcs() << " arcs" << std::endl;
-        out << "Unfolded in " << unfolder.time() << " seconds" << std::endl;
         if (compute_partiton) {
             out << "Partitioned in " << partition.time() << " seconds" << std::endl;
         }
+        out << "Unfolded in " << unfolder.time() << " seconds" << std::endl;
         return std::make_tuple<PetriNetBuilder, Colored::PTTransitionMap, Colored::PTPlaceMap>
             (std::move(r),unfolder.transition_names(),unfolder.place_names());
     }
