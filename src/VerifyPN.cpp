@@ -63,7 +63,7 @@ bool reduceColored(ColoredPetriNetBuilder &cpnBuilder, std::vector<std::shared_p
     if (!cpnBuilder.isColored()) return false;
 
     if (reductiontype == 0) {
-        out << "Skipping colored structural reductions (-R 0)" << std::endl;
+        out << "\nSkipping colored structural reductions (-R 0)" << std::endl;
         out << "Net consists of " << cpnBuilder.getPlaceCount() << " places and " << cpnBuilder.getTransitionCount() << " transitions" << std::endl;
         return false;
     }
