@@ -310,7 +310,7 @@ namespace PetriEngine {
         class NumberOfExpression : public ArcExpression {
         private:
             uint32_t _number;
-            std::vector<ColorExpression_ptr> _color; // Constituents of a product, not individual tokens.
+            std::vector<ColorExpression_ptr> _color;
             AllExpression_ptr _all;
         public:
             uint32_t weight() const override {

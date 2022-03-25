@@ -123,7 +123,6 @@ namespace PetriEngine::Colored {
             // Reduction rules
             RedRulePreAgglomeration _preAgglomeration;
             std::vector<ReductionRule *> _reductions{
-                    // TODO Actually useful reductions. This is just a test rule to guide implementation
                     &_preAgglomeration
             };
         };
