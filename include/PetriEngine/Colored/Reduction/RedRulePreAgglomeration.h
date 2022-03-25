@@ -15,9 +15,10 @@ namespace PetriEngine::Colored::Reduction {
     public:
         std::string name() override { return "Atomic Pre-Agglomeration (Colored)"; }
 
-        bool canBeAppliedRepeatedly() override { return false; }
+        bool canBeAppliedRepeatedly() override { return true; }
+        bool isApplicable(QueryType queryType, bool preserveLoops, bool preserveStutter) const override;
 
-        bool apply(ColoredReducer &red, const std::vector<bool> &inQuery, bool preserveDeadlocks) override;
+        bool apply(ColoredReducer &red, const std::vector<bool> &inQuery, QueryType queryType, bool preserveLoops, bool preserveStutter, uint32_t explosion_limiter) override;
     };
 }
 
