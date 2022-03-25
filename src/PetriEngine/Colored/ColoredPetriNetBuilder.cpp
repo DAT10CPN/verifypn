@@ -140,10 +140,8 @@ namespace PetriEngine {
             _inhibitorArcs.push_back(std::move(arc));
         } else if (input) {
             _transitions[t].input_arcs.push_back(std::move(arc));
-            std::sort(_transitions[t].input_arcs.begin(), _transitions[t].input_arcs.end(), Colored::ArcLessThanByPlace);
         } else {
             _transitions[t].output_arcs.push_back(std::move(arc));
-            std::sort(_transitions[t].output_arcs.begin(), _transitions[t].output_arcs.end(), Colored::ArcLessThanByPlace);
         }
     }
 

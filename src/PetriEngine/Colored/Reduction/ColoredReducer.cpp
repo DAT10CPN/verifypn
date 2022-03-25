@@ -242,7 +242,6 @@ namespace PetriEngine::Colored::Reduction {
             ++_tnameid;
             tmp = prefix + std::to_string(_tnameid);
         }
-        ++_tnameid;
         return tmp;
     }
 
@@ -252,9 +251,12 @@ namespace PetriEngine::Colored::Reduction {
         {
             id = _skippedTransitions.back();
             _skippedTransitions.pop_back();
-            _builder._transitions[id].skipped = false;
-            _builder._transitions[id].inhibited = false;
-            _builder._transitions[id].name = newTransitionName();
+            PetriEngine::Colored::Transition tran = _builder._transitions[id];
+            tran.skipped = false;
+            tran.inhibited = false;
+            _builder._transitionnames.erase(tran.name);
+            tran.name = newTransitionName();
+            _builder._transitionnames[tran.name] = id;
         }
         else
         {
@@ -269,6 +271,7 @@ namespace PetriEngine::Colored::Reduction {
     }
     void ColoredReducer::addOutputArc(uint32_t tid, uint32_t pid, ArcExpression_ptr expr){
         _builder.addOutputArc(_builder._transitions[tid].name, _builder._places[pid].name, expr);
+        std::sort(_builder._places[pid]._pre.begin(), _builder._places[pid]._pre.end());
     }
 
 }
