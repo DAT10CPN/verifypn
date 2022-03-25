@@ -4,6 +4,7 @@
 
 #include <fstream>
 #include <iomanip>
+#include <PetriEngine/AbstractPetriNetBuilder.h>
 
 
 namespace PetriEngine {
