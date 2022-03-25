@@ -10,7 +10,7 @@
 
 namespace PetriEngine::Colored::Reduction {
     bool RedRulePreAgglomeration::isApplicable(QueryType queryType, bool preserveLoops, bool preserveStutter) const {
-        return true;
+        return queryType != CTL && !preserveStutter;
     }
 
     bool RedRulePreAgglomeration::apply(ColoredReducer &red, const std::vector<bool> &inQuery,
@@ -35,7 +35,7 @@ namespace PetriEngine::Colored::Reduction {
 //            }
 
             // X4, X7.1, X1
-            if (place.skipped || place.inhibitor || inQuery[pid] > 0 || !place.marking.empty() || place._pre.empty() ||
+            if (place.skipped || place.inhibitor || inQuery[pid] || !place.marking.empty() || place._pre.empty() ||
                 place._post.empty())
                 continue;
 
@@ -103,10 +103,10 @@ namespace PetriEngine::Colored::Reduction {
                 for (const auto& prearc : producer.input_arcs){
                     const Place& preplace = red.places()[prearc.place];
                     // X8.2, X7.2
-                    if (preplace.inhibitor || inQuery[prearc.place] > 0){
+                    if (preplace.inhibitor || inQuery[prearc.place]){
                         ok = false;
                         break;
-                    } else if (queryType != Reach) {
+                    } else if (preserveLoops) {
                         // For reachability, we can do free agglomeration which avoids this condition
                         // X10
                         for(uint32_t alternative : preplace._post){
@@ -140,13 +140,13 @@ namespace PetriEngine::Colored::Reduction {
 
                 const Transition &consumer = red.transitions()[originalConsumers[n]];
                 // (X10 || X15)
-                if ((queryType != Reach || !kIsAlwaysOne[n]) && consumer.input_arcs.size() != 1) {
+                if ((preserveLoops || !kIsAlwaysOne[n]) && consumer.input_arcs.size() != 1) {
                     continue;
                 }
                 // X14, X16
                 if (!kIsAlwaysOne[n]) {
                     for (const auto& conspost : consumer.output_arcs) {
-                        if (red.places()[conspost.place].inhibitor || (queryType != Reach && inQuery[conspost.place] > 0)){
+                        if (red.places()[conspost.place].inhibitor || (queryType != Reach && inQuery[conspost.place])){
                             ok = false;
                             break;
                         }
@@ -168,32 +168,32 @@ namespace PetriEngine::Colored::Reduction {
                     // One for each number of firings of consumer possible after one firing of producer
                     for (uint32_t k_i = 1; k_i <= k; k_i++){
                         // Create new transition with effect of firing the producer, and then the consumer k_i times
-                        auto id = red.newTransition(nullptr);
+                        auto tid = red.newTransition(nullptr);
 
                         // Re-fetch the transition pointers as it might be invalidated, I think that's the issue?
                         const Transition &producerPrime = red.transitions()[prod];
                         const Transition &consumerPrime = red.transitions()[originalConsumers[n]];
-                        const Transition& newtran = red.transitions()[id];
+                        const Transition& newtran = red.transitions()[tid];
 
                         // Arcs from consumer
                         for (const auto& arc : consumerPrime.output_arcs) {
                             ArcExpression_ptr expr = arc.expr;
-                            red.addOutputArc(newtran, red.places()[arc.place], std::make_shared<PetriEngine::Colored::ScalarProductExpression>(std::shared_ptr(expr), k_i));
+                            red.addOutputArc(tid, arc.place, std::make_shared<PetriEngine::Colored::ScalarProductExpression>(std::shared_ptr(expr), k_i));
                         }
                         for (const auto& arc : consumerPrime.input_arcs){
                             if (arc.place != pid){
                                 ArcExpression_ptr expr = arc.expr;
-                                red.addInputArc(red.places()[arc.place], newtran, expr, arc.inhib_weight);
+                                red.addInputArc(arc.place, tid, expr, arc.inhib_weight);
                             }
                         }
 
                         for (const auto& arc : producerPrime.input_arcs){
                             ArcExpression_ptr expr = arc.expr;
-                            red.addInputArc(red.places()[arc.place], newtran, expr, arc.inhib_weight);
+                            red.addInputArc(arc.place, tid, expr, arc.inhib_weight);
                         }
 
                         if (k_i != k){
-                            red.addOutputArc(newtran, place, std::make_shared<PetriEngine::Colored::ScalarProductExpression>(std::shared_ptr(proArc->expr), k-k_i));
+                            red.addOutputArc(tid, pid, std::make_shared<PetriEngine::Colored::ScalarProductExpression>(std::shared_ptr(proArc->expr), k-k_i));
                         }
                     }
                 }

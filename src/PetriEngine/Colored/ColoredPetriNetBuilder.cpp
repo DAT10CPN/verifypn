@@ -119,7 +119,6 @@ namespace PetriEngine {
 
         if(input) {
             _places[p]._post.emplace_back(t);
-            std::sort(_places[p]._post.begin(), _places[p]._post.end());
         }
         else {
             _places[p]._pre.emplace_back(t);

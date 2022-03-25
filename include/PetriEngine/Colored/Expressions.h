@@ -38,7 +38,6 @@
 #include "utils/errors.h"
 #include "ColorExpressionVisitor.h"
 #include "CExprToString.h"
-#include "ArcExpressionVisitor.h"
 
 namespace PetriEngine {
     class ColoredPetriNetBuilder;
@@ -276,7 +275,6 @@ namespace PetriEngine {
             virtual ~ArcExpression() {}
 
             virtual void visit(ColorExpressionVisitor& visitor) const = 0;
-            virtual void visit(ArcExpressionVisitor& visitor) const = 0;
             virtual uint32_t weight() const = 0;
             virtual bool is_single_color() const = 0;
         };
@@ -358,7 +356,6 @@ namespace PetriEngine {
                     : _number(number), _color(), _all(std::move(all)) {}
 
             void visit(ColorExpressionVisitor& visitor) const { visitor.accept(this); }
-            void visit(ArcExpressionVisitor& visitor) const { visitor.accept(this); }
         };
 
         typedef std::shared_ptr<NumberOfExpression> NumberOfExpression_ptr;
@@ -376,7 +373,7 @@ namespace PetriEngine {
             }
 
             bool is_single_color() const {
-                return false;
+                return _constituents.size() == 1 && _constituents[0]->is_single_color();
             }
 
             size_t size() const {
@@ -399,7 +396,6 @@ namespace PetriEngine {
                     : _constituents(std::move(constituents)) {}
 
             void visit(ColorExpressionVisitor& visitor) const { visitor.accept(this); }
-            void visit(ArcExpressionVisitor& visitor) const { visitor.accept(this); }
         };
 
         class SubtractExpression : public ArcExpression {
@@ -440,7 +436,6 @@ namespace PetriEngine {
                     : _left(std::move(left)), _right(std::move(right)) {}
 
             void visit(ColorExpressionVisitor& visitor) const { visitor.accept(this); }
-            void visit(ArcExpressionVisitor& visitor) const { visitor.accept(this); }
         };
 
         class ScalarProductExpression : public ArcExpression {
@@ -469,7 +464,6 @@ namespace PetriEngine {
                     : _scalar(std::move(scalar)), _expr(expr) {}
 
             void visit(ColorExpressionVisitor& visitor) const { visitor.accept(this); }
-            void visit(ArcExpressionVisitor& visitor) const { visitor.accept(this); }
         };
     }
 }
