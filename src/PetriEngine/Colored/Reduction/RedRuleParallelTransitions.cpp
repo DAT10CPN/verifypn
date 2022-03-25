@@ -45,6 +45,7 @@ namespace PetriEngine::Colored::Reduction {
                 if (tout.skipped) continue;
 
                 for (size_t inner = outer + 1; inner < op._post.size(); inner++) {
+                    if (tout.skipped) break;
 
                     auto tinner = op._post[inner];
                     const Transition &tin = transitions[tinner];
@@ -109,7 +110,6 @@ namespace PetriEngine::Colored::Reduction {
                         if (t2 == touter) {
                             outer--;
                             inner--;
-                            break;
                         }
                         else if (t2 == tinner) inner--;
                         break; // swap
