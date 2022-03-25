@@ -60,7 +60,7 @@ namespace PetriEngine::Colored {
         if (!other._types.empty() && _types != other._types)
             throw base_error("You cannot add multisets over different sets");
         for (auto &pair: _set) {
-            (*this)[pair.first] = std::min<uint32_t>(pair.second - other[pair.first], 0); // min because underflow
+            (*this)[pair.first] = pair.second < other[pair.first] ? 0 : pair.second - other[pair.first];
         }
     }
 
