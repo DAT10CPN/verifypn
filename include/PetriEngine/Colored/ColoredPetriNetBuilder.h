@@ -98,6 +98,22 @@ namespace PetriEngine {
             return sum;
         }
 
+        uint32_t unskippedPlacesCount() const {
+            uint32_t count = 0;
+            for (auto &t : _transitions) {
+                if (!t.skipped) count++;
+            }
+            return count;
+        }
+
+        uint32_t unskippedTransitionsCount() const {
+            uint32_t count = 0;
+            for (auto &p : _places) {
+                if (!p.skipped) count++;
+            }
+            return count;
+        }
+
         const std::vector<Colored::Place>& places() const {
             return _places;
         }
@@ -143,7 +159,7 @@ namespace PetriEngine {
                 const Colored::ArcExpression_ptr& expr,
                 bool input, uint32_t inhib_weight);
 
-        void addVariable(const Colored::Variable* variable);
+        void addVariable(const Colored::Variable* variable) override;
     };
 
     enum ExpressionType {
