@@ -5,7 +5,7 @@
  *      Mathias Mehl Sørensen
  */
 
-#include <PetriEngine/Colored/ArcVarMultisetVisitor.h>
+#include "PetriEngine/Colored/ArcVarMultisetVisitor.h"
 #include "PetriEngine/Colored/Reduction/RedRuleParallelTransitions.h"
 #include "PetriEngine/Colored/Reduction/ColoredReducer.h"
 

@@ -16,8 +16,6 @@ namespace PetriEngine::Colored::Reduction {
     public:
         std::string name() override { return "ParallelTransitions"; }
 
-        bool canBeAppliedRepeatedly() override { return false; }
-
         bool isApplicable(QueryType queryType, bool preserveLoops, bool preserveStutter) const override {
             return !preserveStutter;
         }

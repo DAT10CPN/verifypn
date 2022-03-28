@@ -37,7 +37,7 @@ namespace PetriEngine::Colored::Reduction {
     }
 
     bool ColoredReducer::reduce(uint32_t timeout, const std::vector<bool> &inQuery, QueryType queryType,
-                                bool preserveLoops, bool preserveStutter, int reductiontype,
+                                bool preserveLoops, bool preserveStutter, uint32_t reductiontype,
                                 std::vector<uint32_t> &reductions) {
 
         _startTime = std::chrono::high_resolution_clock::now();
@@ -46,6 +46,7 @@ namespace PetriEngine::Colored::Reduction {
 
         bool any = false;
         bool changed;
+        uint32_t explosion_limiter = 2;
 
         std::vector<ReductionRule *> reductionsToUse;
 
@@ -61,14 +62,9 @@ namespace PetriEngine::Colored::Reduction {
 
         do {
             changed = false;
-
             for (auto &rule: reductionsToUse) {
-                if (rule->canBeAppliedRepeatedly())
-                    while (rule->apply(*this, inQuery, queryType, preserveLoops, preserveStutter)) changed = true;
-                else
-                    changed |= rule->apply(*this, inQuery, queryType, preserveLoops, preserveStutter);
+                changed |= rule->apply(*this, inQuery, queryType, preserveLoops, preserveStutter);
             }
-
             any |= changed;
         } while (changed && hasTimedOut());
 
@@ -231,4 +227,48 @@ namespace PetriEngine::Colored::Reduction {
         }
 #endif
     }
+
+    std::string ColoredReducer::newTransitionName()
+    {
+        auto prefix = "CCT";
+        auto tmp = prefix + std::to_string(_tnameid);
+        while(_builder._transitionnames.count(tmp) >= 1)
+        {
+            ++_tnameid;
+            tmp = prefix + std::to_string(_tnameid);
+        }
+        return tmp;
+    }
+
+    uint32_t ColoredReducer::newTransition(const Colored::GuardExpression_ptr& guard){
+        uint32_t id = transitions().size();
+        if (!_skippedTransitions.empty())
+        {
+            id = _skippedTransitions.back();
+            _skippedTransitions.pop_back();
+            PetriEngine::Colored::Transition& tran = _builder._transitions[id];
+            tran.skipped = false;
+            tran.inhibited = false;
+            _builder._transitionnames.erase(tran.name);
+            tran.name = newTransitionName();
+            _builder._transitionnames[tran.name] = id;
+        }
+        else
+        {
+            _builder.addTransition(newTransitionName(), guard, 0,0,0);
+        }
+        return id;
+    }
+
+    void ColoredReducer::addInputArc(uint32_t pid, uint32_t tid, ArcExpression_ptr& expr, uint32_t inhib_weight){
+        _builder.addInputArc(_builder._places[pid].name, _builder._transitions[tid].name, expr, inhib_weight);
+        std::sort(_builder._places[pid]._post.begin(), _builder._places[pid]._post.end());
+        std::sort(_builder._transitions[tid].input_arcs.begin(), _builder._transitions[tid].input_arcs.end(), ArcLessThanByPlace);
+    }
+    void ColoredReducer::addOutputArc(uint32_t tid, uint32_t pid, ArcExpression_ptr expr){
+        _builder.addOutputArc(_builder._transitions[tid].name, _builder._places[pid].name, expr);
+        std::sort(_builder._places[pid]._pre.begin(), _builder._places[pid]._pre.end());
+        std::sort(_builder._transitions[tid].output_arcs.begin(), _builder._transitions[tid].output_arcs.end(), ArcLessThanByPlace);
+    }
+
 }

@@ -11,14 +11,16 @@
 #include "ReductionRule.h"
 
 namespace PetriEngine::Colored::Reduction {
-    class RedRuleIdentity : public ReductionRule {
+    class RedRulePreAgglomeration : public ReductionRule {
     public:
-        std::string name() override { return "Identity"; }
+        std::string name() override { return "AtomicPreAgglomeration"; }
 
-        bool canBeAppliedRepeatedly() override { return false; }
-        bool isApplicable(QueryType queryType, bool preserveLoops, bool preserveStutter) const override { return true; }
+        bool isApplicable(QueryType queryType, bool preserveLoops, bool preserveStutter) const override;
 
         bool apply(ColoredReducer &red, const std::vector<bool> &inQuery, QueryType queryType, bool preserveLoops, bool preserveStutter) override;
+
+    private:
+        uint32_t explosion_limiter = 1;
     };
 }
 
