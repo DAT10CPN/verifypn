@@ -14,6 +14,9 @@
 #include "VarMultiset.h"
 
 namespace PetriEngine::Colored {
+
+    std::optional<VarMultiset> extractVarMultiset(const ArcExpression &e);
+
     class ArcVarMultisetVisitor : public ColorExpressionVisitor {
     public:
         ArcVarMultisetVisitor() : _msRes(), _tupRes(), _varRes() {};
@@ -85,8 +88,6 @@ namespace PetriEngine::Colored {
         std::vector<const Variable *> _tupRes;
         const Variable * _varRes;
     };
-
-    std::optional<VarMultiset> extractVarMultiset(const ArcExpression &e);
 }
 
 #endif //VERIFYPN_ARCVARMULTISETVISITOR_H
