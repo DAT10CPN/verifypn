@@ -46,7 +46,6 @@ namespace PetriEngine::Colored::Reduction {
 
         bool any = false;
         bool changed;
-        uint32_t explosion_limiter = 2;
 
         std::vector<ReductionRule *> reductionsToUse;
 
@@ -110,7 +109,6 @@ namespace PetriEngine::Colored::Reduction {
 
     void ColoredReducer::skipTransition(uint32_t tid) {
         Transition &tran = _builder._transitions[tid];
-        printf("-> Skipping transition %s\n", tran.name.c_str());
         assert(!tran.skipped);
         tran.skipped = true;
         _skippedTransitions.push_back(tid);
