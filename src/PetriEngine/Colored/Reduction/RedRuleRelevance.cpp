@@ -5,228 +5,155 @@
  *      Mathias Mehl Sørensen
  */
 
-#include "PetriEngine/Colored/Reduction/RedRulePreAgglomeration.h"
+#include "PetriEngine/Colored/Reduction/RedRuleRelevance.h"
 #include "PetriEngine/Colored/Reduction/ColoredReducer.h"
 
 namespace PetriEngine::Colored::Reduction {
-    bool RedRulePreAgglomeration::isApplicable(QueryType queryType, bool preserveLoops, bool preserveStutter) const {
-        return queryType != CTL && !preserveStutter;
+    bool RedRuleRelevance::isApplicable(QueryType queryType, bool preserveLoops, bool preserveStutter) const {
+        return !preserveConsumers;
     }
 
-    bool RedRulePreAgglomeration::apply(ColoredReducer &red, const std::vector<bool> &inQuery,
+    bool RedRuleRelevance::apply(ColoredReducer &red, const std::vector<bool> &inQuery,
                                         QueryType queryType, bool preserveLoops, bool preserveStutter) {
 
-        explosion_limiter *= 2;
-
-        bool continueReductions = false;
         bool changed = true;
 
         // Apply repeatedly
         while (changed) {
             changed = false;
 
+            std::vector<uint32_t> wtrans;
+            std::vector<bool> tseen(parent->numberOfTransitions(), false);
+            std::vector<bool> pseen(parent->numberOfPlaces(), false);
+
             for (uint32_t pid = 0; pid < red.placeCount(); pid++) {
                 if (red.hasTimedOut())
                     return false;
-                if (red.origTransitionCount() * 2 < red.unskippedTransitionsCount())
-                    return false;
 
-
-                const Place &place = red.places()[pid];
-
-                // Start small
-    //            if (place._pre.size() > explosion_limiter){
-    //                changed = true;
-    //                continue;
-    //            } else if (explosion_limiter > 8){
-    //                return false;
-    //            }
-
-                // X4, X7.1, X1
-                if (place.skipped || place.inhibitor || inQuery[pid] || !place.marking.empty() || place._pre.empty() ||
-                    place._post.empty())
+                if (inQuery[pid]){
+                    pseen[pid] = true;
+                    const Place &place = red._places[p];
+                    for (auto t : place.post) {
+                        if (!tseen[t]) {
+                            wtrans.push_back(t);
+                            tseen[t] = true;
+                        }
+                    }
+                    for (auto t : place.pre) {
+                        if (!tseen[t]) {
+                            wtrans.push_back(t);
+                            tseen[t] = true;
+                        }
+                    }
+                } else {
                     continue;
-
-                // Check that producers and consumers are disjoint
-                // X3
-                const auto presize = place._pre.size();
-                const auto postsize = place._post.size();
-                bool ok = true;
-                uint32_t i = 0, j = 0;
-                while (i < presize && j < postsize) {
-                    if (place._pre[i] < place._post[j])
-                        i++;
-                    else if (place._pre[j] < place._post[i])
-                        j++;
-                    else {
-                        ok = false;
-                        break;
-                    }
                 }
-
-                if (!ok) continue;
-
-                std::vector<bool> todo (postsize, true);
-                bool todoAllGood = true;
-                // X14/15
-                std::vector<bool> kIsAlwaysOne (postsize, true);
-
-                for (const auto& prod : place._pre){
-                    const Transition& producer = red.transitions()[prod];
-                    // X8.1, X6
-                    if(producer.inhibited || producer.input_arcs.size() != 1){
-                        ok = false;
-                        break;
-                    }
-
-                    const CArcIter& prodArc = red.getOutArc(producer, pid);
-                    uint32_t kw = 1;
-
-                    // X5
-                    if(prodArc->expr->is_single_color()){
-                        kw = prodArc->expr->weight();
-                    } else {
-                        ok = false;
-                        break;
-                    }
-
-                    for (uint32_t n = 0; n < place._post.size(); n++) {
-                        const CArcIter& consArc = red.getInArc(pid, red.transitions()[place._post[n]]);
-                        uint32_t w = consArc->expr->weight();
-                        // X9, (X5)
-                        if (!consArc->expr->is_single_color() || kw % w != 0) {
-                            todo[n] = false;
-                            todoAllGood = false;
-                        } else if (kw != w) {
-                            kIsAlwaysOne[n] = false;
-                        }
-                    }
-
-                    // Check if we have any qualifying consumers left
-                    if (!todoAllGood && std::lower_bound(todo.begin(), todo.end(), true) == todo.end()){
-                        ok = false;
-                        break;
-                    }
-
-                    for (const auto& prearc : producer.input_arcs){
-                        const Place& preplace = red.places()[prearc.place];
-                        // X8.2, X7.2
-                        if (preplace.inhibitor || inQuery[prearc.place]){
-                            ok = false;
-                            break;
-                        } else if (preserveLoops) {
-                            // For reachability, we can do free agglomeration which avoids this condition
-                            // X10
-                            for(uint32_t alternative : preplace._post){
-                                // X10; Transitions in place.pre are exempt from this check
-                                if (std::lower_bound(place._pre.begin(), place._pre.end(), alternative) != place._pre.end())
-                                    continue;
-
-                                const Transition& alternativeConsumer = red.transitions()[alternative];
-                                // X10; Transitions outside place.pre are not allowed to alter the contents of preplace
-                                if (red.getInArc(prearc.place, alternativeConsumer)->expr == red.getOutArc(alternativeConsumer, prearc.place)->expr){
-                                    ok = false;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-
-                    if (!ok) break;
-                }
-
-                if (!ok) continue;
-                std::vector<uint32_t> originalConsumers = place._post;
-                std::vector<uint32_t> originalProducers = place._pre;
-                for (uint32_t n = 0; n < originalConsumers.size(); n++)
-                {
-                    if (red.hasTimedOut())
-                        return false;
-                    if (!todo[n])
-                        continue;
-                    ok = true;
-
-                    const Transition &consumer = red.transitions()[originalConsumers[n]];
-                    // (X10 || X15)
-                    if ((preserveLoops || !kIsAlwaysOne[n]) && consumer.input_arcs.size() != 1) {
-                        continue;
-                    }
-                    // X14, X16
-                    if (!kIsAlwaysOne[n]) {
-                        for (const auto& conspost : consumer.output_arcs) {
-                            if (red.places()[conspost.place].inhibitor || (queryType != Reach && inQuery[conspost.place])){
-                                ok = false;
-                                break;
-                            }
-                        }
-                        if (!ok) continue;
-                    }
-
-                    uint32_t w = red.getInArc(pid, consumer)->expr->weight();
-
-                    // Update
-                    for (const auto& prod : originalProducers){
-                        const Transition& producer = red.transitions()[prod];
-                        const CArcIter proArc = red.getOutArc(producer, pid);
-                        uint32_t k = 1;
-                        if (!kIsAlwaysOne[n]){
-                            k = proArc->expr->weight() / w;
-                        }
-
-                        // One for each number of firings of consumer possible after one firing of producer
-                        for (uint32_t k_i = 1; k_i <= k; k_i++){
-                            // Create new transition with effect of firing the producer, and then the consumer k_i times
-                            auto tid = red.newTransition(nullptr);
-
-                            // Re-fetch the transition pointers as it might be invalidated, I think that's the issue?
-                            const Transition &producerPrime = red.transitions()[prod];
-                            const Transition &consumerPrime = red.transitions()[originalConsumers[n]];
-                            const Transition& newtran = red.transitions()[tid];
-
-                            // Arcs from consumer
-                            for (const auto& arc : consumerPrime.output_arcs) {
-                                ArcExpression_ptr expr = arc.expr;
-                                red.addOutputArc(tid, arc.place, std::make_shared<PetriEngine::Colored::ScalarProductExpression>(std::shared_ptr(expr), k_i));
-                            }
-                            for (const auto& arc : consumerPrime.input_arcs){
-                                if (arc.place != pid){
-                                    ArcExpression_ptr expr = arc.expr;
-                                    red.addInputArc(arc.place, tid, expr, arc.inhib_weight);
-                                }
-                            }
-
-                            for (const auto& arc : producerPrime.input_arcs){
-                                ArcExpression_ptr expr = arc.expr;
-                                red.addInputArc(arc.place, tid, expr, arc.inhib_weight);
-                            }
-
-                            if (k_i != k){
-                                red.addOutputArc(tid, pid, std::make_shared<PetriEngine::Colored::ScalarProductExpression>(std::shared_ptr(proArc->expr), k-k_i));
-                            }
-                        }
-                    }
-                    red.skipTransition(originalConsumers[n]);
-                    changed = true;
-                    _applications++;
-                }
-
-                if (place._post.empty()) {
-                    if (!preserveLoops){
-                        // The original producers of place will become purely consuming transitions when it is gone, which can sometimes be removed
-                        // The places they consume from aren't allowed to be in the query, but if they were we couldn't reach this point either.
-                        // For k > 1 the newly made transitions need to stay, hence originalProducers instead of place._pre
-                        for (auto tran_id : originalProducers)
-                            red.skipTransition(tran_id);
-                    }
-                    red.skipPlace(pid);
-                }
-
-                red.consistent();
             }
 
-            continueReductions |= changed;
+            while (!wtrans.empty()) {
+                if (hasTimedout()) return std::nullopt;
+                auto t = wtrans.back();
+                wtrans.pop_back();
+                const Transition &trans = parent->_transitions[t];
+                for (const Arc &arc: trans.input_arcs) {
+                    const Place &place = red._places[arc.place];
+                    if (arc.inhib_weight == 0){
+
+                    } else {
+
+                    }
+                }
+            }
+
         }
 
-        return continueReductions;
+        return changed;
     }
 }
+
+//Reducer::relevant(const uint32_t *placeInQuery, bool remove_consumers) {
+//    std::vector<uint32_t> wtrans;
+//    std::vector<bool> tseen(parent->numberOfTransitions(), false);
+//    for (uint32_t p = 0; p < parent->numberOfPlaces(); ++p) {
+//        if (hasTimedout()) return std::nullopt;
+//        if (placeInQuery[p] > 0) {
+//            const Place &place = parent->_places[p];
+//            for (auto t : place.consumers) {
+//                if (!tseen[t]) {
+//                    wtrans.push_back(t);
+//                    tseen[t] = true;
+//                }
+//            }
+//            for (auto t : place.producers) {
+//                if (!tseen[t]) {
+//                    wtrans.push_back(t);
+//                    tseen[t] = true;
+//                }
+//            }
+//        }
+//    }
+//    std::vector<bool> pseen(parent->numberOfPlaces(), false);
+//
+//    while (!wtrans.empty()) {
+//        if (hasTimedout()) return std::nullopt;
+//        auto t = wtrans.back();
+//        wtrans.pop_back();
+//        const Transition &trans = parent->_transitions[t];
+//        for (const Arc &arc : trans.pre) {
+//            const Place &place = parent->_places[arc.place];
+//            if (arc.inhib) {
+//                for (auto pt : place.consumers) {
+//                    if (!tseen[pt]) {
+//                        // Summary of block: 'pt' is seen unless it:
+//                        // - Is inhibited by 'place'
+//                        // - Forms a decreasing loop on 'place' that cannot lower the marking of 'place' below the weight of 'arc'
+//                        // - Forms a non-decreasing loop on 'place'
+//                        Transition &trans = parent->_transitions[pt];
+//                        auto it = trans.post.begin();
+//                        for (; it != trans.post.end(); ++it)
+//                            if (it->place >= arc.place) break;
+//
+//                        if (it != trans.post.end() && it->place == arc.place) {
+//                            auto it2 = trans.pre.begin();
+//                            // Find the arc from place to trans we know to exist because that is how we found trans in the first place
+//                            for (; it2 != trans.pre.end(); ++it2)
+//                                if (it2->place >= arc.place) break;
+//                            // No need for a || it2->place != arc.place condition because we know the loop will always break on it2->place == arc.place
+//                            if (it2->inhib || it->weight >= arc.weight || it->weight >= it2->weight) continue;
+//                        }
+//                        tseen[pt] = true;
+//                        wtrans.push_back(pt);
+//                    }
+//                }
+//            } else {
+//                for (auto pt : place.producers) {
+//                    if (!tseen[pt]) {
+//                        // Summary of block: pt is seen unless it forms a non-increasing loop on place
+//                        Transition &trans = parent->_transitions[pt];
+//                        auto it = trans.pre.begin();
+//                        for (; it != trans.pre.end(); ++it)
+//                            if (it->place >= arc.place) break;
+//
+//                        if (it != trans.pre.end() && it->place == arc.place && !it->inhib) {
+//                            auto it2 = trans.post.begin();
+//                            for (; it2 != trans.post.end(); ++it2)
+//                                if (it2->place >= arc.place) break;
+//                            if (it->weight >= it2->weight) continue;
+//                        }
+//                        tseen[pt] = true;
+//                        wtrans.push_back(pt);
+//                    }
+//                }
+//
+//                for (auto pt : place.consumers) {
+//                    if (!tseen[pt] && (!remove_consumers || placeInQuery[arc.place] > 0)) {
+//                        tseen[pt] = true;
+//                        wtrans.push_back(pt);
+//                    }
+//                }
+//            }
+//            pseen[arc.place] = true;
+//        }
+//    }
+//    return std::make_optional(std::pair(tseen, pseen));
+//}

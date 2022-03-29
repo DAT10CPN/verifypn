@@ -80,8 +80,6 @@ namespace PetriEngine::Colored {
             return _ok;
         }
 
-        static std::optional<VarMultiset> extract(const ArcExpression &e);
-
     private:
         bool _ok = true; // False if the arc expression could not be converted to multiset of variables
         VarMultiset _msRes;
@@ -89,6 +87,8 @@ namespace PetriEngine::Colored {
         std::vector<const Variable *> _tupRes;
         const Variable * _varRes;
     };
+
+    std::optional<VarMultiset> extract(const ArcExpression &e);
 }
 
 #endif //VERIFYPN_ARCVARMULTISETVISITOR_H

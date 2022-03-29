@@ -5,8 +5,8 @@
  *      Mathias Mehl Sørensen
  */
 
-#ifndef VERIFYPN_REDRULEIDENTITY_H
-#define VERIFYPN_REDRULEIDENTITY_H
+#ifndef VERIFYPN_REDRULEPREAGGLOMERATION_H
+#define VERIFYPN_REDRULEPREAGGLOMERATION_H
 
 #include "ReductionRule.h"
 
@@ -24,4 +24,4 @@ namespace PetriEngine::Colored::Reduction {
     };
 }
 
-#endif //VERIFYPN_REDRULEIDENTITY_H
+#endif //VERIFYPN_REDRULEPREAGGLOMERATION_H
