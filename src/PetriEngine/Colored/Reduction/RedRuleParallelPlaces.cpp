@@ -87,8 +87,8 @@ namespace PetriEngine::Colored::Reduction {
 
                             if (to_string(*a1->expr) == to_string(*a2->expr)) {
                                 continue; // mult is already at least 1
-                            } else if (auto ms1 = ArcVarMultisetVisitor::extract(*a1->expr)) {
-                                if (auto ms2 = ArcVarMultisetVisitor::extract(*a2->expr)) {
+                            } else if (auto ms1 = extractVarMultiset(*a1->expr)) {
+                                if (auto ms2 = extractVarMultiset(*a2->expr)) {
                                     if (auto k = ms1->scaleRequiredToCover(*ms2)) {
                                         mult = std::max(mult, *k);
                                         continue;
@@ -122,8 +122,8 @@ namespace PetriEngine::Colored::Reduction {
 
                             if (mult == 1.0 && to_string(*a1->expr) == to_string(*a2->expr)) {
                                 continue;
-                            } else if (auto ms1 = ArcVarMultisetVisitor::extract(*a1->expr)) {
-                                if (auto ms2 = ArcVarMultisetVisitor::extract(*a2->expr)) {
+                            } else if (auto ms1 = extractVarMultiset(*a1->expr)) {
+                                if (auto ms2 = extractVarMultiset(*a2->expr)) {
                                     // TODO Could be more precise with fuzzy multisets
                                     if ((*ms1 * (uint32_t)std::ceil(mult)).isSubsetOrEqTo(*ms2)) {
                                         continue;
