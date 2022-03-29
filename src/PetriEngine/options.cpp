@@ -182,6 +182,7 @@ void printHelp() {
         "                                       LTL model checking. Not recommended.\n"
         "  --noreach                            Force use of CTL/LTL engine, even when queries are reachability.\n"
         "                                       Not recommended since the reachability engine is faster.\n"
+        "  --nounfold                           Stops after structural reductions, but before unfolding \n"
         "  -c, --cpn-overapproximation          Over approximate query on Colored Petri Nets (CPN only)\n"
         "  --disable-cfp                        Disable the computation of possible colors in the Petri Net (CPN only)\n"
         "  --disable-partitioning               Disable the partitioning of colors in the Petri Net (CPN only)\n"
@@ -543,7 +544,9 @@ bool options_t::parse(int argc, const char** argv) {
             computePartition = false;
         } else if (std::strcmp(argv[i], "--noverify") == 0) {
             doVerification = false;
-        } else if (std::strcmp(argv[i], "--disable-symmetry-vars") == 0) {
+        } else if (std::strcmp(argv[i], "--nounfold") == 0) {
+            doUnfolding = false;
+        }else if (std::strcmp(argv[i], "--disable-symmetry-vars") == 0) {
             symmetricVariables = false;
         } else if (std::strcmp(argv[i], "--strategy-output") == 0) {
             if (argc == i + 1) {
