@@ -7,11 +7,11 @@
 
 #include "PetriEngine/Colored/Reduction/RedRuleParallelTransitions.h"
 #include "PetriEngine/Colored/Reduction/ColoredReducer.h"
+#include "PetriEngine/Colored/ArcVarMultisetVisitor.h"
 
 namespace PetriEngine::Colored::Reduction {
     bool RedRuleParallelTransitions::apply(ColoredReducer &red, const std::vector<bool> &inQuery,
-                                           QueryType queryType, bool preserveLoops, bool preserveStutter,
-                                           uint32_t explosion_limiter) {
+                                           QueryType queryType, bool preserveLoops, bool preserveStutter) {
 
         // Remove transitions which effect is k times another transitions effect
 
@@ -73,39 +73,47 @@ namespace PetriEngine::Colored::Reduction {
 
                         if (trans1.inhibited) continue; // TODO Can be generalized
 
-                        bool ok = true;
-                        // TODO Check if t2 is k times t1 once we have variable multisets
+                        uint32_t fail = 0;
+                        uint32_t mult = std::numeric_limits<uint32_t>::max();
 
                         // Check output arcs
                         for (int i = trans1.output_arcs.size() - 1; i >= 0; i--) {
                             const Arc &arc1 = trans1.output_arcs[i];
                             const Arc &arc2 = trans2.output_arcs[i];
 
-                            if (arc1.place != arc2.place || to_string(*arc1.expr) != to_string(*arc2.expr)) {
-                                ok = false;
+                            if (arc1.place != arc2.place) {
+                                fail = 2;
                                 break;
                             }
+
+                            checkMult(fail, mult, *arc1.expr, *arc2.expr);
+                            if (fail > 0) break;
                         }
 
-                        if (!ok) break;
+                        if (fail == 2) break;
+                        else if (fail == 1) continue;
 
                         // Check input arcs
                         for (int i = trans1.input_arcs.size() - 1; i >= 0; i--) {
                             const Arc &arc1 = trans1.input_arcs[i];
                             const Arc &arc2 = trans2.input_arcs[i];
-
-                            if (arc1.place != arc2.place || to_string(*arc1.expr) != to_string(*arc2.expr)) {
-                                ok = false;
+                            if (arc1.place != arc2.place) {
+                                fail = 2;
                                 break;
                             }
+
+                            checkMult(fail, mult, *arc1.expr, *arc2.expr);
+                            if (fail > 0) break;
                         }
 
-                        if (!ok) break;
+                        if (fail == 2) break;
+                        else if (fail == 1) continue;
 
                         // Update
                         _applications++;
                         continueReductions = true;
                         red.skipTransition(t2);
+                        red._tflags[touter] = 0;
                         // op._post just shrunk, so go one back to not miss any
                         if (t2 == touter) {
                             outer--;
@@ -119,5 +127,39 @@ namespace PetriEngine::Colored::Reduction {
         }
 
         return continueReductions;
+    }
+
+    void RedRuleParallelTransitions::checkMult(uint32_t &fail, uint32_t &mult, const ArcExpression &small, const ArcExpression &big) {
+        if (mult == std::numeric_limits<uint32_t>::max()) {
+            if (to_string(small) == to_string(big)) {
+                mult = 1;
+                return;
+            }
+
+            if (auto sms = PetriEngine::Colored::extractVarMultiset(small)) {
+                if (auto bms = PetriEngine::Colored::extractVarMultiset(big)) {
+                    if (sms->divides(*bms)) {
+                        mult = sms->numberOfTimesThisFitsInto(*bms);
+                        return;
+                    }
+                }
+            }
+
+            fail = 1;
+            return;
+        }
+
+        if (mult == 1 && to_string(small) == to_string(big))
+            return;
+
+        if (auto ms1 = PetriEngine::Colored::extractVarMultiset(small)) {
+            if (auto ms2 = PetriEngine::Colored::extractVarMultiset(big)) {
+                if (*ms1 * mult == ms2) {
+                    return;
+                }
+            }
+        }
+
+        fail = 2;
     }
 }

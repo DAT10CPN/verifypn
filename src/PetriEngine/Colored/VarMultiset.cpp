@@ -60,7 +60,7 @@ namespace PetriEngine::Colored {
         if (!other._types.empty() && _types != other._types)
             throw base_error("You cannot add multisets over different sets");
         for (auto &pair: _set) {
-            (*this)[pair.first] = std::min<uint32_t>(pair.second - other[pair.first], 0); // min because underflow
+            (*this)[pair.first] = pair.second < other[pair.first] ? 0 : pair.second - other[pair.first];
         }
     }
 
@@ -111,12 +111,45 @@ namespace PetriEngine::Colored {
         return thisMinusOther.empty();
     }
 
+    std::optional<double> VarMultiset::scaleRequiredToCover(const VarMultiset &other) const {
+        double mult = 0;
+        VarMultiset combined = *this + other;
+        for (const auto &pair : combined) {
+            double a = (*this)[pair.first];
+            double b = other[pair.first];
+            if (a == 0 && b != 0) return std::nullopt;
+            mult = std::max(mult, b / a);
+        }
+        return std::optional(mult);
+    }
+
+    uint32_t VarMultiset::numberOfTimesThisFitsInto(const VarMultiset &other) const {
+        if (_types.empty())
+            return std::numeric_limits<uint32_t>::max();
+        if (_types != other._types)
+            throw base_error("You cannot compare variable multisets of different types");
+        if (!this->isSubsetOrEqTo(other)) return 0;
+        uint32_t k = std::numeric_limits<uint32_t>::max();
+        for (const auto &pair : other) {
+            if ((*this)[pair.first] != 0) {
+                k = std::min(k, pair.second / (*this)[pair.first]);
+            }
+        }
+        return k;
+    }
+
+    bool VarMultiset::divides(const VarMultiset &other) const {
+        VarMultiset ms(*this);
+        auto k = ms.numberOfTimesThisFitsInto(other);
+        return (other - (*this) * k).empty();
+    }
+
     std::string VarMultiset::toString() const {
         std::ostringstream oss;
         for (size_t i = 0; i < _set.size(); ++i) {
             auto &entry = _set[i];
             oss << _set[i].second << "'(";
-            for (int j = 0; j < entry.first.size(); ++j) {
+            for (size_t j = 0; j < entry.first.size(); ++j) {
                 oss << entry.first[j]->name;
                 if (j < entry.first.size() - 1) {
                     oss << ", ";
@@ -132,7 +165,7 @@ namespace PetriEngine::Colored {
 
     bool VarMultiset::matchesType(const VarTuple &vt) const {
         if (_types.size() != vt.size()) return false;
-        for (int i = 0; i < _types.size(); ++i) {
+        for (size_t i = 0; i < _types.size(); ++i) {
             if (_types[i] != vt[i]->colorType) return false;
         }
         return true;
@@ -144,6 +177,14 @@ namespace PetriEngine::Colored {
             types.emplace_back(v->colorType);
         }
         return types;
+    }
+
+    size_t VarMultiset::distinctSize() const {
+        size_t size = 0;
+        for (auto &pair : _set) {
+            if (pair.second > 0) size++;
+        }
+        return size;
     }
 
     bool VarMultiset::Iterator::operator==(VarMultiset::Iterator &other) {
