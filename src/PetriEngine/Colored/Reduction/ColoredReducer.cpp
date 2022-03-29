@@ -62,15 +62,9 @@ namespace PetriEngine::Colored::Reduction {
 
         do {
             changed = false;
-
             for (auto &rule: reductionsToUse) {
-                if (rule->canBeAppliedRepeatedly())
-                    while (rule->apply(*this, inQuery, queryType, preserveLoops, preserveStutter, explosion_limiter)) changed = true;
-                else
-                    changed |= rule->apply(*this, inQuery, queryType, preserveLoops, preserveStutter, explosion_limiter);
+                changed |= rule->apply(*this, inQuery, queryType, preserveLoops, preserveStutter);
             }
-
-            explosion_limiter *= 2;
             any |= changed;
         } while (changed && hasTimedOut());
 
@@ -116,6 +110,7 @@ namespace PetriEngine::Colored::Reduction {
 
     void ColoredReducer::skipTransition(uint32_t tid) {
         Transition &tran = _builder._transitions[tid];
+        printf("-> Skipping transition %s\n", tran.name.c_str());
         assert(!tran.skipped);
         tran.skipped = true;
         _skippedTransitions.push_back(tid);
