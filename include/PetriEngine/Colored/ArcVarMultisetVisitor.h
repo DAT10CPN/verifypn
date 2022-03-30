@@ -14,7 +14,10 @@
 #include "VarMultiset.h"
 
 namespace PetriEngine::Colored {
-    class ArcVarMultisetVisitor : ColorExpressionVisitor {
+
+    std::optional<VarMultiset> extractVarMultiset(const ArcExpression &e);
+
+    class ArcVarMultisetVisitor : public ColorExpressionVisitor {
     public:
         ArcVarMultisetVisitor() : _msRes(), _tupRes(), _varRes() {};
 
@@ -76,9 +79,7 @@ namespace PetriEngine::Colored {
 
         void accept(const ScalarProductExpression *) override;
 
-        [[nodiscard]] bool ok() const {
-            return _ok;
-        }
+        std::optional<VarMultiset> getResult() const;
 
     private:
         bool _ok = true; // False if the arc expression could not be converted to multiset of variables
@@ -87,8 +88,6 @@ namespace PetriEngine::Colored {
         std::vector<const Variable *> _tupRes;
         const Variable * _varRes;
     };
-
-    std::optional<VarMultiset> extract(const ArcExpression &e);
 }
 
 #endif //VERIFYPN_ARCVARMULTISETVISITOR_H
