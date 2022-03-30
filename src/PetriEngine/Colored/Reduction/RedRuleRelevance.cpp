@@ -58,6 +58,11 @@ namespace PetriEngine::Colored::Reduction {
                 for (const Arc &arc: trans.input_arcs) {
                     const Place &place = red._places[arc.place];
                     if (arc.inhib_weight == 0){
+                        for (auto pt : place.producers) {
+                            if (!tseen[pt]) {
+
+                            }
+                        }
 
                     } else {
 
