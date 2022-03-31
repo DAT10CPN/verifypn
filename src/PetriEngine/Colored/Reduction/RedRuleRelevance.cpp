@@ -17,10 +17,7 @@ namespace PetriEngine::Colored::Reduction {
     bool RedRuleRelevance::apply(ColoredReducer &red, const std::vector<bool> &inQuery,
                                         QueryType queryType, bool preserveLoops, bool preserveStutter) {
 
-        bool changed = true;
-
-        // Apply repeatedly
-        changed = false;
+        bool changed = false;
         std::vector<uint32_t> wtrans;
         std::vector<bool> tseen(red.transitions().size(), false);
         std::vector<bool> pseen(red.places().size(), false);
