@@ -5,12 +5,13 @@
  *      Mathias Mehl Sørensen
  */
 
+#include <PetriEngine/Colored/ArcVarMultisetVisitor.h>
 #include "PetriEngine/Colored/Reduction/RedRuleRelevance.h"
 #include "PetriEngine/Colored/Reduction/ColoredReducer.h"
 
 namespace PetriEngine::Colored::Reduction {
     bool RedRuleRelevance::isApplicable(QueryType queryType, bool preserveLoops, bool preserveStutter) const {
-        return !preserveConsumers;
+        return false; //!preserveStutter;
     }
 
     bool RedRuleRelevance::apply(ColoredReducer &red, const std::vector<bool> &inQuery,
@@ -23,8 +24,8 @@ namespace PetriEngine::Colored::Reduction {
             changed = false;
 
             std::vector<uint32_t> wtrans;
-            std::vector<bool> tseen(parent->numberOfTransitions(), false);
-            std::vector<bool> pseen(parent->numberOfPlaces(), false);
+            std::vector<bool> tseen(red.transitions().size(), false);
+            std::vector<bool> pseen(red.places().size(), false);
 
             for (uint32_t pid = 0; pid < red.placeCount(); pid++) {
                 if (red.hasTimedOut())
@@ -32,14 +33,14 @@ namespace PetriEngine::Colored::Reduction {
 
                 if (inQuery[pid]){
                     pseen[pid] = true;
-                    const Place &place = red._places[p];
-                    for (auto t : place.post) {
+                    const Place &place = red.places()[pid];
+                    for (auto t : place._post) {
                         if (!tseen[t]) {
                             wtrans.push_back(t);
                             tseen[t] = true;
                         }
                     }
-                    for (auto t : place.pre) {
+                    for (auto t : place._pre) {
                         if (!tseen[t]) {
                             wtrans.push_back(t);
                             tseen[t] = true;
@@ -51,21 +52,58 @@ namespace PetriEngine::Colored::Reduction {
             }
 
             while (!wtrans.empty()) {
-                if (hasTimedout()) return std::nullopt;
+                if (red.hasTimedOut()) return false;
                 auto t = wtrans.back();
                 wtrans.pop_back();
-                const Transition &trans = parent->_transitions[t];
-                for (const Arc &arc: trans.input_arcs) {
-                    const Place &place = red._places[arc.place];
+                const Transition &relevantTrans = red.transitions()[t];
+                for (const Arc &arc: relevantTrans.input_arcs) {
+                    const Place &place = red.places()[arc.place];
+                    pseen[arc.place] = true;
                     if (arc.inhib_weight == 0){
-                        for (auto pt : place.producers) {
-                            if (!tseen[pt]) {
-
+                        for (auto prtID : place._pre) {
+                            if (!tseen[prtID]) {
+                                const PetriEngine::Colored::Transition& potentiallyRelevantTrans = red.transitions()[prtID];
+                                auto prtOut = potentiallyRelevantTrans.output_arcs.begin();
+                                for (; prtOut != potentiallyRelevantTrans.output_arcs.end(); ++prtOut){
+                                    if (prtOut->place >= arc.place) break;
+                                }
+                                if (prtOut != potentiallyRelevantTrans.output_arcs.end() && prtOut->place == arc.place) {
+                                    const auto& prtIn = red.getInArc(arc.place, potentiallyRelevantTrans);
+                                    if (auto ms1 = PetriEngine::Colored::extractVarMultiset(*prtIn->expr)){
+                                        if (auto ms2 = PetriEngine::Colored::extractVarMultiset(*prtOut->expr)) {
+                                            if (ms1 == ms2){
+                                                continue;
+                                            }
+                                        }
+                                    }
+                                }
+                                tseen[prtID] = true;
+                                wtrans.push_back(prtID);
                             }
                         }
-
                     } else {
+                        for (auto prtID : place._post) {
+                            if (!tseen[prtID]) {
+                                // Summary of block: 'pt' is seen unless it:
+                                // - Is inhibited by 'place'
+                                // - Forms a decreasing loop on 'place' that cannot lower the marking of 'place' below the weight of 'arc'
+                                // - Forms a non-decreasing loop on 'place'
+                                const Transition &potentiallyRelevantTrans = red.transitions()[prtID];
+                                auto prtOut = potentiallyRelevantTrans.output_arcs.begin();
+                                for (; prtOut != potentiallyRelevantTrans.output_arcs.end(); ++prtOut)
+                                    if (prtOut->place >= arc.place) break;
 
+                                if (prtOut != potentiallyRelevantTrans.output_arcs.end() && prtOut->place == arc.place) {
+                                    const auto prtIn = red.getInArc(arc.place, potentiallyRelevantTrans);
+                                    // No need for a || it2->place != arc.place condition because we know the loop will always break on it2->place == arc.place
+                                    if (prtIn->inhib_weight > 0 || prtOut->expr->weight() >= arc.expr->weight() ||
+                                            prtOut->expr->weight() >= prtIn->expr->weight())
+                                        continue;
+                                }
+                                tseen[prtID] = true;
+                                wtrans.push_back(prtID);
+                            }
+                        }
                     }
                 }
             }
