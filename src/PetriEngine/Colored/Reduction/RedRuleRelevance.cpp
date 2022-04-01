@@ -55,14 +55,15 @@ namespace PetriEngine::Colored::Reduction {
                 const Place &place = red.places()[arc.place];
                 pseen[arc.place] = true;
                 if (arc.inhib_weight == 0){
-                    for (const auto prtID : place._pre) {
+                    for (uint32_t prtID : place._pre) {
                         if (!tseen[prtID]) {
                             const PetriEngine::Colored::Transition& potentiallyRelevantTrans = red.transitions()[prtID];
-                            auto prtIn = potentiallyRelevantTrans.output_arcs.begin();
-                            for (; prtIn != potentiallyRelevantTrans.output_arcs.end(); ++prtIn){
+                            // Loops that do not alter the marking in the place are not considered relevant to the place.
+                            auto prtIn = potentiallyRelevantTrans.input_arcs.begin();
+                            for (; prtIn != potentiallyRelevantTrans.input_arcs.end(); ++prtIn){
                                 if (prtIn->place >= arc.place) break;
                             }
-                            if (prtIn != potentiallyRelevantTrans.output_arcs.end() && prtIn->place == arc.place) {
+                            if (prtIn != potentiallyRelevantTrans.input_arcs.end() && prtIn->place == arc.place) {
                                 const auto& prtOut = red.getOutArc(potentiallyRelevantTrans, arc.place);
                                 if (const auto ms1 = PetriEngine::Colored::extractVarMultiset(*prtIn->expr)){
                                     if (const auto ms2 = PetriEngine::Colored::extractVarMultiset(*prtIn->expr)) {
