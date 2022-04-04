@@ -133,10 +133,10 @@ namespace PetriEngine::Colored {
             RedRuleParallelPlaces _redRuleParallelPlaces;
             RedRuleRelevance _redRuleRelevance;
             std::vector<ReductionRule *> _reductions{
+                    &_redRuleRelevance,
                     &_preAgglomeration,
                     &_redRuleParallelTransitions,
                     &_redRuleParallelPlaces,
-                    &_redRuleRelevance,
             };
         };
     }
