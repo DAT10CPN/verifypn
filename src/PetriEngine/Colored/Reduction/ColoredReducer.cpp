@@ -73,14 +73,30 @@ namespace PetriEngine::Colored::Reduction {
     }
 
     CArcIter ColoredReducer::getInArc(uint32_t pid, const Colored::Transition &tran) const {
-        return std::find_if(tran.input_arcs.begin(), tran.input_arcs.end(),
-                            [&pid](const Colored::Arc &arc) { return arc.place == pid; });
+        auto in = tran.input_arcs.begin();
+        for (; in != tran.input_arcs.end(); ++in)
+            if (in->place >= pid) break;
+
+        if (in == tran.input_arcs.end() || in->place != pid){
+            return tran.input_arcs.end();
+        } else {
+            return in;
+        }
     }
 
     CArcIter ColoredReducer::getOutArc(const Colored::Transition &tran, uint32_t pid) const {
-        return std::find_if(tran.output_arcs.begin(), tran.output_arcs.end(),
-                            [&pid](const Colored::Arc &arc) { return arc.place == pid; });
+        auto out = tran.output_arcs.begin();
+        for (; out != tran.output_arcs.end(); ++out)
+            if (out->place >= pid) break;
+
+        if (out == tran.output_arcs.end() || out->place != pid){
+            return tran.output_arcs.end();
+        } else {
+            return out;
+        }
     }
+
+
 
     void ColoredReducer::skipPlace(uint32_t pid) {
         Place &place = _builder._places[pid];

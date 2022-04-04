@@ -19,30 +19,30 @@ namespace PetriEngine::Colored::Reduction {
 
         bool changed = false;
         std::vector<uint32_t> wtrans;
-        std::vector<bool> tseen(red.transitions().size(), false);
-        std::vector<bool> pseen(red.places().size(), false);
+        red._tflags.resize(red.transitions().size(), 0);
+        std::fill(red._tflags.begin(), red._tflags.end(), 0);
+        red._pflags.resize(red.places().size(), 0);
+        std::fill(red._pflags.begin(), red._pflags.end(), 0);
 
         for (uint32_t pid = 0; pid < red.placeCount(); pid++) {
             if (red.hasTimedOut())
                 return false;
 
             if (inQuery[pid]){
-                pseen[pid] = true;
+                red._pflags[pid] = true;
                 const Place &place = red.places()[pid];
                 for (auto t : place._post) {
-                    if (!tseen[t]) {
+                    if (!red._tflags[t]) {
                         wtrans.push_back(t);
-                        tseen[t] = true;
+                        red._tflags[t] = true;
                     }
                 }
                 for (auto t : place._pre) {
-                    if (!tseen[t]) {
+                    if (!red._tflags[t]) {
                         wtrans.push_back(t);
-                        tseen[t] = true;
+                        red._tflags[t] = true;
                     }
                 }
-            } else {
-                continue;
             }
         }
 
@@ -53,17 +53,14 @@ namespace PetriEngine::Colored::Reduction {
             const Transition &relevantTrans = red.transitions()[t];
             for (const Arc &arc: relevantTrans.input_arcs) {
                 const Place &place = red.places()[arc.place];
-                pseen[arc.place] = true;
+                red._pflags[arc.place] = true;
                 if (arc.inhib_weight == 0){
                     for (uint32_t prtID : place._pre) {
-                        if (!tseen[prtID]) {
+                        if (!red._tflags[prtID]) {
                             const PetriEngine::Colored::Transition& potentiallyRelevantTrans = red.transitions()[prtID];
                             // Loops that do not alter the marking in the place are not considered relevant to the place.
-                            auto prtIn = potentiallyRelevantTrans.input_arcs.begin();
-                            for (; prtIn != potentiallyRelevantTrans.input_arcs.end(); ++prtIn){
-                                if (prtIn->place >= arc.place) break;
-                            }
-                            if (prtIn != potentiallyRelevantTrans.input_arcs.end() && prtIn->place == arc.place) {
+                            const auto& prtIn = red.getInArc(arc.place, potentiallyRelevantTrans);
+                            if (prtIn != potentiallyRelevantTrans.input_arcs.end()) {
                                 const auto& prtOut = red.getOutArc(potentiallyRelevantTrans, arc.place);
                                 if (const auto ms1 = PetriEngine::Colored::extractVarMultiset(*prtIn->expr)){
                                     if (const auto ms2 = PetriEngine::Colored::extractVarMultiset(*prtIn->expr)) {
@@ -73,31 +70,36 @@ namespace PetriEngine::Colored::Reduction {
                                     }
                                 }
                             }
-                            tseen[prtID] = true;
+                            red._tflags[prtID] = true;
                             wtrans.push_back(prtID);
                         }
                     }
-                } else {
-                    for (const auto prtID : place._post) {
-                        if (!tseen[prtID]) {
-                            // Summary of block: the potentially relevant transition is seen unless it:
-                            // - Is inhibited by 'place'
-                            // - Forms a decreasing loop on 'place' that cannot lower the token count of 'place' below the weight of 'arc'
-                            // - Forms a non-decreasing loop on 'place'
-                            const Transition &potentiallyRelevantTrans = red.transitions()[prtID];
-                            auto prtOut = potentiallyRelevantTrans.output_arcs.begin();
-                            for (; prtOut != potentiallyRelevantTrans.output_arcs.end(); ++prtOut)
-                                if (prtOut->place >= arc.place) break;
+                }
+            }
+            // The inhibitor implementation is not exactly elegant at this point
+            const auto& inhibs = red.inhibitorArcs();
+            for (const Arc& inhibitor : inhibs){
+                if (inhibitor.transition != t)
+                    continue;
 
-                            if (prtOut != potentiallyRelevantTrans.output_arcs.end() && prtOut->place == arc.place) {
-                                const auto prtIn = red.getInArc(arc.place, potentiallyRelevantTrans);
-                                if (prtIn->inhib_weight > 0 || prtOut->expr->weight() >= arc.expr->weight() ||
-                                        prtOut->expr->weight() >= prtIn->expr->weight())
-                                    continue;
-                            }
-                            tseen[prtID] = true;
-                            wtrans.push_back(prtID);
+                for (const auto prtID : red.places()[inhibitor.place]._post) {
+                    if (!red._tflags[prtID]) {
+                        // Summary of block: the potentially relevant transition is seen unless it:
+                        // - Is inhibited by 'place'
+                        // - Forms a decreasing loop on 'place' that cannot lower the token count of 'place' below the weight of 'arc'
+                        // - Forms a non-decreasing loop on 'place'
+                        const Transition &potentiallyRelevantTrans = red.transitions()[prtID];
+                        auto prtOut = red.getOutArc(potentiallyRelevantTrans, inhibitor.place);
+                        if (prtOut != potentiallyRelevantTrans.output_arcs.end()) {
+                            const auto prtIn = red.getInArc(inhibitor.place, potentiallyRelevantTrans);
+                            // Makes use of the assumption that the colored net representation does not put
+                            // inhibitor arcs in place._post, will crash if violated.
+                            if (prtOut->expr->weight() >= inhibitor.inhib_weight ||
+                                prtOut->expr->weight() >= prtIn->expr->weight())
+                                continue;
                         }
+                        red._tflags[prtID] = true;
+                        wtrans.push_back(prtID);
                     }
                 }
             }
@@ -106,21 +108,21 @@ namespace PetriEngine::Colored::Reduction {
         for (uint32_t i = red.placeCount(); i > 0;) {
             // This loop structure avoids underflow handling while also minimizing placeCount() calls.
             i--;
-            if (pseen[i] || red.places()[i].skipped){
+            if (red._pflags[i] || red.places()[i].skipped){
                 continue;
             } else {
                 red.skipPlace(i);
-                changed |= true;
+                changed = true;
             }
         }
         for (uint32_t i = red.transitionCount(); i > 0;) {
             // This loop structure avoids underflow handling while also minimizing transitionCount() calls.
             i--;
-            if (tseen[i] || red.transitions()[i].skipped){
+            if (red._tflags[i] || red.transitions()[i].skipped){
                 continue;
             } else {
                 red.skipTransition(i);
-                changed |= true;
+                changed = true;
             }
         }
         if (changed) _applications++;
