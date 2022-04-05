@@ -41,6 +41,7 @@ void PNMLParser::parse(std::istream& xml,
     arcs.clear();
     _transitions.clear();
     colorTypes.clear();
+    placeTypeContext = "";
 
     //Set the builder
     this->builder = builder;
@@ -620,6 +621,7 @@ void PNMLParser::parsePlace(rapidxml::xml_node<>* element) {
             hlinitialMarking = PetriEngine::Colored::EvaluationVisitor::evaluate(*ae, context);
         } else if (strcmp(it->name(), "type") == 0) {
             type = parseUserSort(it);
+            placeTypeContext = type->getName();
         }
     }
 
@@ -815,6 +817,9 @@ void PNMLParser::parsePosition(rapidxml::xml_node<>* element, double& x, double&
 
 const PetriEngine::Colored::Color* PNMLParser::findColor(const char* name) const {
     for (const auto& elem : colorTypes) {
+        if (!placeTypeContext.empty() && elem.first != placeTypeContext) {
+            continue;
+        }
         auto col = (*elem.second)[name];
         if (col)
             return col;
@@ -859,6 +864,9 @@ std::vector<PetriEngine::Colored::ColorExpression_ptr> PNMLParser::findPartition
 
 const PetriEngine::Colored::Color* PNMLParser::findColorForIntRange(const char* value, uint32_t start, uint32_t end) const{
 	for (const auto& elem : colorTypes) {
+        if (!placeTypeContext.empty() && elem.first != placeTypeContext) {
+            continue;
+        }
 		auto col = (*elem.second)[value];
 		if (col){
 			if((*elem.second).operator[](0).getId() == (start -1) && (*elem.second).operator[]((*elem.second).size()-1).getId() == end -1)
