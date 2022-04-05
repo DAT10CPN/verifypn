@@ -646,6 +646,7 @@ void PNMLParser::parsePlace(rapidxml::xml_node<>* element) {
     nn.id = id;
     nn.isPlace = true;
     id2name[id] = nn;
+    placeTypeContext = "";
 }
 
 void PNMLParser::parseArc(rapidxml::xml_node<>* element, bool inhibitor) {

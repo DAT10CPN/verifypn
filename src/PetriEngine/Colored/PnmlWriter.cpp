@@ -215,7 +215,7 @@ namespace PetriEngine {
                     } else {
                         _out << getTabs() << "<subterm>\n";
                     }
-                    handleNumberOff(p);
+                    handleNumberOf(p);
                     _out << decreaseTabs() << "</subterm>\n";
                     first = false;
                 }
@@ -225,7 +225,7 @@ namespace PetriEngine {
                     if (p.second == 0) {
                         continue;
                     }
-                    handleNumberOff(p);
+                    handleNumberOf(p);
                 }
             }
 
@@ -233,7 +233,7 @@ namespace PetriEngine {
             _out << decreaseTabs() << "</hlinitialMarking>\n";
         }
 
-        void PnmlWriter::handleNumberOff(std::pair<const PetriEngine::Colored::Color *const, uint32_t> numberOff) {
+        void PnmlWriter::handleNumberOf(std::pair<const PetriEngine::Colored::Color *const, uint32_t> numberOff) {
             const auto &c = numberOff.first;
             const auto &m = numberOff.second;
 
