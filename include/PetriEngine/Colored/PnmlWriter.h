@@ -85,16 +85,11 @@ namespace PetriEngine::Colored {
 
         void handleProducts(std::vector<std::string> productSorts);
 
-        //void handleMarking(Multiset multiset);
-
         void handleTuple(const PetriEngine::Colored::Color *const c);
 
         void handleOtherColor(const Color *const c);
 
-        void handleAdd(Multiset multiset);
-
         void handleNumberOff(std::pair<const PetriEngine::Colored::Color *const, uint32_t> numberOff);
-
     };
 }
 
