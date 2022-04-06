@@ -9,6 +9,7 @@
 namespace PetriEngine {
     namespace Colored {
         void PnmlWriter::toColPNML() {
+            //TODO cannot handle nets with partitions
             metaInfo();
             declarations();
             page();
