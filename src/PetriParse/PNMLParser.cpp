@@ -832,6 +832,9 @@ const PetriEngine::Colored::Color* PNMLParser::findColor(const char* name) const
             //go through all colotypes in the tuple
             for (uint32_t i = 0; i < placeColorType->productSize(); i++ ) {
                 const auto &nestedColorType = pt->getNestedColorType(i);
+                if (nestedColorType->productSize() > 1) {
+                    throw base_error("Nested products when finding colors: ", nestedColorType->getName());
+                }
                 auto col = (*nestedColorType)[name];
                 if (col) {
                     return col;
@@ -897,6 +900,9 @@ const PetriEngine::Colored::Color* PNMLParser::findColorForIntRange(const char* 
             //go through all colotypes in the tuple
             for (uint32_t i = 0; i < placeColorType->productSize(); i++ ) {
                 const auto &nestedColorType = pt->getNestedColorType(i);
+                if (nestedColorType->productSize() > 1) {
+                    throw base_error("Nested products when finding colors: ", nestedColorType->getName());
+                }
                 auto col = (*nestedColorType)[value];
                 if (col){
                     if((*nestedColorType).operator[](0).getId() == (start -1) && (*elem.second).operator[]((*elem.second).size()-1).getId() == end -1)
