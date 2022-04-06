@@ -11,7 +11,7 @@
 #include "ReductionRule.h"
 
 namespace PetriEngine::Colored::Reduction {
-    class REDRULEDEADTRANSITION : public ReductionRule {
+    class RedRuleDeadTransiton : public ReductionRule {
     public:
         std::string name() override { return "ParallelPlaces"; }
 
