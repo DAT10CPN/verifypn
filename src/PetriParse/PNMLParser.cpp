@@ -146,6 +146,7 @@ void PNMLParser::parseDeclarations(rapidxml::xml_node<>* element) {
             variables[it->first_attribute("id")->value()] = var;
             builder->addVariable(var);
         } else if (strcmp(it->name(), "partition") == 0) {
+            builder->enablePartition();
             hasPartition = true;
             parsePartitions(it);
         } else {
