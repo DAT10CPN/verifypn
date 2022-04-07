@@ -42,6 +42,7 @@ void PNMLParser::parse(std::istream& xml,
     _transitions.clear();
     colorTypes.clear();
     placeTypeContext = "";
+    hasPartition = false;
 
     //Set the builder
     this->builder = builder;
@@ -145,6 +146,7 @@ void PNMLParser::parseDeclarations(rapidxml::xml_node<>* element) {
             variables[it->first_attribute("id")->value()] = var;
             builder->addVariable(var);
         } else if (strcmp(it->name(), "partition") == 0) {
+            hasPartition = true;
             parsePartitions(it);
         } else {
             parseDeclarations(it);
@@ -819,30 +821,34 @@ void PNMLParser::parsePosition(rapidxml::xml_node<>* element, double& x, double&
 
 const PetriEngine::Colored::Color* PNMLParser::findColor(const char* name) const {
     bool placeTypeIsTuple = false;
-    if (!placeTypeContext.empty()) {
-        auto &placeColorType = colorTypes.find(placeTypeContext)->second;
-        placeTypeIsTuple = placeColorType->productSize() > 1;
+    if (!hasPartition) {
+        if (!placeTypeContext.empty()) {
+            auto &placeColorType = colorTypes.find(placeTypeContext)->second;
+            placeTypeIsTuple = placeColorType->productSize() > 1;
+        }
     }
 
     for (const auto& elem : colorTypes) {
-        //If we are finding color for a place, and the type of place is tuple
-        if (!placeTypeContext.empty() && placeTypeIsTuple){
-            auto &placeColorType = colorTypes.find(placeTypeContext)->second;
-            const auto *pt = dynamic_cast<const PetriEngine::Colored::ProductType*> (placeColorType);
-            //go through all colotypes in the tuple
-            for (uint32_t i = 0; i < placeColorType->productSize(); i++ ) {
-                const auto &nestedColorType = pt->getNestedColorType(i);
-                if (nestedColorType->productSize() > 1) {
-                    throw base_error("Nested products when finding colors: ", nestedColorType->getName());
+        if (!hasPartition) {
+            //If we are finding color for a place, and the type of place is tuple
+            if (!placeTypeContext.empty() && placeTypeIsTuple) {
+                auto &placeColorType = colorTypes.find(placeTypeContext)->second;
+                const auto *pt = dynamic_cast<const PetriEngine::Colored::ProductType *> (placeColorType);
+                //go through all colotypes in the tuple
+                for (uint32_t i = 0; i < placeColorType->productSize(); i++) {
+                    const auto &nestedColorType = pt->getNestedColorType(i);
+                    if (nestedColorType->productSize() > 1) {
+                        throw base_error("Nested products when finding colors: ", nestedColorType->getName());
+                    }
+                    auto col = (*nestedColorType)[name];
+                    if (col) {
+                        return col;
+                    }
                 }
-                auto col = (*nestedColorType)[name];
-                if (col) {
-                    return col;
-                }
+                //type of place is not a tuple
+            } else if (!placeTypeContext.empty() && elem.first != placeTypeContext) {
+                continue;
             }
-            //type of place is not a tuple
-        } else if (!placeTypeContext.empty() && elem.first != placeTypeContext) {
-            continue;
         }
         auto col = (*elem.second)[name];
         if (col)
@@ -875,11 +881,12 @@ std::vector<PetriEngine::Colored::ColorExpression_ptr> PNMLParser::findPartition
     } else {
         throw base_error("Could not find color expression in expression: ", element->name(), "\nCANNOT_COMPUTE\n");
     }
-
     for (auto partition : partitions) {
         if (strcmp(partition.name.c_str(), name) == 0){
             for(auto color : partition.colors){
+
                 colorExpressions.push_back(std::make_shared<PetriEngine::Colored::UserOperatorExpression>(color));
+
             }
         }
     }
@@ -888,30 +895,36 @@ std::vector<PetriEngine::Colored::ColorExpression_ptr> PNMLParser::findPartition
 
 const PetriEngine::Colored::Color* PNMLParser::findColorForIntRange(const char* value, uint32_t start, uint32_t end) const{
     bool placeTypeIsTuple = false;
-    if (!placeTypeContext.empty()) {
-        auto &placeColorType = colorTypes.find(placeTypeContext)->second;
-        placeTypeIsTuple = placeColorType->productSize() > 1;
+    if (!hasPartition) {
+        if (!placeTypeContext.empty()) {
+            auto &placeColorType = colorTypes.find(placeTypeContext)->second;
+            placeTypeIsTuple = placeColorType->productSize() > 1;
+        }
     }
 
+
 	for (const auto& elem : colorTypes) {
-        if (!placeTypeContext.empty() && placeTypeIsTuple){
-            auto &placeColorType = colorTypes.find(placeTypeContext)->second;
-            const auto *pt = dynamic_cast<const PetriEngine::Colored::ProductType*> (placeColorType);
-            //go through all colotypes in the tuple
-            for (uint32_t i = 0; i < placeColorType->productSize(); i++ ) {
-                const auto &nestedColorType = pt->getNestedColorType(i);
-                if (nestedColorType->productSize() > 1) {
-                    throw base_error("Nested products when finding colors: ", nestedColorType->getName());
+        if (!hasPartition) {
+            if (!placeTypeContext.empty() && placeTypeIsTuple) {
+                auto &placeColorType = colorTypes.find(placeTypeContext)->second;
+                const auto *pt = dynamic_cast<const PetriEngine::Colored::ProductType *> (placeColorType);
+                //go through all colotypes in the tuple
+                for (uint32_t i = 0; i < placeColorType->productSize(); i++) {
+                    const auto &nestedColorType = pt->getNestedColorType(i);
+                    if (nestedColorType->productSize() > 1) {
+                        throw base_error("Nested products when finding colors: ", nestedColorType->getName());
+                    }
+                    auto col = (*nestedColorType)[value];
+                    if (col) {
+                        if ((*nestedColorType).operator[](0).getId() == (start - 1) &&
+                            (*elem.second).operator[]((*elem.second).size() - 1).getId() == end - 1)
+                            return col;
+                    }
                 }
-                auto col = (*nestedColorType)[value];
-                if (col){
-                    if((*nestedColorType).operator[](0).getId() == (start -1) && (*elem.second).operator[]((*elem.second).size()-1).getId() == end -1)
-                        return col;
-                }
+                //type of place is not a tuple
+            } else if (!placeTypeContext.empty() && elem.first != placeTypeContext) {
+                continue;
             }
-            //type of place is not a tuple
-        } else if (!placeTypeContext.empty() && elem.first != placeTypeContext) {
-            continue;
         }
 		auto col = (*elem.second)[value];
 		if (col){
