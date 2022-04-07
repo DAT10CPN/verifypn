@@ -11,9 +11,9 @@
 #include "ReductionRule.h"
 
 namespace PetriEngine::Colored::Reduction {
-    class RedRuleDeadTransiton : public ReductionRule {
+    class RedRuleDeadTransition : public ReductionRule {
     public:
-        std::string name() override { return "ParallelPlaces"; }
+        std::string name() override { return "DeadTransition"; }
 
         bool isApplicable(QueryType queryType, bool preserveLoops, bool preserveStutter) const override { return true; }
 
