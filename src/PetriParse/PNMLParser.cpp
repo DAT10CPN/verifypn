@@ -821,17 +821,15 @@ void PNMLParser::parsePosition(rapidxml::xml_node<>* element, double& x, double&
 
 const PetriEngine::Colored::Color* PNMLParser::findColor(const char* name) const {
     bool placeTypeIsTuple = false;
-    if (!hasPartition) {
-        if (!placeTypeContext.empty()) {
-            auto &placeColorType = colorTypes.find(placeTypeContext)->second;
-            placeTypeIsTuple = placeColorType->productSize() > 1;
-        }
+    if (!hasPartition && !placeTypeContext.empty()) {
+        auto &placeColorType = colorTypes.find(placeTypeContext)->second;
+        placeTypeIsTuple = placeColorType->productSize() > 1;
     }
 
     for (const auto& elem : colorTypes) {
-        if (!hasPartition) {
+        if (!hasPartition && !placeTypeContext.empty()) {
             //If we are finding color for a place, and the type of place is tuple
-            if (!placeTypeContext.empty() && placeTypeIsTuple) {
+            if (placeTypeIsTuple) {
                 auto &placeColorType = colorTypes.find(placeTypeContext)->second;
                 const auto *pt = dynamic_cast<const PetriEngine::Colored::ProductType *> (placeColorType);
                 //go through all colotypes in the tuple
@@ -846,7 +844,7 @@ const PetriEngine::Colored::Color* PNMLParser::findColor(const char* name) const
                     }
                 }
                 //type of place is not a tuple
-            } else if (!placeTypeContext.empty() && elem.first != placeTypeContext) {
+            } else if (elem.first != placeTypeContext) {
                 continue;
             }
         }
@@ -895,17 +893,15 @@ std::vector<PetriEngine::Colored::ColorExpression_ptr> PNMLParser::findPartition
 
 const PetriEngine::Colored::Color* PNMLParser::findColorForIntRange(const char* value, uint32_t start, uint32_t end) const{
     bool placeTypeIsTuple = false;
-    if (!hasPartition) {
-        if (!placeTypeContext.empty()) {
-            auto &placeColorType = colorTypes.find(placeTypeContext)->second;
-            placeTypeIsTuple = placeColorType->productSize() > 1;
-        }
+    if (!hasPartition && !placeTypeContext.empty()) {
+        auto &placeColorType = colorTypes.find(placeTypeContext)->second;
+        placeTypeIsTuple = placeColorType->productSize() > 1;
     }
 
 
 	for (const auto& elem : colorTypes) {
-        if (!hasPartition) {
-            if (!placeTypeContext.empty() && placeTypeIsTuple) {
+        if (!hasPartition && !placeTypeContext.empty()) {
+            if (placeTypeIsTuple) {
                 auto &placeColorType = colorTypes.find(placeTypeContext)->second;
                 const auto *pt = dynamic_cast<const PetriEngine::Colored::ProductType *> (placeColorType);
                 //go through all colotypes in the tuple
@@ -922,7 +918,7 @@ const PetriEngine::Colored::Color* PNMLParser::findColorForIntRange(const char* 
                     }
                 }
                 //type of place is not a tuple
-            } else if (!placeTypeContext.empty() && elem.first != placeTypeContext) {
+            } else if (elem.first != placeTypeContext) {
                 continue;
             }
         }
