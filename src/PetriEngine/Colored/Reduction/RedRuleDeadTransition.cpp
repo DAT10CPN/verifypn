@@ -5,6 +5,7 @@
  *      Mathias Mehl Sørensen
  */
 
+#include <PetriEngine/Colored/ArcVarMultisetVisitor.h>
 #include "PetriEngine/Colored/Reduction/RedRuleDeadTransition.h"
 #include "PetriEngine/Colored/Reduction/ColoredReducer.h"
 
@@ -22,17 +23,35 @@ namespace PetriEngine::Colored::Reduction {
             if(place.inhibitor) continue;
             if(place._pre.size() > place._post.size()) continue;
 
-            std::set<uint32_t> notenabled;
             bool ok = true;
+            // Check for producers without matching consumers first
+            for(uint prod : place._pre)
+            {
+                // Any producer without a matching consumer blocks this rule
+                Transition t = red.transitions()[prod];
+                auto in = red.getInArc(p, t);
+                if(in == t.input_arcs.end())
+                {
+                    ok = false;
+                    break;
+                }
+            }
+
+            if(!ok) continue;
+
+            std::set<uint32_t> notenabled;
+            // Out of the consumers, tally up those that are initially not enabled by place
+            // Ensure all the enabled transitions that feed back into place are non-increasing on place.
             for(uint cons : place._post)
             {
                 Transition t = red.transitions()[cons];
                 auto in = red.getInArc(p, t);
                 if(in->expr->weight() <= place.marking.size())
                 {
+                    // This branch happening even once means notenabled.size() != consumers.size()
                     auto out = red.getOutArc(t, p);
-                    if(out == t.output_arcs.end() || out->place != p || out->expr->weight() >= in->expr->weight())
-                    {
+                    // Only increasing loops are not ok
+                    if (out != t.output_arcs.end() && out->expr->weight() > in->expr->weight()) {
                         ok = false;
                         break;
                     }
@@ -43,40 +62,20 @@ namespace PetriEngine::Colored::Reduction {
                 }
             }
 
-            if(!ok || notenabled.size() == 0) continue;
+            if(!ok || notenabled.empty()) continue;
 
-            for(uint prod : place._pre)
-            {
-                if(notenabled.count(prod) == 0)
-                {
-                    ok = false;
-                    break;
-                }
-                // check that producing arcs originate from transition also
-                // consuming. If so, we know it will never fire.
-                Transition t = red.transitions()[prod];
-                CArcIter it = red.getInArc(p, t);
-                if(it == t.input_arcs.end())
-                {
-                    ok = false;
-                    break;
-                }
+            bool skipplace = (notenabled.size() == place._pre.size()) && (inQuery[p] == 0);
+
+            for(uint cons : notenabled) {
+                red.skipTransition(cons);
             }
 
-            if(!ok) continue;
+            if(skipplace) {
+                red.skipPlace(p);
+            }
 
             _applications++;
             continueReductions = true;
-
-            if(inQuery[p] == 0)
-                place.marking.size() == 0;
-
-            bool skipplace = (notenabled.size() == place._post.size()) && (inQuery[p] == 0);
-            for(uint cons : notenabled)
-                red.skipTransition(cons);
-
-            if(skipplace)
-                red.skipPlace(p);
 
         }
         red.consistent();
