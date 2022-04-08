@@ -6,7 +6,7 @@
  */
 
 #include <PetriEngine/Colored/ArcVarMultisetVisitor.h>
-#include "PetriEngine/Colored/Reduction/RedRuleDeadTransition.h"
+#include "PetriEngine/Colored/Reduction/RedRuleDeadTransitions.h"
 #include "PetriEngine/Colored/Reduction/ColoredReducer.h"
 
 namespace PetriEngine::Colored::Reduction {

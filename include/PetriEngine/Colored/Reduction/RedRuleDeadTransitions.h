@@ -5,15 +5,15 @@
  *      Mathias Mehl Sørensen
  */
 
-#ifndef VERIFYPN_REDRULEDEADTRANSITION_H
-#define VERIFYPN_REDRULEDEADTRANSITION_H
+#ifndef VERIFYPN_REDRULEDEADTRANSITIONS_H
+#define VERIFYPN_REDRULEDEADTRANSITIONS_H
 
 #include "ReductionRule.h"
 
 namespace PetriEngine::Colored::Reduction {
-    class RedRuleDeadTransition : public ReductionRule {
+    class RedRuleDeadTransitions : public ReductionRule {
     public:
-        std::string name() override { return "DeadTransition"; }
+        std::string name() override { return "DeadTransitions"; }
 
         bool isApplicable(QueryType queryType, bool preserveLoops, bool preserveStutter) const override { return true; }
 
@@ -21,4 +21,4 @@ namespace PetriEngine::Colored::Reduction {
     };
 }
 
-#endif //VERIFYPN_REDRULEDEADTRANSITION_H
+#endif //VERIFYPN_REDRULEDEADTRANSITIONS_H

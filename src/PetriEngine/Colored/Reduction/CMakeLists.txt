@@ -6,6 +6,6 @@ add_library(ColoredReduction ${HEADER_FILES}
         RedRuleParallelTransitions.cpp
         RedRuleParallelPlaces.cpp
         RedRuleRelevance.cpp
-        RedRuleDeadTransition.cpp)
+        RedRuleDeadTransitions.cpp)
 
 target_link_libraries(ColoredReduction Colored)
