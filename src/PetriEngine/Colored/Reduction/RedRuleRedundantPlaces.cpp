@@ -41,10 +41,9 @@ namespace PetriEngine::Colored::Reduction {
             }
 
             if (!ok) continue;
-
-            ++_applications;
-
+            
             if (red.unskippedPlacesCount() > 1) {
+                ++_applications;
                 red.skipPlace(p);
                 continueReductions = true;
             }
