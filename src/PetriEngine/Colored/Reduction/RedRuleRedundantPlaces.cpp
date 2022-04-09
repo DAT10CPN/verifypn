@@ -25,15 +25,26 @@ namespace PetriEngine::Colored::Reduction {
             bool ok = true;
             for (uint cons: place._pre) {
                 Transition t = red.transitions()[cons];
-                auto w = red.getInArc(p, t)->expr->weight();
-                if (w > place.marking.size()) {
+
+                if (t.guard) {
+                    ok = false;
+                    break;
+                }
+
+                auto inArc = red.getInArc(p, t);
+
+                //check if initial marking allows to fire the transition once
+                if (place.marking.isAllOrMore() && inArc->expr->is_single_color() && (inArc->expr->weight() == 1)) {
                     ok = false;
                     break;
                 } else {
-                    auto it = red.getOutArc(t, p);
-                    if (it == t.output_arcs.end() ||
-                        it->place != p ||
-                        it->expr->weight() < w) {
+                    auto outArc = red.getOutArc(t, p);
+                    //check subset here instead
+                    auto inSet = PetriEngine::Colored::extractVarMultiset(*inArc->expr);
+                    auto outSet = PetriEngine::Colored::extractVarMultiset(*outArc->expr);
+                    if (outArc == t.output_arcs.end() ||
+                        outArc->place != p ||
+                        !inSet->isSubsetOrEqTo(*outSet)) {
                         ok = false;
                         break;
                     }
@@ -41,7 +52,7 @@ namespace PetriEngine::Colored::Reduction {
             }
 
             if (!ok) continue;
-            
+
             if (red.unskippedPlacesCount() > 1) {
                 ++_applications;
                 red.skipPlace(p);

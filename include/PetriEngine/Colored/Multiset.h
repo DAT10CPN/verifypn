@@ -64,6 +64,7 @@ namespace PetriEngine {
 
             bool isSubsetOf(const Multiset&) const;
             bool isSubsetOrEqTo(const Multiset&) const;
+            bool isAllOrMore() const;
 
             bool empty() const;
             void clean();
