@@ -10,7 +10,7 @@
 #include "PetriEngine/Colored/Reduction/ColoredReducer.h"
 
 namespace PetriEngine::Colored::Reduction {
-    bool RedRuleDeadTransition::apply(ColoredReducer &red, const std::vector<bool> &inQuery,
+    bool RedRuleDeadTransitions::apply(ColoredReducer &red, const std::vector<bool> &inQuery,
                                       QueryType queryType, bool preserveLoops, bool preserveStutter) {
 
         bool continueReductions = false;
