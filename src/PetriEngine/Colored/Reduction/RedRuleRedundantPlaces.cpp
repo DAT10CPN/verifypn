@@ -34,19 +34,22 @@ namespace PetriEngine::Colored::Reduction {
                 auto inArc = red.getInArc(p, t);
 
                 //check if initial marking allows to fire the transition once
-                if (place.marking.isAllOrMore() && inArc->expr->is_single_color() && (inArc->expr->weight() == 1)) {
+                //this is very very mvp, check better. InArc expr can also be all. And can be more complex
+                if (!(place.marking.isAllOrMore() && inArc->expr->is_single_color())) {
                     ok = false;
                     break;
                 } else {
                     auto outArc = red.getOutArc(t, p);
                     //check subset here instead
-                    auto inSet = PetriEngine::Colored::extractVarMultiset(*inArc->expr);
-                    auto outSet = PetriEngine::Colored::extractVarMultiset(*outArc->expr);
-                    if (outArc == t.output_arcs.end() ||
-                        outArc->place != p ||
-                        !inSet->isSubsetOrEqTo(*outSet)) {
-                        ok = false;
-                        break;
+                    if (auto inSet = PetriEngine::Colored::extractVarMultiset(*inArc->expr)) {
+                        if (auto outSet = PetriEngine::Colored::extractVarMultiset(*outArc->expr)) {
+                            // TODO Could be more precise with fuzzy multisets
+                            if ((!(*inSet).isSubsetOrEqTo(*outSet)) || outArc == t.output_arcs.end() ||
+                                outArc->place != p) {
+                                ok = false;
+                                break;
+                            }
+                        }
                     }
                 }
             }
