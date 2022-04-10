@@ -35,7 +35,7 @@ namespace PetriEngine::Colored::Reduction {
 
                 //check if initial marking allows to fire the transition once
                 //this is very very mvp, check better. InArc expr can also be all. And can be more complex
-                if (!(place.marking.isAllOrMore() && inArc->expr->is_single_color())) {
+                if (!(place.marking.isAllOrMore() && inArc->expr->is_single_color() && (!inArc->expr->has_variables()) )) {
                     ok = false;
                     break;
                 } else {
@@ -58,6 +58,7 @@ namespace PetriEngine::Colored::Reduction {
 
             if (red.unskippedPlacesCount() > 1) {
                 ++_applications;
+                std::cout << place.name << std::endl;
                 red.skipPlace(p);
                 continueReductions = true;
             }

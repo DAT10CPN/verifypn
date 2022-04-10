@@ -137,6 +137,9 @@ namespace PetriEngine {
         }
 
         bool Multiset::isAllOrMore() const {
+            if (this->_type == nullptr) {
+                return false;
+            }
             if (this->distinctSize() < this->_type->size()) {
                 return false;
             }
