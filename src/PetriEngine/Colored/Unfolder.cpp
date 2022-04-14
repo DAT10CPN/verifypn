@@ -258,6 +258,7 @@ namespace PetriEngine {
                     unfoldPlace(ptBuilder, &place, newColor, arc.place, id);
                     pName = _ptplacenames[place.name][id];
                 }
+                std::string pName2 = *pName;
 
                 if (arc.input) {
                     ptBuilder.addInputArc(pName, tName, false, color.second);
