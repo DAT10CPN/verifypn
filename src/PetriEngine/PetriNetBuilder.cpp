@@ -168,7 +168,6 @@ namespace PetriEngine {
         }
 
         Arc arc;
-        std::string test = *transition;
         arc.place = p;
         arc.weight = weight;
         arc.skip = false;
