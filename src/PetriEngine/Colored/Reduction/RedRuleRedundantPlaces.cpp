@@ -46,9 +46,9 @@ namespace PetriEngine::Colored::Reduction {
 
                 const auto &inArc = red.getInArc(p, t);
 
-                NaiveBindingGenerator gen(t, red.getBuilderColors());
+                NaiveBindingGenerator gen(t, red.colors());
                 for (const auto &binding: gen) {
-                    if (!(this->markingSatisfiesInArc(place.marking, *inArc, red.getBuilderColors(), partition,
+                    if (!(this->markingSatisfiesInArc(place.marking, *inArc, red.colors(), partition,
                                                       binding))) {
                         ok = false;
                         break;
