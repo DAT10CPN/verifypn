@@ -22,8 +22,6 @@
 
 namespace PetriEngine {
     namespace Colored {
-        struct Arc;
-
         class Multiset {
         private:
             class Iterator {

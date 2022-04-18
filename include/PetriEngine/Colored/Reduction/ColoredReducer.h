@@ -86,6 +86,10 @@ namespace PetriEngine::Colored {
                 return _builder.transitions();
             }
 
+            const Colored::ColorTypeMap &colors() const {
+                return _builder.colors();
+            }
+
             const std::vector<Colored::Arc> &inhibitorArcs() const {
                 return _builder.inhibitors();
             }
@@ -110,9 +114,6 @@ namespace PetriEngine::Colored {
 
             std::vector<uint8_t> _pflags;
 
-            Colored::ColorTypeMap getBuilderColors() {
-                return _builder.colors();
-            }
         private:
             PetriEngine::ColoredPetriNetBuilder &_builder;
             std::chrono::system_clock::time_point _startTime;
