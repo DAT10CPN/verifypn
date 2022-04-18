@@ -20,7 +20,6 @@
 #include <sstream>
 
 #include "PetriEngine/Colored/Multiset.h"
-#include "PetriEngine/Colored/ColoredNetStructures.h"
 
 namespace PetriEngine {
     namespace Colored {
@@ -209,15 +208,6 @@ namespace PetriEngine {
                 res += item.second;
             }
             return res;
-        }
-
-        bool Multiset::satisfies(const Arc &arc) const {
-            assert(arc.input);
-            if (this->isAllOrMore() && arc.expr->is_single_color()) {
-                return true;
-            } else {
-                return false;
-            }
         }
     }
 }

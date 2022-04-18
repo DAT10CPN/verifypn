@@ -110,6 +110,9 @@ namespace PetriEngine::Colored {
 
             std::vector<uint8_t> _pflags;
 
+            Colored::ColorTypeMap getBuilderColors() {
+                return _builder.colors();
+            }
         private:
             PetriEngine::ColoredPetriNetBuilder &_builder;
             std::chrono::system_clock::time_point _startTime;

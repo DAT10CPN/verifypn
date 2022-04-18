@@ -5,6 +5,9 @@
  *      Mathias Mehl Sørensen
  */
 
+#include <PetriEngine/Colored/PartitionBuilder.h>
+#include <PetriEngine/Colored/EvaluationVisitor.h>
+#include <PetriEngine/Colored/BindingGenerator.h>
 #include "PetriEngine/Colored/Reduction/RedRuleRedundantPlaces.h"
 #include "PetriEngine/Colored/Reduction/ColoredReducer.h"
 #include "PetriEngine/Colored/ArcVarMultisetVisitor.h"
@@ -12,6 +15,10 @@
 namespace PetriEngine::Colored::Reduction {
     bool RedRuleRedundantPlaces::apply(ColoredReducer &red, const std::vector<bool> &inQuery,
                                        QueryType queryType, bool preserveLoops, bool preserveStutter) {
+
+        Colored::PartitionBuilder partition(red.transitions(), red.places());
+        partition.compute(5);
+
         bool continueReductions = false;
         const size_t numberofplaces = red.placeCount();
         for (uint32_t p = 0; p < numberofplaces; ++p) {
@@ -31,26 +38,29 @@ namespace PetriEngine::Colored::Reduction {
                     break;
                 }
 
-                const auto &inArc = red.getInArc(p, t);
-
-                //check if initial marking allows to fire the transition once
-                //this is very very mvp. InArc expr can also be all. And can be more complex
-                if (!(place.marking.satisfies(*inArc))) {
+                const auto &outArc = red.getOutArc(t, p);
+                if (outArc == t.output_arcs.end()) {
                     ok = false;
                     break;
-                } else {
-                    const auto &outArc = red.getOutArc(t, p);
-                    if (outArc == t.output_arcs.end()) {
+                }
+
+                const auto &inArc = red.getInArc(p, t);
+                //check if initial marking allows to fire the transition once
+
+                NaiveBindingGenerator gen(t, red.getBuilderColors());
+                for (const auto &binding : gen) {
+                    if (!this->satisfies(place.marking, *inArc, red.getBuilderColors(), partition, binding)) {
                         ok = false;
                         break;
                     }
+                }
 
-                    if (auto inSet = PetriEngine::Colored::extractVarMultiset(*inArc->expr)) {
-                        if (auto outSet = PetriEngine::Colored::extractVarMultiset(*outArc->expr)) {
-                            if (!(*inSet).isSubsetOrEqTo(*outSet)) {
-                                ok = false;
-                                break;
-                            }
+                //check if we have succ or pred
+                if (auto inSet = PetriEngine::Colored::extractVarMultiset(*inArc->expr)) {
+                    if (auto outSet = PetriEngine::Colored::extractVarMultiset(*outArc->expr)) {
+                        if (!(*inSet).isSubsetOrEqTo(*outSet)) {
+                            ok = false;
+                            break;
                         }
                     }
                 }
@@ -60,12 +70,18 @@ namespace PetriEngine::Colored::Reduction {
 
             if (red.unskippedPlacesCount() > 1) {
                 ++_applications;
-                std::cout << place.name << std::endl;
                 red.skipPlace(p);
                 continueReductions = true;
             }
         }
         red.consistent();
         return continueReductions;
+    }
+
+    bool RedRuleRedundantPlaces::satisfies(Multiset &marking, const Arc &arc, ColorTypeMap colors, PartitionBuilder &partition, const Colored::BindingMap& binding) const {
+        assert(arc.input);
+        const ExpressionContext context{binding, colors, partition.partition()[arc.place]};
+        const auto ms = EvaluationVisitor::evaluate(*arc.expr, context);
+        return (marking.isSubsetOrEqTo(ms));
     }
 }

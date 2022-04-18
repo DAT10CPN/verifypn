@@ -67,7 +67,6 @@ namespace PetriEngine {
             bool isSubsetOf(const Multiset&) const;
             bool isSubsetOrEqTo(const Multiset&) const;
             bool isAllOrMore() const;
-            bool satisfies(const PetriEngine::Colored::Arc &arc) const;
 
             bool empty() const;
             void clean();
