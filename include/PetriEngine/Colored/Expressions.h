@@ -55,7 +55,6 @@ namespace PetriEngine {
             ColorExpression() {}
             virtual ~ColorExpression() {}
             virtual const ColorType* getColorType(const ColorTypeMap& colorTypes) const = 0;
-            virtual const bool contains_variables() const = 0;
         };
 
         class DotConstantExpression : public ColorExpression {
@@ -66,9 +65,6 @@ namespace PetriEngine {
                 return ColorType::dotInstance();
             }
 
-            virtual const bool contains_variables() const override{
-                return false;
-            }
 
         };
 
@@ -91,10 +87,6 @@ namespace PetriEngine {
                 return _variable->colorType;
             }
 
-            virtual const bool contains_variables() const override{
-                return true;
-            }
-
         };
 
         class UserOperatorExpression : public ColorExpression {
@@ -112,10 +104,6 @@ namespace PetriEngine {
 
             virtual const ColorType* getColorType(const ColorTypeMap& colorTypes) const override {
                 return _userOperator->getColorType();
-            }
-
-            virtual const bool contains_variables() const override{
-                return false;
             }
 
         };
@@ -137,10 +125,6 @@ namespace PetriEngine {
                 return _color->getColorType(colorTypes);
             }
 
-            virtual const bool contains_variables() const override{
-                return _color->contains_variables();
-            }
-
         };
 
         class PredecessorExpression : public ColorExpression {
@@ -158,10 +142,6 @@ namespace PetriEngine {
 
             virtual const ColorType* getColorType(const ColorTypeMap& colorTypes) const override{
                 return _color->getColorType(colorTypes);
-            }
-
-            virtual const bool contains_variables() const override{
-                return _color->contains_variables();
             }
 
         };
@@ -211,20 +191,6 @@ namespace PetriEngine {
                 assert(false);
                 throw base_error("COULD NOT FIND PRODUCT TYPE");
                 return nullptr;
-            }
-
-            const bool contains_variables() const override{
-
-                std::vector<const ColorType*> types;
-                /*if(_colorType != nullptr){
-                    return false;
-                }*/
-
-                for (const auto& color : _colors) {
-                    if (color->contains_variables()) {
-                        return true;
-                    }
-                }
             }
         };
 
@@ -316,7 +282,6 @@ namespace PetriEngine {
             virtual void visit(ColorExpressionVisitor& visitor) const = 0;
             virtual uint32_t weight() const = 0;
             virtual bool is_single_color() const = 0;
-            virtual bool has_variables() const = 0;
         };
 
         typedef std::shared_ptr<ArcExpression> ArcExpression_ptr;
@@ -364,15 +329,6 @@ namespace PetriEngine {
 
             bool is_single_color() const {
                 return !is_all() && _color.size() == 1;
-            }
-
-            bool has_variables() const override {
-                for (auto &color: _color) {
-                    if (color->contains_variables()) {
-                        return true;
-                    }
-                }
-                return false;
             }
 
             uint32_t number() const {
@@ -425,15 +381,6 @@ namespace PetriEngine {
                 return _constituents.size() == 1 && _constituents[0]->is_single_color();
             }
 
-            bool has_variables() const override {
-                for (auto &constituent: _constituents) {
-                    if (constituent->has_variables()) {
-                        return true;
-                    }
-                }
-                return false;
-            }
-
             size_t size() const {
                 return _constituents.size();
             }
@@ -470,12 +417,6 @@ namespace PetriEngine {
                 return false;
             }
 
-            bool has_variables() const override {
-                if ((_left->has_variables()) || (_left->has_variables())) {
-                    return true;
-                }
-                return false;
-            }
 
             size_t size() const {
                 return 2;
@@ -505,13 +446,6 @@ namespace PetriEngine {
 
             bool is_single_color() const {
                 return _expr->is_single_color();
-            }
-
-            bool has_variables() const override {
-                if (_expr->has_variables()) {
-                    return true;
-                }
-                return false;
             }
 
             auto scalar() const {
