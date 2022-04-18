@@ -33,10 +33,10 @@ namespace PetriEngine::Colored::Reduction {
             for (uint cons: place._post) {
                 const Transition &t = red.transitions()[cons];
 
-                if (t.guard) {
+                /*if (t.guard) {
                     ok = false;
                     break;
-                }
+                }*/
 
                 const auto &outArc = red.getOutArc(t, p);
                 if (outArc == t.output_arcs.end()) {
@@ -45,17 +45,19 @@ namespace PetriEngine::Colored::Reduction {
                 }
 
                 const auto &inArc = red.getInArc(p, t);
-                //check if initial marking allows to fire the transition once
 
                 NaiveBindingGenerator gen(t, red.getBuilderColors());
-                for (const auto &binding : gen) {
-                    if (!this->satisfies(place.marking, *inArc, red.getBuilderColors(), partition, binding)) {
+                for (const auto &binding: gen) {
+                    if (!(this->markingSatisfiesInArc(place.marking, *inArc, red.getBuilderColors(), partition,
+                                                      binding))) {
                         ok = false;
                         break;
                     }
                 }
 
-                //check if we have succ or pred
+                if (!ok) break;
+
+                //check if we have succ or pred, optional
                 if (auto inSet = PetriEngine::Colored::extractVarMultiset(*inArc->expr)) {
                     if (auto outSet = PetriEngine::Colored::extractVarMultiset(*outArc->expr)) {
                         if (!(*inSet).isSubsetOrEqTo(*outSet)) {
@@ -78,10 +80,12 @@ namespace PetriEngine::Colored::Reduction {
         return continueReductions;
     }
 
-    bool RedRuleRedundantPlaces::satisfies(Multiset &marking, const Arc &arc, ColorTypeMap colors, PartitionBuilder &partition, const Colored::BindingMap& binding) const {
+    bool RedRuleRedundantPlaces::markingSatisfiesInArc(Multiset &marking, const Arc &arc, ColorTypeMap colors,
+                                                       PartitionBuilder &partition,
+                                                       const Colored::BindingMap &binding) const {
         assert(arc.input);
         const ExpressionContext context{binding, colors, partition.partition()[arc.place]};
         const auto ms = EvaluationVisitor::evaluate(*arc.expr, context);
-        return (marking.isSubsetOrEqTo(ms));
+        return (ms.isSubsetOrEqTo(marking));
     }
 }

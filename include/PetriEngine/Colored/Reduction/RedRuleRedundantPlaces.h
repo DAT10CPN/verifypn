@@ -17,7 +17,7 @@ namespace PetriEngine::Colored::Reduction {
 
         bool apply(ColoredReducer &red, const std::vector<bool> &inQuery, QueryType queryType, bool preserveLoops, bool preserveStutter) override;
 
-        bool satisfies(Multiset &marking, const Arc &arc, ColorTypeMap colors, PartitionBuilder &partition, const Colored::BindingMap& binding) const;
+        bool markingSatisfiesInArc(Multiset &marking, const Arc &arc, ColorTypeMap colors, PartitionBuilder &partition, const Colored::BindingMap& binding) const;
     };
 }
 
