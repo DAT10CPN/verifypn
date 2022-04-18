@@ -64,8 +64,6 @@ namespace PetriEngine {
             virtual const ColorType* getColorType(const ColorTypeMap& colorTypes) const override{
                 return ColorType::dotInstance();
             }
-
-
         };
 
         typedef std::shared_ptr<ColorExpression> ColorExpression_ptr;
@@ -105,7 +103,6 @@ namespace PetriEngine {
             virtual const ColorType* getColorType(const ColorTypeMap& colorTypes) const override {
                 return _userOperator->getColorType();
             }
-
         };
 
         class SuccessorExpression : public ColorExpression {
@@ -124,7 +121,6 @@ namespace PetriEngine {
             virtual const ColorType* getColorType(const ColorTypeMap& colorTypes) const override{
                 return _color->getColorType(colorTypes);
             }
-
         };
 
         class PredecessorExpression : public ColorExpression {
@@ -143,7 +139,6 @@ namespace PetriEngine {
             virtual const ColorType* getColorType(const ColorTypeMap& colorTypes) const override{
                 return _color->getColorType(colorTypes);
             }
-
         };
 
         class TupleExpression : public ColorExpression {
@@ -416,7 +411,6 @@ namespace PetriEngine {
             bool is_single_color() const {
                 return false;
             }
-
 
             size_t size() const {
                 return 2;

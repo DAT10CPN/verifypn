@@ -136,16 +136,6 @@ namespace PetriEngine {
             return thisMinusOther.empty();
         }
 
-        bool Multiset::isAllOrMore() const {
-            if (this->_type == nullptr) {
-                return false;
-            }
-            if (this->distinctSize() < this->_type->size()) {
-                return false;
-            }
-            return true;
-        }
-
         bool Multiset::empty() const {
             for (auto & e : _set) {
                 if (e.second > 0) return false;
