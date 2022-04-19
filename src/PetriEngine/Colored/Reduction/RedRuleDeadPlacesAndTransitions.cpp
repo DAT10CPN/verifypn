@@ -12,8 +12,8 @@
 #include <queue>
 
 namespace PetriEngine::Colored::Reduction {
-    bool RedRuleDeadPlacesAndTransitions::apply(ColoredReducer &red, const std::vector<bool> &inQuery,
-                                       QueryType queryType, bool preserveLoops, bool preserveStutter) {
+    bool RedRuleDeadPlacesAndTransitions::apply(ColoredReducer &red, const PetriEngine::PQL::ColoredUseVisitor &inQuery,
+                                                QueryType queryType, bool preserveLoops, bool preserveStutter) {
 
         if (red.hasTimedOut()) return false;
 
@@ -92,6 +92,7 @@ namespace PetriEngine::Colored::Reduction {
 
         // Process initially enabled transitions (ignoring color)
         for (uint32_t t = 0; t < red.transitionCount(); ++t) {
+            if (inQuery.isTransitionUsed(t)) return false; // TODO Add support for fireability
             const Transition& tran = red.transitions()[t];
             if (tran.skipped)
                 continue;
@@ -146,7 +147,7 @@ namespace PetriEngine::Colored::Reduction {
         // Remove places that cannot increase nor decrease as well as unfireable transitions
         bool anyRemoved = false;
         for (uint32_t p = 0; p < red.placeCount(); ++p) {
-            if (!red.places()[p].skipped && !inQuery[p] && red._pflags[p] == 0) {
+            if (!red.places()[p].skipped && !inQuery.isPlaceUsed(p) && red._pflags[p] == 0) {
                 red.skipPlace(p);
                 anyRemoved = true;
             }
