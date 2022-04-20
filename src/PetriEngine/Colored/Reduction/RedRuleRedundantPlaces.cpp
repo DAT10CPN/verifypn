@@ -23,9 +23,8 @@ namespace PetriEngine::Colored::Reduction {
         for (uint32_t p = 0; p < numberofplaces; ++p) {
 
             if (red.unskippedPlacesCount() <= 1) break;
-       
-
             if (red.hasTimedOut()) return false;
+
             Place place = red.places()[p];
             if (place.skipped) continue;
             if (place.inhibitor) continue;
@@ -49,14 +48,7 @@ namespace PetriEngine::Colored::Reduction {
 
                 const auto &inArc = red.getInArc(p, transition);
 
-                NaiveBindingGenerator gen(transition, red.colors());
-                for (const auto &binding: gen) {
-                    if (!(this->markingSatisfiesInArc(place.marking, *inArc, red.colors(), partition,
-                                                      binding))) {
-                        ok = false;
-                        break;
-                    }
-                }
+                ok = markingSatisfiesInArc(place.marking, *inArc, transition, partition, red.colors());
 
                 if (!ok) break;
 
@@ -70,7 +62,6 @@ namespace PetriEngine::Colored::Reduction {
 
             if (!ok) continue;
 
-
             ++_applications;
             red.skipPlace(p);
             continueReductions = true;
@@ -80,12 +71,18 @@ namespace PetriEngine::Colored::Reduction {
         return continueReductions;
     }
 
-    bool RedRuleRedundantPlaces::markingSatisfiesInArc(Multiset &marking, const Arc &arc, ColorTypeMap colors,
+    bool RedRuleRedundantPlaces::markingSatisfiesInArc(Multiset &marking, const Arc &arc,
+                                                       const Colored::Transition &transition,
                                                        PartitionBuilder &partition,
-                                                       const Colored::BindingMap &binding) const {
+                                                       ColorTypeMap colors) const {
         assert(arc.input);
-        const ExpressionContext context{binding, colors, partition.partition()[arc.place]};
-        const auto ms = EvaluationVisitor::evaluate(*arc.expr, context);
-        return (ms.isSubsetOrEqTo(marking));
+
+        NaiveBindingGenerator gen(transition, colors);
+        for (const auto &binding: gen) {
+            const ExpressionContext context{binding, colors, partition.partition()[arc.place]};
+            const auto ms = EvaluationVisitor::evaluate(*arc.expr, context);
+            if (!(ms.isSubsetOrEqTo(marking))) return false;
+        }
+        return true;
     }
 }
