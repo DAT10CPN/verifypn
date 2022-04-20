@@ -13,7 +13,7 @@
 #include "PetriEngine/Colored/ArcVarMultisetVisitor.h"
 
 namespace PetriEngine::Colored::Reduction {
-    bool RedRuleRedundantPlaces::apply(ColoredReducer &red, const std::vector<bool> &inQuery,
+    bool RedRuleRedundantPlaces::apply(ColoredReducer &red, const PetriEngine::PQL::ColoredUseVisitor &inQuery,
                                        QueryType queryType, bool preserveLoops, bool preserveStutter) {
 
         Colored::PartitionBuilder partition(red.transitions(), red.places());
@@ -26,7 +26,7 @@ namespace PetriEngine::Colored::Reduction {
             if (place.skipped) continue;
             if (place.inhibitor) continue;
             if (place._pre.size() < place._post.size()) continue;
-            if (inQuery[p] != 0) continue;
+            if (inQuery.isPlaceUsed(p)) continue;
 
             bool ok = true;
             for (uint cons: place._post) {
