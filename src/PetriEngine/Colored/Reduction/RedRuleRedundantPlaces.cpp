@@ -17,7 +17,6 @@ namespace PetriEngine::Colored::Reduction {
                                        QueryType queryType, bool preserveLoops, bool preserveStutter) {
 
         Colored::PartitionBuilder partition(red.transitions(), red.places());
-        partition.compute(5);
 
         bool continueReductions = false;
         const size_t numberofplaces = red.placeCount();
@@ -33,10 +32,10 @@ namespace PetriEngine::Colored::Reduction {
             for (uint cons: place._post) {
                 const Transition &t = red.transitions()[cons];
 
-                /*if (t.guard) {
+                if (t.guard) {
                     ok = false;
                     break;
-                }*/
+                }
 
                 const auto &outArc = red.getOutArc(t, p);
                 if (outArc == t.output_arcs.end()) {
@@ -57,14 +56,11 @@ namespace PetriEngine::Colored::Reduction {
 
                 if (!ok) break;
 
-                //check if we have succ or pred, optional
-                if (auto inSet = PetriEngine::Colored::extractVarMultiset(*inArc->expr)) {
-                    if (auto outSet = PetriEngine::Colored::extractVarMultiset(*outArc->expr)) {
-                        if (!(*inSet).isSubsetOrEqTo(*outSet)) {
-                            ok = false;
-                            break;
-                        }
-                    }
+                auto inSet = PetriEngine::Colored::extractVarMultiset(*inArc->expr);
+                auto outSet = PetriEngine::Colored::extractVarMultiset(*outArc->expr);
+                if (!inSet || !outSet || !(*inSet).isSubsetOrEqTo(*outSet)) {
+                    ok = false;
+                    break;
                 }
             }
 
