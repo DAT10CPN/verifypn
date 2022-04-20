@@ -30,22 +30,22 @@ namespace PetriEngine::Colored::Reduction {
 
             bool ok = true;
             for (uint cons: place._post) {
-                const Transition &t = red.transitions()[cons];
+                const Transition &transition = red.transitions()[cons];
 
-                if (t.guard) {
+                if (transition.guard) {
                     ok = false;
                     break;
                 }
 
-                const auto &outArc = red.getOutArc(t, p);
-                if (outArc == t.output_arcs.end()) {
+                const auto &outArc = red.getOutArc(transition, p);
+                if (outArc == transition.output_arcs.end()) {
                     ok = false;
                     break;
                 }
 
-                const auto &inArc = red.getInArc(p, t);
+                const auto &inArc = red.getInArc(p, transition);
 
-                NaiveBindingGenerator gen(t, red.colors());
+                NaiveBindingGenerator gen(transition, red.colors());
                 for (const auto &binding: gen) {
                     if (!(this->markingSatisfiesInArc(place.marking, *inArc, red.colors(), partition,
                                                       binding))) {
