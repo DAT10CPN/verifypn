@@ -21,6 +21,10 @@ namespace PetriEngine::Colored::Reduction {
         bool continueReductions = false;
         const size_t numberofplaces = red.placeCount();
         for (uint32_t p = 0; p < numberofplaces; ++p) {
+
+            if (red.unskippedPlacesCount() <= 1) break;
+       
+
             if (red.hasTimedOut()) return false;
             Place place = red.places()[p];
             if (place.skipped) continue;
@@ -66,11 +70,11 @@ namespace PetriEngine::Colored::Reduction {
 
             if (!ok) continue;
 
-            if (red.unskippedPlacesCount() > 1) {
-                ++_applications;
-                red.skipPlace(p);
-                continueReductions = true;
-            }
+
+            ++_applications;
+            red.skipPlace(p);
+            continueReductions = true;
+
         }
         red.consistent();
         return continueReductions;
