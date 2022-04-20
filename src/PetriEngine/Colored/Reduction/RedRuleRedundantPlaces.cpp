@@ -48,7 +48,7 @@ namespace PetriEngine::Colored::Reduction {
 
                 const auto &inArc = red.getInArc(p, transition);
 
-                ok = markingSatisfiesInArc(place.marking, *inArc, transition, partition, red.colors());
+                ok = markingEnablesInArc(place.marking, *inArc, transition, partition, red.colors());
 
                 if (!ok) break;
 
@@ -71,10 +71,10 @@ namespace PetriEngine::Colored::Reduction {
         return continueReductions;
     }
 
-    bool RedRuleRedundantPlaces::markingSatisfiesInArc(Multiset &marking, const Arc &arc,
-                                                       const Colored::Transition &transition,
-                                                       PartitionBuilder &partition,
-                                                       ColorTypeMap colors) const {
+    bool RedRuleRedundantPlaces::markingEnablesInArc(Multiset &marking, const Arc &arc,
+                                                     const Colored::Transition &transition,
+                                                     PartitionBuilder &partition,
+                                                     const ColorTypeMap &colors) const {
         assert(arc.input);
 
         NaiveBindingGenerator gen(transition, colors);

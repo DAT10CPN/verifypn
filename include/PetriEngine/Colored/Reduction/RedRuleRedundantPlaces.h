@@ -18,8 +18,10 @@ namespace PetriEngine::Colored::Reduction {
         bool apply(ColoredReducer &red, const PetriEngine::PQL::ColoredUseVisitor &inQuery, QueryType queryType,
                    bool preserveLoops, bool preserveStutter) override;
 
-        bool markingSatisfiesInArc(Multiset &marking, const Arc &arc, const Colored::Transition &transition,
-                                   PartitionBuilder &partition, ColorTypeMap colors) const;
+        bool markingEnablesInArc(Multiset &marking, const Arc &arc,
+                                 const Colored::Transition &transition,
+                                 PartitionBuilder &partition,
+                                 const ColorTypeMap &colors) const;
     };
 }
 
