@@ -6,12 +6,16 @@
  */
 
 #include <PetriEngine/Colored/ArcVarMultisetVisitor.h>
+#include <PetriEngine/Colored/BindingGenerator.h>
+#include <PetriEngine/Colored/EvaluationVisitor.h>
 #include "PetriEngine/Colored/Reduction/RedRuleDeadTransitions.h"
 #include "PetriEngine/Colored/Reduction/ColoredReducer.h"
 
 namespace PetriEngine::Colored::Reduction {
     bool RedRuleDeadTransitions::apply(ColoredReducer &red, const PetriEngine::PQL::ColoredUseVisitor &inQuery,
                                       QueryType queryType, bool preserveLoops, bool preserveStutter) {
+
+        Colored::PartitionBuilder partition(red.transitions(), red.places());
 
         bool continueReductions = false;
         const size_t numberofplaces = red.placeCount();
@@ -28,7 +32,7 @@ namespace PetriEngine::Colored::Reduction {
             for(uint prod : place._pre)
             {
                 // Any producer without a matching consumer blocks this rule
-                Transition t = red.transitions()[prod];
+                const Transition &t = red.transitions()[prod];
                 auto in = red.getInArc(p, t);
                 if(in == t.input_arcs.end())
                 {
@@ -44,9 +48,10 @@ namespace PetriEngine::Colored::Reduction {
             // Ensure all the enabled transitions that feed back into place are non-increasing on place.
             for(uint cons : place._post)
             {
-                Transition t = red.transitions()[cons];
-                auto in = red.getInArc(p, t);
-                if(in->expr->weight() <= place.marking.size())
+                const Transition &t = red.transitions()[cons];
+                const auto &in = red.getInArc(p, t);
+                Place place = red.places()[p];
+                if(markingEnablesInArc(place.marking, *in, t, partition, red.colors()))
                 {
                     // This branch happening even once means notenabled.size() != consumers.size()
                     auto out = red.getOutArc(t, p);
@@ -83,5 +88,20 @@ namespace PetriEngine::Colored::Reduction {
         }
         red.consistent();
         return continueReductions;
+    }
+
+    bool RedRuleDeadTransitions::markingEnablesInArc(Multiset &marking, const Arc &arc,
+                                                     const Colored::Transition &transition,
+                                                     PartitionBuilder &partition,
+                                                     const ColorTypeMap &colors) const {
+        assert(arc.input);
+
+        NaiveBindingGenerator gen(transition, colors);
+        for (const auto &binding: gen) {
+            const ExpressionContext context{binding, colors, partition.partition()[arc.place]};
+            const auto ms = EvaluationVisitor::evaluate(*arc.expr, context);
+            if (!(ms.isSubsetOrEqTo(marking))) return false;
+        }
+        return true;
     }
 }
