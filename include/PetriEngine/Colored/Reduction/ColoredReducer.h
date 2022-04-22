@@ -18,6 +18,7 @@
 #include "RedRuleParallelPlaces.h"
 #include "RedRuleRelevance.h"
 #include "RedRuleDeadTransitions.h"
+#include "RedRuleRedundantPlaces.h"
 
 
 namespace PetriEngine::Colored {
@@ -42,7 +43,9 @@ namespace PetriEngine::Colored {
 
             std::vector<ApplicationSummary> createApplicationSummary() const;
 
-            bool reduce(uint32_t timeout, const std::vector<bool> &inQuery, QueryType queryType, bool preserveLoops, bool preserveStutter, uint32_t reductiontype,std::vector<uint32_t>& reductions);
+            bool reduce(uint32_t timeout, const PetriEngine::PQL::ColoredUseVisitor &inQuery, QueryType queryType,
+                        bool preserveLoops, bool preserveStutter, uint32_t reductiontype,
+                        std::vector<uint32_t>& reductions);
 
             double time() const {
                 return _timeSpent;
@@ -83,6 +86,10 @@ namespace PetriEngine::Colored {
 
             const std::vector<Colored::Transition> &transitions() const {
                 return _builder.transitions();
+            }
+
+            const Colored::ColorTypeMap &colors() const {
+                return _builder.colors();
             }
 
             const std::vector<Colored::Arc> &inhibitorArcs() const {
@@ -134,12 +141,16 @@ namespace PetriEngine::Colored {
             RedRuleParallelPlaces _redRuleParallelPlaces;
             RedRuleRelevance _redRuleRelevance;
             RedRuleDeadTransitions _redRuleDeadTransitions;
+            RedRuleRedundantPlaces _redRuleRedundantPlaces;
+
             std::vector<ReductionRule *> _reductions{
                     &_redRuleRelevance,
                     &_preAgglomeration,
                     &_redRuleParallelTransitions,
                     &_redRuleParallelPlaces,
-                    &_redRuleDeadTransitions
+                    &_redRuleDeadTransitions,
+                    &_redRuleRedundantPlaces
+
             };
         };
     }
