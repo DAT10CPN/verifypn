@@ -16,7 +16,6 @@ namespace PetriEngine::Colored::Reduction {
 
     bool RedRuleRelevance::apply(ColoredReducer &red, const std::vector<bool> &inQuery,
                                         QueryType queryType, bool preserveLoops, bool preserveStutter) {
-
         bool changed = false;
         std::vector<uint32_t> wtrans;
         red._tflags.resize(red.transitions().size(), 0);

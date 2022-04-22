@@ -15,9 +15,6 @@ namespace PetriEngine::Colored::Reduction {
 
     bool RedRulePreAgglomeration::apply(ColoredReducer &red, const std::vector<bool> &inQuery,
                                         QueryType queryType, bool preserveLoops, bool preserveStutter) {
-
-        explosion_limiter *= 2;
-
         bool continueReductions = false;
         bool changed = true;
 
@@ -31,16 +28,12 @@ namespace PetriEngine::Colored::Reduction {
                 if (red.origTransitionCount() * 2 < red.unskippedTransitionsCount())
                     return false;
 
-
                 const Place &place = red.places()[pid];
 
-                // Start small
-    //            if (place._pre.size() > explosion_limiter){
-    //                changed = true;
-    //                continue;
-    //            } else if (explosion_limiter > 8){
-    //                return false;
-    //            }
+                // Limit large applications
+                if (place._pre.size() > explosion_limiter){
+                    continue;
+                }
 
                 // X4, X7.1, X1
                 if (place.skipped || place.inhibitor || inQuery[pid] || !place.marking.empty() || place._pre.empty() ||
