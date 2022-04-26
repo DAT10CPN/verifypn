@@ -52,13 +52,14 @@ namespace PetriEngine::Colored::Reduction {
                 const auto &in = red.getInArc(p, t);
                 if(markingEnablesInArc(place.marking, *in, t, partition, red.colors()))
                 {
-
                     // This branch happening even once means notenabled.size() != consumers.size()
                     auto out = red.getOutArc(t, p);
+                    if (out == t.output_arcs.end()) {
+                        continue;
+                    }
                     // Only increasing loops are not ok
                     auto inSet = PetriEngine::Colored::extractVarMultiset(*in->expr);
                     auto outSet = PetriEngine::Colored::extractVarMultiset(*out->expr);
-
                     if (!inSet || !outSet || (*inSet).isSubsetOrEqTo(*outSet)) {
                         if (to_string(*out->expr) != to_string(*in->expr)) {
                             ok = false;
@@ -81,7 +82,6 @@ namespace PetriEngine::Colored::Reduction {
                     skipplace = false;
                 else
                 {
-                    const Transition &transition = red.transitions()[cons];
                     red.skipTransition(cons);
                 }
             }
