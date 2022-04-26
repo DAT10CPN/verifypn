@@ -50,15 +50,20 @@ namespace PetriEngine::Colored::Reduction {
             {
                 const Transition &t = red.transitions()[cons];
                 const auto &in = red.getInArc(p, t);
-                Place place = red.places()[p];
                 if(markingEnablesInArc(place.marking, *in, t, partition, red.colors()))
                 {
+
                     // This branch happening even once means notenabled.size() != consumers.size()
                     auto out = red.getOutArc(t, p);
                     // Only increasing loops are not ok
-                    if (out != t.output_arcs.end() && out->expr->weight() > in->expr->weight()) {
-                        ok = false;
-                        break;
+                    auto inSet = PetriEngine::Colored::extractVarMultiset(*in->expr);
+                    auto outSet = PetriEngine::Colored::extractVarMultiset(*out->expr);
+
+                    if (!inSet || !outSet || (*inSet).isSubsetOrEqTo(*outSet)) {
+                        if (to_string(*out->expr) != to_string(*in->expr)) {
+                            ok = false;
+                            break;
+                        }
                     }
                 }
                 else
@@ -75,7 +80,10 @@ namespace PetriEngine::Colored::Reduction {
                 if (inQuery.isTransitionUsed(cons))
                     skipplace = false;
                 else
+                {
+                    const Transition &transition = red.transitions()[cons];
                     red.skipTransition(cons);
+                }
             }
 
             if(skipplace) {
@@ -100,8 +108,8 @@ namespace PetriEngine::Colored::Reduction {
         for (const auto &binding: gen) {
             const ExpressionContext context{binding, colors, partition.partition()[arc.place]};
             const auto ms = EvaluationVisitor::evaluate(*arc.expr, context);
-            if (!(ms.isSubsetOrEqTo(marking))) return false;
+            if (ms.isSubsetOrEqTo(marking)) return true;
         }
-        return true;
+        return false;
     }
 }
