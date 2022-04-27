@@ -11,11 +11,11 @@
 
 namespace PetriEngine::Colored::Reduction {
     bool RedRuleRelevance::isApplicable(QueryType queryType, bool preserveLoops, bool preserveStutter) const {
-        return !preserveStutter;
+        return queryType == QueryType::Reach && !preserveStutter && !preserveLoops;
     }
 
-    bool RedRuleRelevance::apply(ColoredReducer &red, const std::vector<bool> &inQuery,
-                                        QueryType queryType, bool preserveLoops, bool preserveStutter) {
+    bool RedRuleRelevance::apply(ColoredReducer &red, const PetriEngine::PQL::ColoredUseVisitor &inQuery,
+                                 QueryType queryType, bool preserveLoops, bool preserveStutter) {
 
         bool changed = false;
         std::vector<uint32_t> wtrans;
@@ -28,7 +28,7 @@ namespace PetriEngine::Colored::Reduction {
             if (red.hasTimedOut())
                 return false;
 
-            if (inQuery[pid]){
+            if (inQuery.isPlaceUsed(pid)){
                 red._pflags[pid] = true;
                 const Place &place = red.places()[pid];
                 for (auto t : place._post) {
@@ -43,6 +43,13 @@ namespace PetriEngine::Colored::Reduction {
                         red._tflags[t] = true;
                     }
                 }
+            }
+        }
+
+        for (uint32_t tid = 0; tid < red.transitionCount(); tid++) {
+            if (!red._tflags[tid] && inQuery.isTransitionUsed(tid)) {
+                wtrans.push_back(tid);
+                red._tflags[tid] = true;
             }
         }
 
@@ -76,24 +83,19 @@ namespace PetriEngine::Colored::Reduction {
                     }
                 }
             }
-            // The inhibitor implementation is not exactly elegant
-            const auto& inhibs = red.inhibitorArcs();
-            for (const Arc& inhibitor : inhibs){
+            for (const Arc& inhibitor : red.inhibitorArcs()) {
                 if (inhibitor.transition != t)
                     continue;
 
                 for (const auto prtID : red.places()[inhibitor.place]._post) {
                     if (!red._tflags[prtID]) {
                         // Summary of block: the potentially relevant transition is seen unless it:
-                        // - Is inhibited by 'place'
                         // - Forms a decreasing loop on 'place' that cannot lower the token count of 'place' below the weight of 'arc'
                         // - Forms a non-decreasing loop on 'place'
                         const Transition &potentiallyRelevantTrans = red.transitions()[prtID];
                         auto prtOut = red.getOutArc(potentiallyRelevantTrans, inhibitor.place);
                         if (prtOut != potentiallyRelevantTrans.output_arcs.end()) {
                             const auto prtIn = red.getInArc(inhibitor.place, potentiallyRelevantTrans);
-                            // Makes use of the assumption that the colored net representation does not put
-                            // inhibitor arcs in place._post, will crash if violated.
                             if (prtOut->expr->weight() >= inhibitor.inhib_weight ||
                                 prtOut->expr->weight() >= prtIn->expr->weight())
                                 continue;
@@ -106,24 +108,17 @@ namespace PetriEngine::Colored::Reduction {
         }
 
         for (uint32_t i = red.placeCount(); i > 0;) {
-            // This loop structure avoids underflow handling while also minimizing placeCount() calls.
             i--;
-            if (red._pflags[i] || red.places()[i].skipped){
-                continue;
-            } else {
-                red.skipPlace(i);
-                changed = true;
-            }
+            if (red._pflags[i] || red.places()[i].skipped) continue;
+            red.skipPlace(i);
+            changed = true;
         }
+
         for (uint32_t i = red.transitionCount(); i > 0;) {
-            // This loop structure avoids underflow handling while also minimizing transitionCount() calls.
             i--;
-            if (red._tflags[i] || red.transitions()[i].skipped){
-                continue;
-            } else {
-                red.skipTransition(i);
-                changed = true;
-            }
+            if (red._tflags[i] || red.transitions()[i].skipped) continue;
+            red.skipTransition(i);
+            changed = true;
         }
 
         // There must be at least one place.
