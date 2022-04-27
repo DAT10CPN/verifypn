@@ -60,6 +60,7 @@ BOOST_AUTO_TEST_CASE(InitialMarkingMatch, * utf::timeout(5)) {
         auto [pn, conditions, qstrings] = load_pn(model.c_str(),
             query.c_str(), qnums);
         BOOST_REQUIRE_GE(pn->numberOfPlaces(), 5);
+
         BOOST_REQUIRE_GE(pn->numberOfTransitions(), 5);
     } catch(base_error ex)
     {
@@ -104,7 +105,7 @@ BOOST_AUTO_TEST_CASE(PhilosophersDynCOL03, * utf::timeout(60)) {
                     std::cerr << "\t" << model << ", " << query << " partition=" << std::boolalpha << partition << " sym=" << symmetry << " cfp=" << cfp << " approx=" << approx << std::endl;
                     try {
                         auto [pn, conditions, qstrings] = load_pn(model.c_str(),
-                            query.c_str(), qnums, partition, symmetry, cfp, approx);
+                            query.c_str(), qnums, TemporalLogic::CTL, partition, symmetry, cfp, approx);
                         for(auto i : qnums)
                         {
                             std::cerr << "\t\tQ[" << i << "] " << std::endl;
@@ -159,7 +160,7 @@ BOOST_AUTO_TEST_CASE(PetersonCOL2, * utf::timeout(60)) {
                     std::cerr << "\t" << model << ", " << query << " partition=" << std::boolalpha << partition << " sym=" << symmetry << " cfp=" << cfp << " approx=" << approx << std::endl;
                     try {
                         auto [pn, conditions, qstrings] = load_pn(model.c_str(),
-                            query.c_str(), qnums, partition, symmetry, cfp, approx);
+                            query.c_str(), qnums, TemporalLogic::CTL, partition, symmetry, cfp, approx);
                         for(auto i : qnums)
                         {
                             std::cerr << "\t\tQ[" << i << "] " << std::endl;
@@ -207,7 +208,7 @@ BOOST_AUTO_TEST_CASE(UtilityControlRoomCOLZ2T3N04, * utf::timeout(60)) {
                     std::cerr << "\t" << model << ", " << query << " partition=" << std::boolalpha << partition << " sym=" << symmetry << " cfp=" << cfp << " approx=" << approx << std::endl;
                     try {
                         auto [pn, conditions, qstrings] = load_pn(model.c_str(),
-                            query.c_str(), qnums, partition, symmetry, cfp, approx);
+                            query.c_str(), qnums, TemporalLogic::CTL, partition, symmetry, cfp, approx);
                         BOOST_REQUIRE(pn->numberOfTransitions() > 0);
                         BOOST_REQUIRE(pn->numberOfPlaces() > 0);
                     } catch (const base_error& er) {
@@ -238,7 +239,7 @@ BOOST_AUTO_TEST_CASE(NeoElectionCOL3, * utf::timeout(60)) {
                     std::cerr << "\t" << model << ", " << query << " partition=" << std::boolalpha << partition << " sym=" << symmetry << " cfp=" << cfp << " approx=" << approx << std::endl;
                     try {
                         auto [pn, conditions, qstrings] = load_pn(model.c_str(),
-                            query.c_str(), qnums, partition, symmetry, cfp, approx);
+                            query.c_str(), qnums, TemporalLogic::CTL, partition, symmetry, cfp, approx);
                         BOOST_REQUIRE(pn->numberOfTransitions() > 0);
                         BOOST_REQUIRE(pn->numberOfPlaces() > 0);
                     } catch (const base_error& er) {
@@ -268,7 +269,7 @@ BOOST_AUTO_TEST_CASE(RangeNotOne, * utf::timeout(1)) {
                     std::cerr << "\t" << model << ", " << query << " partition=" << std::boolalpha << partition << " sym=" << symmetry << " cfp=" << cfp << " approx=" << approx << std::endl;
                     try {
                         auto [pn, conditions, qstrings] = load_pn(model.c_str(),
-                            query.c_str(), qnums, partition, symmetry, cfp, approx);
+                            query.c_str(), qnums, TemporalLogic::CTL, partition, symmetry, cfp, approx);
                         BOOST_REQUIRE(pn->numberOfTransitions() > 0);
                         BOOST_REQUIRE(pn->numberOfPlaces() > 0);
                         auto c2 = prepareForReachability(conditions[0]);
@@ -306,7 +307,7 @@ BOOST_AUTO_TEST_CASE(UnfoldLoop, * utf::timeout(1)) {
                     std::cerr << "\t" << model << ", " << query << " partition=" << std::boolalpha << partition << " sym=" << symmetry << " cfp=" << cfp << " approx=" << approx << std::endl;
                     try {
                         auto [pn, conditions, qstrings] = load_pn(model.c_str(),
-                            query.c_str(), qnums, partition, symmetry, cfp, approx);
+                            query.c_str(), qnums, TemporalLogic::CTL, partition, symmetry, cfp, approx);
                         BOOST_REQUIRE(pn->numberOfPlaces() > 0);
                         auto c2 = prepareForReachability(conditions[0]);
                         ReachabilitySearch strategy(*pn, handler, 0);
