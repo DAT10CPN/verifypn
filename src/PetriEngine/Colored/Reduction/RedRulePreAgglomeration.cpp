@@ -17,6 +17,7 @@ namespace PetriEngine::Colored::Reduction {
                                         QueryType queryType, bool preserveLoops, bool preserveStutter) {
         bool continueReductions = false;
         bool changed = true;
+        bool atomic_viable = (queryType == Reach) && !preserveLoops;
 
         // Apply repeatedly
         while (changed) {
@@ -25,6 +26,7 @@ namespace PetriEngine::Colored::Reduction {
             for (uint32_t pid = 0; pid < red.placeCount(); pid++) {
                 if (red.hasTimedOut())
                     return false;
+                // Limit explosion
                 if (red.origTransitionCount() * 2 < red.unskippedTransitionsCount())
                     return false;
 
@@ -35,17 +37,19 @@ namespace PetriEngine::Colored::Reduction {
                     continue;
                 }
 
-                // X4, X7.1, X1
+                // T/S8--1, T/S1, T/S3
                 if (place.skipped || place.inhibitor || inQuery.isPlaceUsed(pid) || !place.marking.empty() || place._pre.empty() ||
                     place._post.empty())
                     continue;
 
-                // Check that producers and consumers are disjoint
-                // X3
+
                 const auto presize = place._pre.size();
                 const auto postsize = place._post.size();
                 bool ok = true;
                 uint32_t i = 0, j = 0;
+
+                // Check that producers and consumers are disjoint, and not in a fireability query
+                // T/S4, T/S2
                 while (i < presize && j < postsize) {
                     if (place._pre[i] < place._post[j]) {
                         if (inQuery.isTransitionUsed(place._pre[i])) {
@@ -66,38 +70,45 @@ namespace PetriEngine::Colored::Reduction {
                         break;
                     }
                 }
+                if (!ok) continue;
+
                 for ( ; i < presize; i++) {
                     if (inQuery.isTransitionUsed(place._pre[i])) {
                         ok = false;
                         break;
                     }
                 }
+                if (!ok) continue;
+
                 for ( ; j < postsize; j++) {
                     if (inQuery.isTransitionUsed(place._post[j])) {
                         ok = false;
                         break;
                     }
                 }
-
                 if (!ok) continue;
 
                 std::vector<bool> todo (postsize, true);
                 bool todoAllGood = true;
-                // X14/15
+                // S11, S12
                 std::vector<bool> kIsAlwaysOne (postsize, true);
 
                 for (const auto& prod : place._pre){
                     const Transition& producer = red.transitions()[prod];
                     // X8.1, X6, X12
-                    if(producer.inhibited || producer.output_arcs.size() != 1 || producer.guard != nullptr){
+                    if(producer.inhibited || producer.output_arcs.size() != 1){
                         ok = false;
                         break;
                     }
 
-                    const CArcIter& prodArc = red.getOutArc(producer, pid);
-                    uint32_t kw = 1;
+                    if (producer.guard != nullptr){
 
-                    // X5
+                    }
+
+                    const CArcIter& prodArc = red.getOutArc(producer, pid);
+                    uint32_t kw;
+
+                    // T9, S6
                     if(prodArc->expr->is_single_color()){
                         kw = prodArc->expr->weight();
                     } else {
@@ -109,12 +120,17 @@ namespace PetriEngine::Colored::Reduction {
                         const PetriEngine::Colored::Transition& consumer = red.transitions()[place._post[n]];
                         const CArcIter& consArc = red.getInArc(pid, consumer);
                         uint32_t w = consArc->expr->weight();
-                        // X9, (X5), X13
-                        if (!consArc->expr->is_single_color() || kw % w != 0 || consumer.guard != nullptr) {
-                            todo[n] = false;
-                            todoAllGood = false;
-                        } else if (kw != w) {
-                            kIsAlwaysOne[n] = false;
+                        // (T9, S6), S10, T10
+                        if (atomic_viable){
+                            if (!consArc->expr->is_single_color() || kw % w != 0 || (producer.guard != nullptr && consumer.guard != nullptr)) {
+                                todo[n] = false;
+                                todoAllGood = false;
+                            } else if (kw != w) {
+                                kIsAlwaysOne[n] = false;
+                            }
+                        } else if (!consArc->expr->is_single_color() || kw != w || (producer.guard != nullptr && consumer.guard != nullptr)) {
+                            ok = false;
+                            break;
                         }
                     }
 
@@ -126,20 +142,20 @@ namespace PetriEngine::Colored::Reduction {
 
                     for (const auto& prearc : producer.input_arcs){
                         const Place& preplace = red.places()[prearc.place];
-                        // X8.2, X7.2
+                        // T/S8--3, T/S7--2
                         if (preplace.inhibitor || inQuery.isPlaceUsed(prearc.place)){
                             ok = false;
                             break;
-                        } else if (preserveLoops) {
+                        } else if (!atomic_viable) {
                             // For reachability, we can do free agglomeration which avoids this condition
-                            // X10
+                            // T5
                             for(uint32_t alternative : preplace._post){
-                                // X10; Transitions in place.pre are exempt from this check
+                                // T5; Transitions in place.pre are exempt from this check
                                 if (std::lower_bound(place._pre.begin(), place._pre.end(), alternative) != place._pre.end())
                                     continue;
 
                                 const Transition& alternativeConsumer = red.transitions()[alternative];
-                                // X10; Transitions outside place.pre are not allowed to alter the contents of preplace
+                                // T5; Transitions outside place.pre are not allowed to alter the contents of preplace
                                 if (red.getInArc(prearc.place, alternativeConsumer)->expr == red.getOutArc(alternativeConsumer, prearc.place)->expr){
                                     ok = false;
                                     break;
@@ -163,20 +179,24 @@ namespace PetriEngine::Colored::Reduction {
                     ok = true;
 
                     const Transition &consumer = red.transitions()[originalConsumers[n]];
-                    // (X10 || X15)
-                    if ((preserveLoops || !kIsAlwaysOne[n]) && consumer.input_arcs.size() != 1) {
-                        continue;
-                    }
-                    // X14, X16
-                    if (!kIsAlwaysOne[n]) {
-                        for (const auto& conspost : consumer.output_arcs) {
-                            if (red.places()[conspost.place].inhibitor || (queryType != Reach && inQuery.isPlaceUsed(conspost.place))) {
-                                ok = false;
-                                break;
-                            }
+                    // T trivially passes these because of T5 earlier
+                    if (atomic_viable){
+                        // S12
+                        if (!kIsAlwaysOne[n] && consumer.input_arcs.size() != 1) {
+                            continue;
                         }
-                        if (!ok) continue;
+                        // S11
+                        if (!kIsAlwaysOne[n]) {
+                            for (const auto& conspost : consumer.output_arcs) {
+                                if (red.places()[conspost.place].inhibitor || (queryType != Reach && inQuery.isPlaceUsed(conspost.place))) {
+                                    ok = false;
+                                    break;
+                                }
+                            }
+
+                        }
                     }
+                    if (!ok) continue;
 
                     uint32_t w = red.getInArc(pid, consumer)->expr->weight();
 
@@ -226,13 +246,9 @@ namespace PetriEngine::Colored::Reduction {
                 }
 
                 if (place._post.empty()) {
-                    if (!preserveLoops){
-                        // The original producers of place will become purely consuming transitions when it is gone, which can sometimes be removed
-                        // The places they consume from aren't allowed to be in the query, but if they were we couldn't reach this point either.
-                        // For k > 1 the newly made transitions need to stay, hence originalProducers instead of place._pre
-                        for (auto tran_id : originalProducers)
-                            red.skipTransition(tran_id);
-                    }
+                    auto transitions = place._pre;
+                    for (uint32_t tran_id : transitions)
+                        red.skipTransition(tran_id);
                     red.skipPlace(pid);
                 }
 
