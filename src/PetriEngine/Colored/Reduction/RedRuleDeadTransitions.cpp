@@ -69,6 +69,8 @@ namespace PetriEngine::Colored::Reduction {
                 }
                 else
                 {
+                    std::cout << "skipping transition " << *t.name << std::endl;
+                    std::cout << "using place " << *place.name << std::endl;
                     notenabled.insert(cons);
                 }
             }
