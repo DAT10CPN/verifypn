@@ -16,7 +16,6 @@ namespace PetriEngine::Colored::Reduction {
                                       QueryType queryType, bool preserveLoops, bool preserveStutter) {
 
         Colored::PartitionBuilder partition(red.transitions(), red.places());
-
         bool continueReductions = false;
         const size_t numberofplaces = red.placeCount();
         for(uint32_t p = 0; p < numberofplaces; ++p)
@@ -50,7 +49,7 @@ namespace PetriEngine::Colored::Reduction {
             {
                 const Transition &t = red.transitions()[cons];
                 const auto &in = red.getInArc(p, t);
-                if(markingEnablesInArc(place.marking, *in, t, partition, red.colors()))
+                if(markingEnablesInArc(place.marking, *in, t, partition, in->expr->getColors(red.colors())))
                 {
                     // This branch happening even once means notenabled.size() != consumers.size()
                     auto out = red.getOutArc(t, p);
@@ -103,7 +102,6 @@ namespace PetriEngine::Colored::Reduction {
                                                      PartitionBuilder &partition,
                                                      const ColorTypeMap &colors) const {
         assert(arc.input);
-
         NaiveBindingGenerator gen(transition, colors);
         for (const auto &binding: gen) {
             const ExpressionContext context{binding, colors, partition.partition()[arc.place]};

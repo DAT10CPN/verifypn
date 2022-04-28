@@ -277,6 +277,7 @@ namespace PetriEngine {
             virtual void visit(ColorExpressionVisitor& visitor) const = 0;
             virtual uint32_t weight() const = 0;
             virtual bool is_single_color() const = 0;
+            virtual Colored::ColorTypeMap getColors(ColorTypeMap colorTypes) const = 0;
         };
 
         typedef std::shared_ptr<ArcExpression> ArcExpression_ptr;
@@ -324,6 +325,20 @@ namespace PetriEngine {
 
             bool is_single_color() const {
                 return !is_all() && _color.size() == 1;
+            }
+
+            Colored::ColorTypeMap getColors(ColorTypeMap colorTypes) const {
+                Colored::ColorTypeMap colors;
+                if (!this->is_all()) {
+                    for (auto &c: _color) {
+                        const ColorType *colorType = c->getColorType(colorTypes);
+                            colors.emplace(std::make_pair(std::string(colorType->getName()),colorType));
+                    }
+                }
+                else {
+                    colors.emplace(std::make_pair(std::string(_all->sort()->getName()),_all->sort()));
+                }
+                return colors;
             }
 
             uint32_t number() const {
@@ -376,6 +391,16 @@ namespace PetriEngine {
                 return _constituents.size() == 1 && _constituents[0]->is_single_color();
             }
 
+            Colored::ColorTypeMap getColors(ColorTypeMap colorTypes) const {
+                Colored::ColorTypeMap colors;
+                for (auto &c: _constituents){
+                    for (auto &cc:c->getColors(colorTypes)) {
+                        colors.emplace(cc);
+                    }
+                }
+                return colors;
+            }
+
             size_t size() const {
                 return _constituents.size();
             }
@@ -412,6 +437,17 @@ namespace PetriEngine {
                 return false;
             }
 
+            Colored::ColorTypeMap getColors(ColorTypeMap colorTypes) const {
+                Colored::ColorTypeMap colors;
+                for (auto &c: _left->getColors(colorTypes)) {
+                    colors.emplace(c);
+                }
+                for (auto &c: _right->getColors(colorTypes)) {
+                    colors.emplace(c);
+                }
+                return colors;
+            }
+
             size_t size() const {
                 return 2;
             }
@@ -440,6 +476,10 @@ namespace PetriEngine {
 
             bool is_single_color() const {
                 return _expr->is_single_color();
+            }
+
+            Colored::ColorTypeMap getColors(ColorTypeMap colorTypes) const {
+                return _expr->getColors(colorTypes);
             }
 
             auto scalar() const {
