@@ -1,21 +1,32 @@
-//
-// Created by mathi on 21/04/2022.
-//
+/*
+ * Authors:
+ *      Nicolaj Østerby Jensen
+ *      Jesper Adriaan van Diepen
+ *      Mathias Mehl Sørensen
+ */
 
 #include "PetriEngine/Colored/Reduction/RedRulePreemptiveFiring.h"
 #include "PetriEngine/Colored/Reduction/ColoredReducer.h"
 
 namespace PetriEngine::Colored::Reduction {
     bool RedRulePreemptiveFiring::apply(ColoredReducer &red, const PetriEngine::PQL::ColoredUseVisitor &inQuery,
-                                       QueryType queryType, bool preserveLoops, bool preserveStutter) {
-        // Fire initially enabled transitions if they are the single consumer of their preset
+                                        QueryType queryType,
+                                        bool preserveLoops, bool preserveStutter) {
         bool continueReductions = false;
+        const size_t numberofplaces = red.placeCount();
+        for (uint32_t p = 0; p < numberofplaces; ++p) {
+            if (red.hasTimedOut()) return false;
+            Place place = red.places()[p];
+            if (place.skipped) continue;
+            if (inQuery.isPlaceUsed(p)) continue;
+            if (place.inhibitor) continue; //todo can do more
+            if (place.marking.empty()) continue;
+            if (place._post.size() != 1) continue; // could do something else
+            if (!place._pre.empty()) continue;
 
-        for (uint32_t t = 0; t < red.transitionCount(); ++t)
-        {
-            const Transition& tran = red.transitions()[t];
+            Transition t = red.transitions()[place._post[0]];
 
-            if (tran.skipped || tran.inhibited || tran.input_arcs.empty()) continue;
+
 
 
             // - Preset and postset must be disjoint (to avoid immediate infinite use)
@@ -28,8 +39,8 @@ namespace PetriEngine::Colored::Reduction {
 
             _applications++;
             continueReductions = false;
-        }
 
+        }
         return continueReductions;
     }
 }
