@@ -24,8 +24,11 @@ namespace PetriEngine::Colored::Reduction {
             if (place._post.size() != 1) continue; // could do something else
             if (!place._pre.empty()) continue;
 
-            Transition t = red.transitions()[place._post[0]];
+            Transition transition = red.transitions()[place._post[0]];
+            auto out = red.getOutArc(transition, p);
+            auto in = red.getInArc(p, transition);
 
+            if (to_string(in->expr) != to_string(out->expr)) continue;
 
 
 
