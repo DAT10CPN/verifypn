@@ -181,7 +181,6 @@ namespace PetriEngine {
         void PnmlWriter::places() {
             _out << getTabs() << "<!-- List of places -->\n";
             for (auto &place: _builder._places) {
-                std::cout << "place" << *place.name << std::endl;
                 if (place.skipped) {
                     continue;
                 }
@@ -197,11 +196,9 @@ namespace PetriEngine {
 
                 bool ok = !place.marking.empty();
                 for (const auto &p: place.marking) {
-                    std::cout << "second" << p.second << std::endl;
                     if (p.second > 0) continue;
                     ok = false;
                 }
-                std::cout << "ok?" <<ok << std::endl;
                 if (ok) handlehlinitialMarking(place.marking);
 
                 _out << decreaseTabs() << "</place>\n";

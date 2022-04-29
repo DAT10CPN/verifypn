@@ -56,7 +56,7 @@ namespace PetriEngine::Colored::Reduction {
             // Easiest to not handle guards, if guard, iterate through all bindings.
 
             _applications++;
-            continueReductions = false;
+            continueReductions = true;
 
         }
         return continueReductions;
