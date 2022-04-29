@@ -15,8 +15,9 @@ namespace PetriEngine::Colored::Reduction {
         bool continueReductions = false;
         const size_t numberofplaces = red.placeCount();
         for (uint32_t p = 0; p < numberofplaces; ++p) {
+
             if (red.hasTimedOut()) return false;
-            Place place = red.places()[p];
+            auto &place = const_cast<Place &>(red.places()[p]);
             if (place.skipped) continue;
             if (inQuery.isPlaceUsed(p)) continue;
             if (place.inhibitor) continue; //todo can do more
@@ -24,13 +25,27 @@ namespace PetriEngine::Colored::Reduction {
             if (place._post.size() != 1) continue; // could do something else
             if (!place._pre.empty()) continue;
 
+            bool ok = true;
+
             Transition transition = red.transitions()[place._post[0]];
-            auto out = red.getOutArc(transition, p);
-            auto in = red.getInArc(p, transition);
+            if (transition.guard) continue;
+            const auto &in = red.getInArc(p, transition);
 
-            if (to_string(in->expr) != to_string(out->expr)) continue;
+            for (auto &out: transition.output_arcs) {
+                if (to_string(*out.expr) != to_string(*in->expr)) {
+                    ok = false;
+                    break;
+                }
+            }
 
+            if (!ok) continue;
 
+            for (auto &out: transition.output_arcs) {
+                auto &otherplace = const_cast<Place &>(red.places()[out.place]);
+                otherplace.marking += place.marking;
+
+            }
+            place.marking *= 0;
 
             // - Preset and postset must be disjoint (to avoid immediate infinite use)
             // - Preset and postset cannot inhibit or be in query
