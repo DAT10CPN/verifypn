@@ -8,6 +8,7 @@
 #include <PetriEngine/Colored/ArcVarMultisetVisitor.h>
 #include <PetriEngine/Colored/BindingGenerator.h>
 #include <PetriEngine/Colored/EvaluationVisitor.h>
+#include <PetriEngine/Colored/VariableVisitor.h>
 #include "PetriEngine/Colored/Reduction/RedRuleDeadTransitions.h"
 #include "PetriEngine/Colored/Reduction/ColoredReducer.h"
 
@@ -48,6 +49,10 @@ namespace PetriEngine::Colored::Reduction {
             for(uint cons : place._post)
             {
                 const Transition &t = red.transitions()[cons];
+
+                uint32_t colorSize = getColorSize(t);
+                if (colorSize > 10000) continue;
+
                 const auto &in = red.getInArc(p, t);
                 if(markingEnablesInArc(place.marking, *in, t, partition, in->expr->getColors(red.colors())))
                 {
@@ -109,5 +114,28 @@ namespace PetriEngine::Colored::Reduction {
             if (ms.isSubsetOrEqTo(marking)) return true;
         }
         return false;
+    }
+
+    uint32_t RedRuleDeadTransitions::getColorSize(const Transition &transition) {
+        std::set<const Colored::Variable*> variables;
+
+        for (const auto &arc : transition.input_arcs) {
+            assert(arc.expr != nullptr);
+            Colored::VariableVisitor::get_variables(*arc.expr, variables);
+        }
+        for (const auto &arc : transition.output_arcs) {
+            assert(arc.expr != nullptr);
+            Colored::VariableVisitor::get_variables(*arc.expr, variables);
+        }
+
+        uint32_t size = 0;
+        for (auto& v: variables) {
+            if (size == 0) {
+                size = v->colorType->size();
+            } else {
+                size *= v->colorType->size();
+            }
+        }
+        return size;
     }
 }

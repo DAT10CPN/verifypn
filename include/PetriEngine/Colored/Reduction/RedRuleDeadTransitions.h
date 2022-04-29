@@ -25,6 +25,8 @@ namespace PetriEngine::Colored::Reduction {
                                  const Colored::Transition &transition,
                                  PartitionBuilder &partition,
                                  const ColorTypeMap &colors) const;
+
+        uint32_t getColorSize(const Transition &transition);
     };
 }
 
