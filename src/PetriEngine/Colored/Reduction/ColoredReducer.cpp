@@ -38,16 +38,15 @@ namespace PetriEngine::Colored::Reduction {
     }
 
     bool ColoredReducer::reduce(uint32_t timeout, const PetriEngine::PQL::ColoredUseVisitor &inQuery,
-                                QueryType queryType, bool preserveLoops, bool preserveStutter, uint32_t reductiontype,
-                                std::vector<uint32_t> &reductions) {
+                                QueryType queryType, bool preserveLoops, bool preserveStutter, uint32_t reduceMode,
+                                std::vector<uint32_t> &userSequence) {
 
-        std::vector<ReductionRule *> reductionsToUse;
+        //if (inQuery.anyTransitionUsed())
+        //    return false; // TODO Only cardinality has been thoroughly tested
 
-        if (reductiontype == 2) {
-            reductionsToUse = ColoredReducer::buildApplicationSequence(reductions);
-        } else {
-            reductionsToUse = _reductions;
-        }
+        assert(reduceMode > 0);
+        auto reductionsToUse = reduceMode == 1 ? _reductions : buildApplicationSequence(userSequence);
+
         for (int i = reductionsToUse.size() - 1; i >= 0; i--) {
             if (!reductionsToUse[i]->isApplicable(queryType, preserveLoops, preserveStutter))
                 reductionsToUse.erase(reductionsToUse.begin() + i);
