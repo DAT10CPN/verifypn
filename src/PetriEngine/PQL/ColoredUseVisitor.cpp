@@ -46,6 +46,16 @@ namespace PetriEngine::PQL {
         if (it == _transitionNameToIndexMap.end())
             throw base_error("Unable to resolve identifier \"", element->getName(), "\"");
         _transitionInUse[it->second] = true;
+        _anyTransitionInUse = true;
+    }
+
+    void ColoredUseVisitor::_accept(const UpperBoundsCondition *element) {
+        for(auto& p : element->getPlaces()) {
+            auto it = _placeNameToIndexMap.find(p);
+            if (it == _placeNameToIndexMap.end())
+                throw base_error("Unable to resolve identifier \"", *p, "\"");
+            _placeInUse[it->second] = true;
+        }
     }
 
     void ColoredUseVisitor::_accept(const ShallowCondition *element) {

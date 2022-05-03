@@ -142,7 +142,6 @@ int main(int argc, const char** argv) {
 
         std::stringstream ss;
         std::ostream& out = options.printstatistics ? std::cout : ss;
-
         reduceColored(cpnBuilder, queries, options.logic, options.colReductionTimeout, out, options.enablecolreduction, options.colreductions);
 
         if (options.model_col_out_file.size() > 0) {
@@ -273,7 +272,6 @@ int main(int argc, const char** argv) {
                             results[i] = options.logic == TemporalLogic::CTL ? ResultPrinter::CTL : ResultPrinter::LTL;
                         alldone = false;
                     } else {
-                        queries[i] = prepareForReachability(queries[i]);
                         alldone = false;
                     }
                 }
@@ -287,8 +285,9 @@ int main(int argc, const char** argv) {
 
         //--------------------- Apply Net Reduction ---------------//
 
+        builder.freezeOriginalSize();
         if (options.enablereduction > 0) {
-            // Compute how many times each place appears in the query
+            // Compute structural reductions
             builder.startTimer();
             builder.reduce(queries, results, options.enablereduction, options.trace != TraceLevel::None, nullptr,
                            options.reductionTimeout, options.reductions);
@@ -484,6 +483,12 @@ int main(int argc, const char** argv) {
             // Change default place-holder to default strategy
             if (options.strategy == Strategy::DEFAULT) options.strategy = Strategy::HEUR;
 
+            // remove the prefix EF/AF (LEGACY, should not be handled here)
+            for(uint32_t i = 0; i < results.size(); ++i)
+            {
+                if(results[i] == ResultPrinter::Unknown)
+                    queries[i] = prepareForReachability(queries[i]);
+            }
             if (options.tar && net->numberOfPlaces() > 0) {
                 //Create reachability search strategy
                 TarResultPrinter tar_printer(printer);
