@@ -7,6 +7,8 @@
 
 #include "PetriEngine/Colored/Reduction/RedRulePreAgglomeration.h"
 #include "PetriEngine/Colored/Reduction/ColoredReducer.h"
+#include "PetriEngine/Colored/ArcVarMultisetVisitor.h"
+#include "PetriEngine/Colored/VarReplaceVisitor.h"
 
 namespace PetriEngine::Colored::Reduction {
     bool RedRulePreAgglomeration::isApplicable(QueryType queryType, bool preserveLoops, bool preserveStutter) const {
@@ -162,12 +164,73 @@ namespace PetriEngine::Colored::Reduction {
                                 }
                             }
                         }
+                        if (!ok) break;
                     }
 
                     if (!ok) break;
                 }
 
                 if (!ok) continue;
+
+
+                std::vector<Variable> nameClashPotentialVictims;
+                std::vector<Arc> nameClashVictims;
+
+                // Find/Fix name clashes
+                for (auto pre : place._pre){
+                    auto preTrans = red.transitions()[pre];
+                    auto preArc = red.getOutArc(preTrans, pid);
+                    const auto preArcVars = PetriEngine::Colored::extractVarMultiset(*preArc->expr);
+                    if (!preArcVars.has_value()){
+                        // This should never be possible, if it somehow happens
+                        ok = false;
+                        break;
+                    }
+                    for (auto post : place._post){
+                        auto postTrans = red.transitions()[post];
+                        auto postArc = red.getInArc(pid, postTrans);
+                        const auto postArcVars = PetriEngine::Colored::extractVarMultiset(*preArc->expr);
+                        if (!postArcVars.has_value()){
+                            // This should never be possible, if it somehow happens
+                            ok = false;
+                            break;
+                        }
+                        if (((*preArcVars).begin().operator*().first[0]) == (*postArcVars).begin().operator*().first[0]){
+                            for (const auto& postPost : postTrans.output_arcs){
+                                if (auto ms2 = PetriEngine::Colored::extractVarMultiset(*postPost.expr)){
+                                    if (!ms2->isSubsetOrEqTo(*postArcVars)){
+                                        for (const auto pair : *ms2){
+                                            for (const PetriEngine::Colored::Variable * var : pair.first){
+                                                if (var != (*postArcVars).begin().operator*().first[0]){
+                                                    nameClashPotentialVictims.emplace_back(*var);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+
+                        }
+                    }
+                    for (const auto& prePre : preTrans.input_arcs){
+                        if (auto ms2 = PetriEngine::Colored::extractVarMultiset(*prePre.expr)){
+                            if (!ms2->isSubsetOrEqTo(*preArcVars)){
+                                for (const auto pair : *ms2){
+                                    for (const PetriEngine::Colored::Variable * var : pair.first){
+                                        if (var != (*preArcVars).begin().operator*().first[0]){
+                                            if (std::lower_bound(nameClashPotentialVictims.begin(),nameClashPotentialVictims.begin(), var) != nameClashPotentialVictims.end()){
+                                                nameClashVictims.emplace_back(prePre);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+
                 std::vector<uint32_t> originalConsumers = place._post;
                 std::vector<uint32_t> originalProducers = place._pre;
                 for (uint32_t n = 0; n < originalConsumers.size(); n++)
@@ -193,7 +256,6 @@ namespace PetriEngine::Colored::Reduction {
                                     break;
                                 }
                             }
-
                         }
                     }
                     if (!ok) continue;
@@ -214,7 +276,7 @@ namespace PetriEngine::Colored::Reduction {
                             // Create new transition with effect of firing the producer, and then the consumer k_i times
                             auto tid = red.newTransition(nullptr);
 
-                            // Re-fetch the transition pointers as it might be invalidated, I think that's the issue?
+                            // Re-fetch the transition references as they might be invalidated?
                             const Transition &producerPrime = red.transitions()[prod];
                             const Transition &consumerPrime = red.transitions()[originalConsumers[n]];
 
@@ -260,5 +322,20 @@ namespace PetriEngine::Colored::Reduction {
 
         red.consistent();
         return continueReductions;
+    }
+
+    void renameVar(const PetriEngine::Colored::Transition& transition, const PetriEngine::Colored::Variable& variable){
+        Variable newVar = variable;
+        newVar.name = variable.name + "jj";
+        VarReplaceVisitor.
+
+        for (const auto& in : transition.input_arcs){
+
+        }
+        for (const auto& out : transition.output_arcs){
+
+        }
+        transition.guard;
+
     }
 }
