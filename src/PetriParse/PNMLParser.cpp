@@ -140,7 +140,7 @@ void PNMLParser::parseDeclarations(rapidxml::xml_node<>* element) {
             parseNamedSort(it);
         } else if (strcmp(it->name(), "variabledecl") == 0) {
             auto var = new PetriEngine::Colored::Variable {
-                it->first_attribute("id")->value(),
+                "transit" + (std::string)it->first_attribute("id")->value(),
                 parseUserSort(it)
             };
             variables[it->first_attribute("id")->value()] = var;
@@ -476,6 +476,7 @@ PetriEngine::Colored::ColorExpression_ptr PNMLParser::parseColorExpression(rapid
     if (strcmp(element->name(), "dotconstant") == 0) {
         return std::make_shared<PetriEngine::Colored::DotConstantExpression>();
     } else if (strcmp(element->name(), "variable") == 0) {
+        if (variables[element->first_attribute("refvariable")->value()])
         return std::make_shared<PetriEngine::Colored::VariableExpression>(variables[element->first_attribute("refvariable")->value()]);
     } else if (strcmp(element->name(), "useroperator") == 0) {
         return std::make_shared<PetriEngine::Colored::UserOperatorExpression>(findColor(element->first_attribute("declaration")->value()));
@@ -760,7 +761,7 @@ void PNMLParser::parseTransition(rapidxml::xml_node<>* element) {
         if (strcmp(it->name(), "graphics") == 0) {
             parsePosition(it, t.x, t.y);
         } else if (strcmp(it->name(), "condition") == 0) {
-            t.expr = parseGuardExpression(it->first_node("structure"), false);
+            t.expr = parseGuardExpression(it->first_node("structure"), t.id, false);
         } else if (strcmp(it->name(), "conditions") == 0) {
             throw base_error("conditions not supported");
         } else if (strcmp(it->name(), "assignments") == 0) {
