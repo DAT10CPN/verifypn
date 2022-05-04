@@ -19,31 +19,43 @@ namespace PetriEngine::Colored::Reduction {
             if (red.hasTimedOut()) return false;
             auto &place = const_cast<Place &>(red.places()[p]);
             if (place.skipped) continue;
-            if (inQuery.isPlaceUsed(p)) continue;
             if (place.inhibitor) continue; //todo can do more
             if (place.marking.empty()) continue;
-            if (place._post.size() != 1) continue; // could do something else
+            if (place._post.size() != 1) continue; // could do something better
             if (!place._pre.empty()) continue;
 
             bool ok = true;
 
             Transition transition = red.transitions()[place._post[0]];
             if (transition.guard) continue;
+            if (transition.input_arcs.size() > 1) continue;
             const auto &in = red.getInArc(p, transition);
+            if (inQuery.isPlaceUsed(in->place)) continue; // later do some more fancy where t can have more input arcs
 
             for (auto &out: transition.output_arcs) {
+                if (inQuery.isPlaceUsed(out.place)) {
+                    ok = false;
+                    break;
+                }
+
                 if (to_string(*out.expr) != to_string(*in->expr)) {
                     ok = false;
                     break;
                 }
             }
 
+            /*for (auto &in_arcs: transition.input_arcs) {
+                if (inQuery.isPlaceUsed(in_arcs.place)) {
+                    ok = false;
+                    break;
+                }
+            }*/
+
             if (!ok) continue;
 
             for (auto &out: transition.output_arcs) {
                 auto &otherplace = const_cast<Place &>(red.places()[out.place]);
                 otherplace.marking += place.marking;
-
             }
             place.marking *= 0;
 
