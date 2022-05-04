@@ -9,6 +9,7 @@
 #define VERIFYPN_REDRULEPREEMPTIVEFIRING_H
 
 #include "ReductionRule.h"
+#include "PetriEngine/Colored/ColoredNetStructures.h"
 
 namespace PetriEngine::Colored::Reduction {
     class RedRulePreemptiveFiring : public ReductionRule {
@@ -19,6 +20,8 @@ namespace PetriEngine::Colored::Reduction {
 
         bool apply(ColoredReducer &red, const PetriEngine::PQL::ColoredUseVisitor &inQuery, QueryType queryType,
                    bool preserveLoops, bool preserveStutter) override;
+
+        bool transition_can_produce_to_place(unsigned int t, uint32_t p, ColoredReducer &red, std::vector<uint32_t> already_checked) const;
     };
 }
 
