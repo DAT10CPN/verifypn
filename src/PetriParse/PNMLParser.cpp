@@ -47,7 +47,7 @@ void PNMLParser::parse(std::istream& xml,
     //Set the builder
     this->builder = builder;
 
-    //Parser the xml
+    //Parse the xml
     rapidxml::xml_document<> doc;
     std::vector<char> buffer((std::istreambuf_iterator<char>(xml)), std::istreambuf_iterator<char>());
     buffer.push_back('\0');
@@ -476,8 +476,15 @@ PetriEngine::Colored::ColorExpression_ptr PNMLParser::parseColorExpression(rapid
     if (strcmp(element->name(), "dotconstant") == 0) {
         return std::make_shared<PetriEngine::Colored::DotConstantExpression>();
     } else if (strcmp(element->name(), "variable") == 0) {
-        if (variables[element->first_attribute("refvariable")->value()])
-        return std::make_shared<PetriEngine::Colored::VariableExpression>(variables[element->first_attribute("refvariable")->value()]);
+        if (variables[tid + element->first_attribute("refvariable")->value()] == nullptr){
+            auto var = new PetriEngine::Colored::Variable {
+                    tid + element->first_attribute("refvariable")->value(),
+                    variables[element->first_attribute("refvariable")->value()]->colorType
+            };
+            variables[tid + element->first_attribute("refvariable")->value()] = var;
+            builder->addVariable(var);
+        }
+        return std::make_shared<PetriEngine::Colored::VariableExpression>(variables[tid + element->first_attribute("refvariable")->value()]);
     } else if (strcmp(element->name(), "useroperator") == 0) {
         return std::make_shared<PetriEngine::Colored::UserOperatorExpression>(findColor(element->first_attribute("declaration")->value()));
     } else if (strcmp(element->name(), "successor") == 0) {
@@ -691,6 +698,7 @@ void PNMLParser::parseArc(rapidxml::xml_node<>* element, bool inhibitor) {
         }
     }
 
+    tid = id2name[source].isPlace ? target : source;
     PetriEngine::Colored::ArcExpression_ptr expr;
     first = true;
     for (auto it = element->first_node("hlinscription"); it; it = it->next_sibling("hlinscription")) {
@@ -753,15 +761,15 @@ void PNMLParser::parseTransition(rapidxml::xml_node<>* element) {
     t.x = 0;
     t.y = 0;
     t.id = element->first_attribute("id")->value();
+    tid = t.id;
     t.expr = nullptr;
-
 
     for (auto it = element->first_node(); it; it = it->next_sibling()) {
         // name element is ignored
         if (strcmp(it->name(), "graphics") == 0) {
             parsePosition(it, t.x, t.y);
         } else if (strcmp(it->name(), "condition") == 0) {
-            t.expr = parseGuardExpression(it->first_node("structure"), t.id, false);
+            t.expr = parseGuardExpression(it->first_node("structure"), false);
         } else if (strcmp(it->name(), "conditions") == 0) {
             throw base_error("conditions not supported");
         } else if (strcmp(it->name(), "assignments") == 0) {

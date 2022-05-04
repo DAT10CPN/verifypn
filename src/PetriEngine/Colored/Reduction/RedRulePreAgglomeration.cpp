@@ -8,7 +8,6 @@
 #include "PetriEngine/Colored/Reduction/RedRulePreAgglomeration.h"
 #include "PetriEngine/Colored/Reduction/ColoredReducer.h"
 #include "PetriEngine/Colored/ArcVarMultisetVisitor.h"
-#include "PetriEngine/Colored/VarReplaceVisitor.h"
 
 namespace PetriEngine::Colored::Reduction {
     bool RedRulePreAgglomeration::isApplicable(QueryType queryType, bool preserveLoops, bool preserveStutter) const {
@@ -177,58 +176,58 @@ namespace PetriEngine::Colored::Reduction {
                 std::vector<Arc> nameClashVictims;
 
                 // Find/Fix name clashes
-                for (auto pre : place._pre){
-                    auto preTrans = red.transitions()[pre];
-                    auto preArc = red.getOutArc(preTrans, pid);
-                    const auto preArcVars = PetriEngine::Colored::extractVarMultiset(*preArc->expr);
-                    if (!preArcVars.has_value()){
-                        // This should never be possible, if it somehow happens
-                        ok = false;
-                        break;
-                    }
-                    for (auto post : place._post){
-                        auto postTrans = red.transitions()[post];
-                        auto postArc = red.getInArc(pid, postTrans);
-                        const auto postArcVars = PetriEngine::Colored::extractVarMultiset(*preArc->expr);
-                        if (!postArcVars.has_value()){
-                            // This should never be possible, if it somehow happens
-                            ok = false;
-                            break;
-                        }
-                        if (((*preArcVars).begin().operator*().first[0]) == (*postArcVars).begin().operator*().first[0]){
-                            for (const auto& postPost : postTrans.output_arcs){
-                                if (auto ms2 = PetriEngine::Colored::extractVarMultiset(*postPost.expr)){
-                                    if (!ms2->isSubsetOrEqTo(*postArcVars)){
-                                        for (const auto pair : *ms2){
-                                            for (const PetriEngine::Colored::Variable * var : pair.first){
-                                                if (var != (*postArcVars).begin().operator*().first[0]){
-                                                    nameClashPotentialVictims.emplace_back(*var);
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        } else {
-
-                        }
-                    }
-                    for (const auto& prePre : preTrans.input_arcs){
-                        if (auto ms2 = PetriEngine::Colored::extractVarMultiset(*prePre.expr)){
-                            if (!ms2->isSubsetOrEqTo(*preArcVars)){
-                                for (const auto pair : *ms2){
-                                    for (const PetriEngine::Colored::Variable * var : pair.first){
-                                        if (var != (*preArcVars).begin().operator*().first[0]){
-                                            if (std::lower_bound(nameClashPotentialVictims.begin(),nameClashPotentialVictims.begin(), var) != nameClashPotentialVictims.end()){
-                                                nameClashVictims.emplace_back(prePre);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+//                for (auto pre : place._pre){
+//                    auto preTrans = red.transitions()[pre];
+//                    auto preArc = red.getOutArc(preTrans, pid);
+//                    const auto preArcVars = PetriEngine::Colored::extractVarMultiset(*preArc->expr);
+//                    if (!preArcVars.has_value()){
+//                        // This should never be possible, if it somehow happens
+//                        ok = false;
+//                        break;
+//                    }
+//                    for (auto post : place._post){
+//                        auto postTrans = red.transitions()[post];
+//                        auto postArc = red.getInArc(pid, postTrans);
+//                        const auto postArcVars = PetriEngine::Colored::extractVarMultiset(*preArc->expr);
+//                        if (!postArcVars.has_value()){
+//                            // This should never be possible, if it somehow happens
+//                            ok = false;
+//                            break;
+//                        }
+//                        if (((*preArcVars).begin().operator*().first[0]) == (*postArcVars).begin().operator*().first[0]){
+//                            for (const auto& postPost : postTrans.output_arcs){
+//                                if (auto ms2 = PetriEngine::Colored::extractVarMultiset(*postPost.expr)){
+//                                    if (!ms2->isSubsetOrEqTo(*postArcVars)){
+//                                        for (const auto pair : *ms2){
+//                                            for (const PetriEngine::Colored::Variable * var : pair.first){
+//                                                if (var != (*postArcVars).begin().operator*().first[0]){
+//                                                    nameClashPotentialVictims.emplace_back(*var);
+//                                                }
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        } else {
+//
+//                        }
+//                    }
+//                    for (const auto& prePre : preTrans.input_arcs){
+//                        if (auto ms2 = PetriEngine::Colored::extractVarMultiset(*prePre.expr)){
+//                            if (!ms2->isSubsetOrEqTo(*preArcVars)){
+//                                for (const auto pair : *ms2){
+//                                    for (const PetriEngine::Colored::Variable * var : pair.first){
+//                                        if (var != (*preArcVars).begin().operator*().first[0]){
+//                                            if (std::lower_bound(nameClashPotentialVictims.begin(),nameClashPotentialVictims.begin(), var) != nameClashPotentialVictims.end()){
+//                                                nameClashVictims.emplace_back(prePre);
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
 
 
                 std::vector<uint32_t> originalConsumers = place._post;
@@ -322,20 +321,5 @@ namespace PetriEngine::Colored::Reduction {
 
         red.consistent();
         return continueReductions;
-    }
-
-    void renameVar(const PetriEngine::Colored::Transition& transition, const PetriEngine::Colored::Variable& variable){
-        Variable newVar = variable;
-        newVar.name = variable.name + "jj";
-        VarReplaceVisitor.
-
-        for (const auto& in : transition.input_arcs){
-
-        }
-        for (const auto& out : transition.output_arcs){
-
-        }
-        transition.guard;
-
     }
 }
