@@ -100,16 +100,11 @@ namespace PetriEngine::Colored::Reduction {
                             const auto ms1 = PetriEngine::Colored::extractVarMultiset(*p1Arc->expr);
                             const auto ms2 = PetriEngine::Colored::extractVarMultiset(*p2Arc->expr);
 
-                            // ms1 and ms2 must share support and ms2 must be subseteq to ms1
+                            // ms1 and ms2 must share support
 
                             if (!ms1 || !ms2 || ms1->distinctSize() != ms2->distinctSize() || ((*ms1) + (*ms2)).distinctSize() != ms1->distinctSize()) {
                                 ok = false;
                                 swp = 2;
-                                break;
-                            }
-
-                            if (!ms2->isSubsetOrEqTo(*ms1)) {
-                                ok = false;
                                 break;
                             }
 
@@ -120,7 +115,7 @@ namespace PetriEngine::Colored::Reduction {
 
                         if (!ok || j != place2._post.size()) continue;
 
-                        if (!(place1.marking * maxDrainRatio).isSubsetOf(place2.marking)) continue;
+                        if (!(place1.marking * maxDrainRatio).isSubsetOrEqTo(place2.marking)) continue;
 
                         i = 0, j = 0;
                         while (i < place1._pre.size() && j < place2._pre.size()) {
@@ -153,16 +148,11 @@ namespace PetriEngine::Colored::Reduction {
                             const auto ms1 = PetriEngine::Colored::extractVarMultiset(*p1Arc->expr);
                             const auto ms2 = PetriEngine::Colored::extractVarMultiset(*p2Arc->expr);
 
-                            // ms1 and ms2 must share support and ms1 must be subseteq to ms2
+                            // ms1 and ms2 must share support
 
                             if (!ms1 || !ms2 || ms1->distinctSize() != ms2->distinctSize() || ((*ms1) + (*ms2)).distinctSize() != ms1->distinctSize()) {
                                 ok = false;
                                 swp = 2;
-                                break;
-                            }
-
-                            if (!ms1->isSubsetOrEqTo(*ms2)) {
-                                ok = false;
                                 break;
                             }
 
