@@ -93,6 +93,7 @@ namespace PetriEngine::Colored::Reduction {
             //base case
             if (out.place == p) {
                 const auto &inArc = red.getInArc(p, transition);
+                if (inArc == transition.input_arcs.end()) continue;
                 auto inSet = PetriEngine::Colored::extractVarMultiset(*inArc->expr);
                 auto outSet = PetriEngine::Colored::extractVarMultiset(*out.expr);
                 if (!inSet || (inSet && (*inSet).isSubsetOrEqTo(*outSet))) {
