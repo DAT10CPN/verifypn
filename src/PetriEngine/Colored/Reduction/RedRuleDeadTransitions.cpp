@@ -14,50 +14,53 @@
 
 namespace PetriEngine::Colored::Reduction {
     bool RedRuleDeadTransitions::apply(ColoredReducer &red, const PetriEngine::PQL::ColoredUseVisitor &inQuery,
-                                      QueryType queryType, bool preserveLoops, bool preserveStutter) {
+                                       QueryType queryType, bool preserveLoops, bool preserveStutter) {
 
         Colored::PartitionBuilder partition(red.transitions(), red.places());
         bool continueReductions = false;
         const size_t numberofplaces = red.placeCount();
-        for(uint32_t p = 0; p < numberofplaces; ++p)
-        {
-            if(red.hasTimedOut()) return false;
+        for (uint32_t p = 0; p < numberofplaces; ++p) {
+            if (red.hasTimedOut()) return false;
             Place place = red.places()[p];
-            if(place.skipped) continue;
-            if(place.inhibitor) continue;
-            if(place._pre.size() > place._post.size()) continue;
+            if (place.skipped) continue;
+            if (place.inhibitor) continue;
+            if (place._pre.size() > place._post.size()) continue;
 
             bool ok = true;
             // Check for producers without matching consumers first
-            for(uint prod : place._pre)
-            {
+            for (uint prod: place._pre) {
                 // Any producer without a matching consumer blocks this rule
                 const Transition &t = red.transitions()[prod];
                 auto in = red.getInArc(p, t);
-                if(in == t.input_arcs.end())
-                {
+                if (in == t.input_arcs.end()) {
                     ok = false;
                     break;
                 }
             }
 
-            if(!ok) continue;
+            if (!ok) continue;
 
             std::set<uint32_t> notenabled;
             // Out of the consumers, tally up those that are initially not enabled by place
             // Ensure all the enabled transitions that feed back into place are non-increasing on place.
-            for(uint cons : place._post)
-            {
+            for (uint cons: place._post) {
                 const Transition &t = red.transitions()[cons];
 
+                const auto &in = red.getInArc(p, t);
+                const auto &out = red.getOutArc(t, p);
+
+                //Cheap check
+                if (in->expr->weight() <= place.marking.size()) {
+                    if (out != t.output_arcs.end() && out->expr->weight() > in->expr->weight()) {
+                        ok = false;
+                        break;
+                    }
+                }
+
+                //slightly more expensive check
                 uint32_t colorSize = getColorSize(t);
                 if (colorSize > 10000) continue;
-
-                const auto &in = red.getInArc(p, t);
-                if(markingEnablesInArc(place.marking, *in, t, partition, in->expr->getColors(red.colors())))
-                {
-                    // This branch happening even once means notenabled.size() != consumers.size()
-                    auto out = red.getOutArc(t, p);
+                if (markingEnablesInArc(place.marking, *in, t, partition, in->expr->getColors(red.colors()))) {
                     if (out == t.output_arcs.end()) {
                         continue;
                     }
@@ -70,27 +73,24 @@ namespace PetriEngine::Colored::Reduction {
                             break;
                         }
                     }
-                }
-                else
-                {
+                } else {
                     notenabled.insert(cons);
                 }
             }
 
-            if(!ok || notenabled.empty()) continue;
+            if (!ok || notenabled.empty()) continue;
 
             bool skipplace = (notenabled.size() == place._pre.size() && !inQuery.isPlaceUsed(p));
 
-            for(uint32_t cons : notenabled) {
+            for (uint32_t cons: notenabled) {
                 if (inQuery.isTransitionUsed(cons))
                     skipplace = false;
-                else
-                {
+                else {
                     red.skipTransition(cons);
                 }
             }
 
-            if(skipplace) {
+            if (skipplace) {
                 red.skipPlace(p);
             }
 
@@ -117,19 +117,19 @@ namespace PetriEngine::Colored::Reduction {
     }
 
     uint32_t RedRuleDeadTransitions::getColorSize(const Transition &transition) {
-        std::set<const Colored::Variable*> variables;
+        std::set<const Colored::Variable *> variables;
 
-        for (const auto &arc : transition.input_arcs) {
+        for (const auto &arc: transition.input_arcs) {
             assert(arc.expr != nullptr);
             Colored::VariableVisitor::get_variables(*arc.expr, variables);
         }
-        for (const auto &arc : transition.output_arcs) {
+        for (const auto &arc: transition.output_arcs) {
             assert(arc.expr != nullptr);
             Colored::VariableVisitor::get_variables(*arc.expr, variables);
         }
 
         uint32_t size = 0;
-        for (auto& v: variables) {
+        for (auto &v: variables) {
             if (size == 0) {
                 size = v->colorType->size();
             } else {
