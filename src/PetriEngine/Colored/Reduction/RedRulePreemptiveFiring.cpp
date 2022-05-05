@@ -18,7 +18,9 @@ namespace PetriEngine::Colored::Reduction {
         Colored::PartitionBuilder partition(red.transitions(), red.places());
         bool continueReductions = false;
         const size_t numberofplaces = red.placeCount();
+        std::cout << numberofplaces << std::endl;
         for (uint32_t p = 0; p < numberofplaces; ++p) {
+            std::cout << p << std::endl;
 
             if (red.hasTimedOut()) return false;
             auto &place = const_cast<Place &>(red.places()[p]);
@@ -31,7 +33,7 @@ namespace PetriEngine::Colored::Reduction {
 
             bool ok = true;
             // - Make sure that we do not produce tokens to something that can produce tokens to our preset. To disallow infinite use of this rule
-            if (transition_can_produce_to_place(place._post[0], p, red, std::vector<uint32_t>())) continue;
+            if ((transition_can_produce_to_place(place._post[0], p, red, std::vector<uint32_t>())).first) continue;
 
             const Transition &transition = red.transitions()[place._post[0]];
 
@@ -81,8 +83,9 @@ namespace PetriEngine::Colored::Reduction {
         return continueReductions;
     }
 
-    bool RedRulePreemptiveFiring::transition_can_produce_to_place(unsigned int t, uint32_t p, ColoredReducer &red,
-                                                                  std::vector<uint32_t> already_checked) const {
+    std::pair<bool, std::vector<uint32_t>>
+    RedRulePreemptiveFiring::transition_can_produce_to_place(unsigned int t, uint32_t p, ColoredReducer &red,
+                                                             std::vector<uint32_t> already_checked) const {
         const Transition &transition = red.transitions()[t];
         for (auto &out: transition.output_arcs) {
 
@@ -94,6 +97,7 @@ namespace PetriEngine::Colored::Reduction {
 
             const Place &place = red.places()[out.place];
             if (place.skipped) continue;
+
             //base case
             if (out.place == p) {
                 const auto &inArc = red.getInArc(p, transition);
@@ -101,16 +105,18 @@ namespace PetriEngine::Colored::Reduction {
                 auto inSet = PetriEngine::Colored::extractVarMultiset(*inArc->expr);
                 auto outSet = PetriEngine::Colored::extractVarMultiset(*out.expr);
                 if (!inSet || (inSet && (*inSet).isSubsetOrEqTo(*outSet))) {
-                    return true;
+                    return std::pair(true, already_checked);
                 }
             }
 
             // recursive case
             for (auto &inout: place._post) {
-                if (transition_can_produce_to_place(inout, p, red, already_checked)) return true;
+                auto res = (transition_can_produce_to_place(inout, p, red, already_checked));
+                if (res.first) return std::pair(true, already_checked);
+                already_checked = res.second;
             }
         }
 
-        return false;
+        return std::pair(false, already_checked);
     }
 }
