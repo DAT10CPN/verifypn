@@ -37,6 +37,8 @@ namespace PetriEngine::Colored::Reduction {
                     auto pid_inner = red.transitions()[tid_outer].output_arcs[aid_inner].place;
                     if (red.places()[pid_inner].skipped) continue;
 
+                    if (red.places()[pid_inner].type != red.places()[pid_outer].type) continue;
+
                     for (size_t swp = 0; swp < 2; ++swp) {
                         if (red.hasTimedOut()) return false;
                         if (red.places()[pid_inner].skipped ||
