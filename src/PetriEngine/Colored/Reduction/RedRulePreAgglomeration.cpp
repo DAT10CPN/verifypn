@@ -96,16 +96,14 @@ namespace PetriEngine::Colored::Reduction {
 
                 for (const auto& prod : place._pre){
                     const Transition& producer = red.transitions()[prod];
-                    // X8.1, X6, X12
+                    // X8.1, X6
                     if(producer.inhibited || producer.output_arcs.size() != 1){
                         ok = false;
                         break;
                     }
 
                     if (producer.guard != nullptr){
-                        // Todo: allow this
-                        ok = false;
-                        break;
+
                     }
 
                     const CArcIter& prodArc = red.getOutArc(producer, pid);
@@ -125,13 +123,13 @@ namespace PetriEngine::Colored::Reduction {
                         uint32_t w = consArc->expr->weight();
                         // (T9, S6), S10, T10
                         if (atomic_viable){
-                            if (!consArc->expr->is_single_color() || kw % w != 0 || (producer.guard != nullptr && consumer.guard != nullptr)) {
+                            if (!consArc->expr->is_single_color() || kw % w != 0 || (producer.guard != nullptr || consumer.guard != nullptr)) {
                                 todo[n] = false;
                                 todoAllGood = false;
                             } else if (kw != w) {
                                 kIsAlwaysOne[n] = false;
                             }
-                        } else if (!consArc->expr->is_single_color() || kw != w || (producer.guard != nullptr && consumer.guard != nullptr)) {
+                        } else if (!consArc->expr->is_single_color() || kw != w || (producer.guard != nullptr || consumer.guard != nullptr)) {
                             ok = false;
                             break;
                         }
@@ -212,11 +210,19 @@ namespace PetriEngine::Colored::Reduction {
                         if (!kIsAlwaysOne[n]){
                             k = proArc->expr->weight() / w;
                         }
+                        GuardExpression_ptr mergedguard = nullptr;
+                        if (consumer.guard != nullptr && producer.guard != nullptr){
+                            mergedguard = std::make_shared<PetriEngine::Colored::AndExpression>(std::shared_ptr(producer.guard), std::shared_ptr(consumer.guard));
+                        } else if (consumer.guard != nullptr){
+                            mergedguard = consumer.guard;
+                        } else if (producer.guard != nullptr){
+                            mergedguard = producer.guard;
+                        }
 
                         // One for each number of firings of consumer possible after one firing of producer
                         for (uint32_t k_i = 1; k_i <= k; k_i++){
                             // Create new transition with effect of firing the producer, and then the consumer k_i times
-                            auto tid = red.newTransition(nullptr);
+                            auto tid = red.newTransition(mergedguard);
 
                             // Re-fetch the transition references as they might be invalidated?
                             const Transition &producerPrime = red.transitions()[prod];
@@ -225,7 +231,11 @@ namespace PetriEngine::Colored::Reduction {
                             // Arcs from consumer
                             for (const auto& arc : consumerPrime.output_arcs) {
                                 ArcExpression_ptr expr = arc.expr;
-                                red.addOutputArc(tid, arc.place, std::make_shared<PetriEngine::Colored::ScalarProductExpression>(std::shared_ptr(expr), k_i));
+                                if (k_i > 1){
+                                    red.addOutputArc(tid, arc.place, std::make_shared<PetriEngine::Colored::ScalarProductExpression>(std::shared_ptr(expr), k_i));
+                                } else {
+                                    red.addOutputArc(tid, arc.place, expr);
+                                }
                             }
                             for (const auto& arc : consumerPrime.input_arcs){
                                 if (arc.place != pid){
