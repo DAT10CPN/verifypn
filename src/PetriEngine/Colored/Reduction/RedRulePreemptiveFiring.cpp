@@ -27,6 +27,8 @@ namespace PetriEngine::Colored::Reduction {
 
             // - Preset can only have one transition in post
             if (place._post.size() != 1) continue;
+            //fireability consistency check
+            if (inQuery.isTransitionUsed(place._post[0])) continue;
 
             bool ok = true;
             // - Make sure that we do not produce tokens to something that can produce tokens to our preset. To disallow infinite use of this rule
@@ -46,8 +48,16 @@ namespace PetriEngine::Colored::Reduction {
                     ok = false;
                     break;
                 }
+                //for fireability consistency. We don't want to put tokens to a place enabling transition
+                for (auto &tin: red.places()[out.place]._post) {
+                    if (inQuery.isTransitionUsed(tin)) {
+                        ok = false;
+                        break;
+                    }
+                }
 
-                //next step relax this,
+
+                //relax this
                 if (to_string(*out.expr) != to_string(*in->expr)) {
                     ok = false;
                     break;
