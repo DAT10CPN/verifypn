@@ -6,7 +6,6 @@
  */
 #include <PetriEngine/Colored/PartitionBuilder.h>
 #include <PetriEngine/Colored/EvaluationVisitor.h>
-#include <PetriEngine/Colored/BindingGenerator.h>
 #include "PetriEngine/Colored/Reduction/RedRulePreemptiveFiring.h"
 #include "PetriEngine/Colored/Reduction/ColoredReducer.h"
 #include "PetriEngine/Colored/ArcVarMultisetVisitor.h"
@@ -98,13 +97,14 @@ namespace PetriEngine::Colored::Reduction {
 
             //base case
             if (out.place == p) {
-                const auto &inArc = red.getInArc(p, transition);
+                return std::pair(true, already_checked);
+                /*const auto &inArc = red.getInArc(p, transition);
                 if (inArc == transition.input_arcs.end()) continue;
                 auto inSet = PetriEngine::Colored::extractVarMultiset(*inArc->expr);
                 auto outSet = PetriEngine::Colored::extractVarMultiset(*out.expr);
                 if (!inSet || (inSet && (*inSet).isSubsetOrEqTo(*outSet))) {
                     return std::pair(true, already_checked);
-                }
+                }*/
             }
 
             // recursive case

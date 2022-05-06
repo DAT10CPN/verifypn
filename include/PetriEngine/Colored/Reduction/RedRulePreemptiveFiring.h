@@ -16,7 +16,9 @@ namespace PetriEngine::Colored::Reduction {
     public:
         std::string name() override { return "PreemptiveFiring"; }
 
-        bool isApplicable(QueryType queryType, bool preserveLoops, bool preserveStutter) const override { return true; }
+        bool isApplicable(QueryType queryType, bool preserveLoops, bool preserveStutter) const override {
+            return true; //todo queryType == QueryType::Reach && !preserveStutter && !preserveLoops;
+        }
 
         bool apply(ColoredReducer &red, const PetriEngine::PQL::ColoredUseVisitor &inQuery, QueryType queryType,
                    bool preserveLoops, bool preserveStutter) override;
