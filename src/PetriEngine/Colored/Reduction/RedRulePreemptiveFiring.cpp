@@ -18,9 +18,7 @@ namespace PetriEngine::Colored::Reduction {
         Colored::PartitionBuilder partition(red.transitions(), red.places());
         bool continueReductions = false;
         const size_t numberofplaces = red.placeCount();
-        std::cout << numberofplaces << std::endl;
         for (uint32_t p = 0; p < numberofplaces; ++p) {
-            std::cout << p << std::endl;
 
             if (red.hasTimedOut()) return false;
             auto &place = const_cast<Place &>(red.places()[p]);
