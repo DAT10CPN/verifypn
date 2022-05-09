@@ -121,6 +121,7 @@ namespace PetriEngine::Colored::Reduction {
 
                         i = 0, j = 0;
                         while (i < place1._pre.size() && j < place2._pre.size()) {
+                            if (red.hasTimedOut()) return false;
 
                             uint32_t p1t = place1._pre[i];
                             uint32_t p2t = place2._pre[j];
