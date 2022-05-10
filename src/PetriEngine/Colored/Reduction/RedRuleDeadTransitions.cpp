@@ -8,7 +8,6 @@
 #include <PetriEngine/Colored/ArcVarMultisetVisitor.h>
 #include <PetriEngine/Colored/BindingGenerator.h>
 #include <PetriEngine/Colored/EvaluationVisitor.h>
-#include <PetriEngine/Colored/VariableVisitor.h>
 #include "PetriEngine/Colored/Reduction/RedRuleDeadTransitions.h"
 #include "PetriEngine/Colored/Reduction/ColoredReducer.h"
 
