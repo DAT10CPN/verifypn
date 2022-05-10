@@ -49,7 +49,9 @@ namespace PetriEngine::Colored::Reduction {
                 const auto &out = red.getOutArc(t, p);
 
                 //Cheap check
+                //Check if we might be able to fire the transition
                 if (in->expr->weight() <= place.marking.size()) {
+                    //The transition produces more tokens than it consumes to current place
                     if (out != t.output_arcs.end() && out->expr->weight() > in->expr->weight()) {
                         ok = false;
                         break;
@@ -59,19 +61,29 @@ namespace PetriEngine::Colored::Reduction {
                 //slightly more expensive check
                 uint32_t bindingCount = red.getBindingCount(t);
                 if (bindingCount > 10000) continue;
+                //lets actually look at the tokens and see if a binding enables the arc to the transition
                 if (markingEnablesInArc(place.marking, *in, t, partition, in->expr->getColors(red.colors()))) {
+                    //If there is no output, continue as it clearly cannot have an increasing effect on the place
                     if (out == t.output_arcs.end()) {
                         continue;
                     }
+
                     // Only increasing loops are not ok
                     auto inSet = PetriEngine::Colored::extractVarMultiset(*in->expr);
                     auto outSet = PetriEngine::Colored::extractVarMultiset(*out->expr);
-                    if (!inSet || !outSet || (*inSet).isSubsetOrEqTo(*outSet)) {
+
+                    if (!inSet || !outSet) {
                         if (to_string(*out->expr) != to_string(*in->expr)) {
                             ok = false;
                             break;
                         }
                     }
+
+                    if ((*inSet).isSubsetOrEqTo(*outSet)) {
+                        ok = false;
+                        break;
+                    }
+
                 } else {
                     notenabled.insert(cons);
                 }
