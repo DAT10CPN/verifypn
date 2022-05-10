@@ -18,19 +18,21 @@ namespace PetriEngine::Colored::Reduction {
         bool continueReductions = false;
         const size_t numberofplaces = red.placeCount();
         for (uint32_t p = 0; p < numberofplaces; ++p) {
-
             if (red.hasTimedOut()) return false;
+
             auto &place = const_cast<Place &>(red.places()[p]);
             if (place.skipped) continue;
-            if (place.inhibitor) continue; //todo can do more, but eh
             if (place.marking.empty()) continue;
+            if (place.inhibitor) continue; //could perhaps relax this
 
-            // - Preset can only have one transition in post
+            // - Preset can only have one transition in post. Could relax this, e.g if there is no pre, and only 1 of the transitions in post is able to be fired
             if (place._post.size() != 1) continue;
+
             //fireability consistency check
             if (inQuery.isTransitionUsed(place._post[0])) continue;
 
             bool ok = true;
+
             // - Make sure that we do not produce tokens to something that can produce tokens to our preset. To disallow infinite use of this rule
             if ((transition_can_produce_to_place(place._post[0], p, red, std::vector<uint32_t>())).first) continue;
 
@@ -39,7 +41,8 @@ namespace PetriEngine::Colored::Reduction {
             // Easiest to not handle guards, if guard, iterate through bindings
             if (transition.guard) continue;
 
-            if (transition.input_arcs.size() > 1) continue; //could also do something here?
+            //could also relax this, but seems much more difficult
+            if (transition.input_arcs.size() > 1) continue;
             const auto &in = red.getInArc(p, transition);
 
             // - Preset and postset cannot inhibit or be in query
@@ -48,6 +51,7 @@ namespace PetriEngine::Colored::Reduction {
                     ok = false;
                     break;
                 }
+
                 //for fireability consistency. We don't want to put tokens to a place enabling transition
                 for (auto &tin: red.places()[out.place]._post) {
                     if (inQuery.isTransitionUsed(tin)) {
@@ -55,7 +59,6 @@ namespace PetriEngine::Colored::Reduction {
                         break;
                     }
                 }
-
 
                 //relax this
                 if (to_string(*out.expr) != to_string(*in->expr)) {
@@ -108,13 +111,6 @@ namespace PetriEngine::Colored::Reduction {
             //base case
             if (out.place == p) {
                 return std::pair(true, already_checked);
-                /*const auto &inArc = red.getInArc(p, transition);
-                if (inArc == transition.input_arcs.end()) continue;
-                auto inSet = PetriEngine::Colored::extractVarMultiset(*inArc->expr);
-                auto outSet = PetriEngine::Colored::extractVarMultiset(*out.expr);
-                if (!inSet || (inSet && (*inSet).isSubsetOrEqTo(*outSet))) {
-                    return std::pair(true, already_checked);
-                }*/
             }
 
             // recursive case
