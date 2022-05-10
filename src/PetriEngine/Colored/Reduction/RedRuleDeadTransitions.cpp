@@ -62,7 +62,7 @@ namespace PetriEngine::Colored::Reduction {
                 uint32_t bindingCount = red.getBindingCount(t);
                 if (bindingCount > 10000) continue;
                 //lets actually look at the tokens and see if a binding enables the arc to the transition
-                if (markingEnablesInArc(place.marking, *in, t, partition, in->expr->getColors(red.colors()))) {
+                if (markingEnablesInArc(place.marking, *in, t, partition, red.colors())) {
                     //If there is no output, continue as it clearly cannot have an increasing effect on the place
                     if (out == t.output_arcs.end()) {
                         continue;
