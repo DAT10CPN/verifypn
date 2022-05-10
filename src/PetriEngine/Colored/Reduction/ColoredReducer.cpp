@@ -279,10 +279,6 @@ namespace PetriEngine::Colored::Reduction {
         _builder.addPlace("Dummy", ColorType::dotInstance(), Multiset(), 0, 0);
     }
 
-    void ColoredReducer::addDummyPlace(const Colored::ColorType* type){
-        _builder.addPlace("Dummy" + type->getName(), type, Multiset(), 0, 0);
-    }
-
     void ColoredReducer::addInputArc(uint32_t pid, uint32_t tid, ArcExpression_ptr& expr, uint32_t inhib_weight){
         _builder.addInputArc(*_builder._places[pid].name, *_builder._transitions[tid].name, expr, inhib_weight);
         std::sort(_builder._places[pid]._post.begin(), _builder._places[pid]._post.end());

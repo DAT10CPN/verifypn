@@ -109,7 +109,6 @@ namespace PetriEngine::Colored {
             std::string newTransitionName();
             uint32_t newTransition(const Colored::GuardExpression_ptr& guard);
             void addDummyPlace();
-            void addDummyPlace(const Colored::ColorType* type);
 
             void consistent();
 
