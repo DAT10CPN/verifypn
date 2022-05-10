@@ -128,13 +128,9 @@ namespace PetriEngine::Colored::Reduction {
             Colored::VariableVisitor::get_variables(*arc.expr, variables);
         }
 
-        uint32_t size = 0;
+        uint32_t size = 1;
         for (auto &v: variables) {
-            if (size == 0) {
-                size = v->colorType->size();
-            } else {
-                size *= v->colorType->size();
-            }
+            size *= v->colorType->size();
         }
         return size;
     }
