@@ -69,6 +69,9 @@ namespace PetriEngine::Colored::Reduction {
                     }
 
                     // Only increasing loops are not ok
+                    auto inSet = PetriEngine::Colored::extractVarMultiset(*in->expr);
+                    auto outSet = PetriEngine::Colored::extractVarMultiset(*out->expr);
+
                     if ((inSet && outSet && (*inSet).isSubsetOf(*outSet)) ||
                         to_string(*out->expr) != to_string(*in->expr)) {
                         ok = false;
