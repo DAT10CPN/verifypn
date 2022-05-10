@@ -346,28 +346,6 @@ namespace PetriEngine::Colored::Reduction {
                             if (k_i != k){
                                 red.addOutputArc(tid, pid, std::make_shared<PetriEngine::Colored::ScalarProductExpression>(varvis.makeReplacementArcExpr(proArc->expr), k-k_i));
                             }
-
-                            // Edge case variable preservation
-//                            if (mergedguard){
-//                                std::set<const Variable*> mergedGuardVars;
-//                                Colored::VariableVisitor::get_variables(*mergedguard, mergedGuardVars);
-//                                for (const auto& var : centerVariables){
-//                                    if (mergedGuardVars.find(var) != mergedGuardVars.end()){
-//                                        const PetriEngine::Colored::Transition& newTrans = red.transitions()[tid];
-//                                        std::set<const Variable*> usedVars;
-//                                        for (const auto& arc : newTrans.input_arcs){
-//                                            Colored::VariableVisitor::get_variables(*arc.expr, usedVars);
-//                                        }
-//                                        for (const auto& arc : newTrans.output_arcs){
-//                                            Colored::VariableVisitor::get_variables(*arc.expr, usedVars);
-//                                        }
-//                                        if (usedVars.find(var) == usedVars.end()){
-//                                            const Place& trashPlace = red.addDummyPlace(var->colorType);
-//                                            red.addOutputArc(tid, trashPlace., std::make_shared<VariableExpression>(var));
-//                                        }
-//                                    }
-//                                }
-//                            }
                         }
                     }
                     red.skipTransition(originalConsumers[n]);
