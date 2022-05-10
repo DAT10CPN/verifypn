@@ -24,6 +24,8 @@ namespace PetriEngine::Colored::Reduction {
                    bool preserveLoops, bool preserveStutter) override;
 
         std::pair<bool, std::vector<uint32_t>> transition_can_produce_to_place(unsigned int t, uint32_t p, ColoredReducer &red, std::vector<uint32_t> already_checked) const;
+
+        bool t_is_viable(ColoredReducer &red, const PetriEngine::PQL::ColoredUseVisitor &inQuery, uint32_t t, uint32_t p);
     };
 }
 

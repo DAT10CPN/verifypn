@@ -26,58 +26,26 @@ namespace PetriEngine::Colored::Reduction {
             if (place.inhibitor) continue; //could perhaps relax this
 
             // - Preset can only have one transition in post. Could relax this, e.g if there is no pre, and only 1 of the transitions in post is able to be fired
-            if (place._post.size() != 1) continue;
-
-            //fireability consistency check
-            if (inQuery.isTransitionUsed(place._post[0])) continue;
-
-            bool ok = true;
-
-            // - Make sure that we do not produce tokens to something that can produce tokens to our preset. To disallow infinite use of this rule
-            if ((transition_can_produce_to_place(place._post[0], p, red, std::vector<uint32_t>())).first) continue;
-
-            const Transition &transition = red.transitions()[place._post[0]];
-
-            // Easiest to not handle guards, if guard, iterate through bindings
-            if (transition.guard) continue;
-
-            //could also relax this, but seems much more difficult
-            if (transition.input_arcs.size() > 1) continue;
-            const auto &in = red.getInArc(p, transition);
-
-            // - Preset and postset cannot inhibit or be in query
-            for (auto &out: transition.output_arcs) {
-                if (inQuery.isPlaceUsed(out.place) || red.places()[out.place].inhibitor) {
-                    ok = false;
-                    break;
-                }
-
-                //for fireability consistency. We don't want to put tokens to a place enabling transition
-                for (auto &tin: red.places()[out.place]._post) {
-                    if (inQuery.isTransitionUsed(tin)) {
+            uint32_t t;
+            if (place._post.size() == 0) {
+                continue;
+            } else if (place._post.size() == 1) {
+                t = place._post[0];
+            } else if (1 < place._post.size()) {
+                bool found_candidate = false;
+                bool ok = true;
+                for (uint32_t tpost: place._post) {
+                    if (found_candidate) {
                         ok = false;
                         break;
                     }
+                    found_candidate = t_is_viable(red, inQuery, tpost, p);
+                    t = tpost;
                 }
-
-                //relax this
-                if (to_string(*out.expr) != to_string(*in->expr)) {
-                    ok = false;
-                    break;
-                }
+                if (!ok) continue;
             }
 
-            if (!ok) continue;
-
-            // - Preset and postset cannot inhibit or be in query
-            for (auto &in_arc: transition.input_arcs) {
-                if (inQuery.isPlaceUsed(in_arc.place) || red.places()[in_arc.place].inhibitor) {
-                    ok = false;
-                    break;
-                }
-            }
-
-            if (!ok) continue;
+            const Transition &transition = red.transitions()[t];
 
             for (auto &out: transition.output_arcs) {
                 auto &otherplace = const_cast<Place &>(red.places()[out.place]);
@@ -93,6 +61,7 @@ namespace PetriEngine::Colored::Reduction {
         return continueReductions;
     }
 
+    // Search function to see if a transition t can somehow get tokens to place p. Very overestimation, just looking at arcs
     std::pair<bool, std::vector<uint32_t>>
     RedRulePreemptiveFiring::transition_can_produce_to_place(unsigned int t, uint32_t p, ColoredReducer &red,
                                                              std::vector<uint32_t> already_checked) const {
@@ -122,5 +91,61 @@ namespace PetriEngine::Colored::Reduction {
         }
 
         return std::pair(false, already_checked);
+    }
+
+    bool RedRulePreemptiveFiring::t_is_viable(ColoredReducer &red, const PetriEngine::PQL::ColoredUseVisitor &inQuery,
+                                              uint32_t t, uint32_t p) {
+        //fireability consistency check
+        if (inQuery.isTransitionUsed(t)) return false;
+
+        bool ok = true;
+
+        // - Make sure that we do not produce tokens to something that can produce tokens to our preset. To disallow infinite use of this rule
+        if ((transition_can_produce_to_place(t, p, red, std::vector<uint32_t>())).first) return false;
+
+        const Transition &transition = red.transitions()[t];
+
+        // Easiest to not handle guards, todo if guard, iterate through bindings and find the valid bindings
+        if (transition.guard) return false;
+
+        //could also relax this, but seems much more difficult
+        if (transition.input_arcs.size() > 1) return false;
+        const auto &in = red.getInArc(p, transition);
+
+        // - Preset and postset cannot inhibit or be in query
+        for (auto &out: transition.output_arcs) {
+            if (inQuery.isPlaceUsed(out.place) || red.places()[out.place].inhibitor) {
+                ok = false;
+                break;
+            }
+
+            //for fireability consistency. We don't want to put tokens to a place enabling transition
+            for (auto &tin: red.places()[out.place]._post) {
+                if (inQuery.isTransitionUsed(tin)) {
+                    ok = false;
+                    break;
+                }
+            }
+
+            //relax this
+            if (to_string(*out.expr) != to_string(*in->expr)) {
+                ok = false;
+                break;
+            }
+        }
+
+        if (!ok) return false;
+
+        // - Preset and postset cannot inhibit or be in query
+        for (auto &in_arc: transition.input_arcs) {
+            if (inQuery.isPlaceUsed(in_arc.place) || red.places()[in_arc.place].inhibitor) {
+                ok = false;
+                break;
+            }
+        }
+
+        if (!ok) return false;
+
+        return true;
     }
 }
