@@ -58,8 +58,8 @@ namespace PetriEngine::Colored::Reduction {
                 }
 
                 //slightly more expensive check
-                uint32_t colorSize = getColorSize(t);
-                if (colorSize > 10000) continue;
+                uint32_t bindingCount = red.getBindingCount(t);
+                if (bindingCount > 10000) continue;
                 if (markingEnablesInArc(place.marking, *in, t, partition, in->expr->getColors(red.colors()))) {
                     if (out == t.output_arcs.end()) {
                         continue;
@@ -114,24 +114,5 @@ namespace PetriEngine::Colored::Reduction {
             if (ms.isSubsetOrEqTo(marking)) return true;
         }
         return false;
-    }
-
-    uint32_t RedRuleDeadTransitions::getColorSize(const Transition &transition) {
-        std::set<const Colored::Variable *> variables;
-
-        for (const auto &arc: transition.input_arcs) {
-            assert(arc.expr != nullptr);
-            Colored::VariableVisitor::get_variables(*arc.expr, variables);
-        }
-        for (const auto &arc: transition.output_arcs) {
-            assert(arc.expr != nullptr);
-            Colored::VariableVisitor::get_variables(*arc.expr, variables);
-        }
-
-        uint32_t size = 1;
-        for (auto &v: variables) {
-            size *= v->colorType->size();
-        }
-        return size;
     }
 }
