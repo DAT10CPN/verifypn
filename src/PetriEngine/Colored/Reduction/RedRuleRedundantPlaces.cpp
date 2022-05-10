@@ -41,7 +41,10 @@ namespace PetriEngine::Colored::Reduction {
                 }*/
 
                 uint32_t bindingCount = red.getBindingCount(transition);
-                if (bindingCount > 10000) continue;
+                if (bindingCount > 10000) {
+                    ok = false;
+                    break;
+                }
 
                 const auto &outArc = red.getOutArc(transition, p);
                 if (outArc == transition.output_arcs.end()) {
