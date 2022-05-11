@@ -85,7 +85,7 @@ namespace PetriEngine::Colored::Reduction {
 
         const Transition &transition = red.transitions()[t];
         // Easiest to not handle guards, todo if guard, iterate through bindings and find the valid bindings
-        if (transition.guard) return false;
+        if (transition.guard || transition.inhibited) return false;
 
         //could also relax this, but seems much more difficult
         if (transition.input_arcs.size() > 1) return false;
