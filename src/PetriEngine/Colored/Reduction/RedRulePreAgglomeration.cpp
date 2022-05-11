@@ -182,7 +182,6 @@ namespace PetriEngine::Colored::Reduction {
 
                     const Transition &consumer = red.transitions()[originalConsumers[n]];
 
-                    // T trivially passes these because of T5 earlier
                     if (atomic_viable){
                         // S12
                         if (!kIsAlwaysOne[n] && consumer.input_arcs.size() != 1) {
@@ -197,8 +196,12 @@ namespace PetriEngine::Colored::Reduction {
                                 }
                             }
                         }
+                        if (!ok) continue;
+                    } else {
+                        if (consumer.input_arcs.size() != 1) {
+                            break;
+                        }
                     }
-                    if (!ok) continue;
 
                     const auto& consArc = red.getInArc(pid, consumer);
                     uint32_t w = consArc->expr->weight();
@@ -244,14 +247,20 @@ namespace PetriEngine::Colored::Reduction {
                                     ok = false;
                                     break;
                                 } else {
-                                    //
                                     consVars.insert(var);
                                 }
                             }
                         }
                     }
 
-                    if (!ok) continue;
+                    if (!ok){
+                        if (atomic_viable){
+                            continue;
+                        } else {
+                            ok = false;
+                            break;
+                        }
+                    }
 
                     // Update
                     for (const auto& prod : originalProducers){
