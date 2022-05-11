@@ -119,7 +119,7 @@ namespace PetriEngine::Colored::Reduction {
                         const PetriEngine::Colored::Transition& consumer = red.transitions()[place._post[n]];
                         const CArcIter& consArc = red.getInArc(pid, consumer);
                         uint32_t w = consArc->expr->weight();
-                        // (T9, S6), S10, T10
+                        // (T9, S6), S10, T10, T12
                         if (atomic_viable){
                             if (!consArc->expr->is_single_color() || kw % w != 0) {
                                 todo[n] = false;
@@ -127,7 +127,7 @@ namespace PetriEngine::Colored::Reduction {
                             } else if (kw != w) {
                                 kIsAlwaysOne[n] = false;
                             }
-                        } else if (!consArc->expr->is_single_color() || kw != w) {
+                        } else if (!consArc->expr->is_single_color() || kw != w || consumer.input_arcs.size() != 1) {
                             ok = false;
                             break;
                         }
@@ -190,17 +190,13 @@ namespace PetriEngine::Colored::Reduction {
                         // S11
                         if (!kIsAlwaysOne[n]) {
                             for (const auto& conspost : consumer.output_arcs) {
-                                if (red.places()[conspost.place].inhibitor || (queryType != Reach && inQuery.isPlaceUsed(conspost.place))) {
+                                if (red.places()[conspost.place].inhibitor)) {
                                     ok = false;
                                     break;
                                 }
                             }
                         }
                         if (!ok) continue;
-                    } else {
-                        if (consumer.input_arcs.size() != 1) {
-                            break;
-                        }
                     }
 
                     const auto& consArc = red.getInArc(pid, consumer);
