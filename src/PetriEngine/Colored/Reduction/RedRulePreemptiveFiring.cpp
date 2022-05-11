@@ -25,7 +25,7 @@ namespace PetriEngine::Colored::Reduction {
             if (place.marking.empty()) continue;
             if (place.inhibitor) continue; //could perhaps relax this
 
-            // - Preset can only have one transition in post. Could relax this, e.g if there is no pre, and only 1 of the transitions in post is able to be fired
+            // - Preset can only have one transition in post
             uint32_t t;
             if (place._post.size() == 0) {
                 continue;
