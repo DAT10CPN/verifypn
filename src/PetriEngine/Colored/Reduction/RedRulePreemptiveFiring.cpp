@@ -24,6 +24,7 @@ namespace PetriEngine::Colored::Reduction {
             if (place.skipped) continue;
             if (place.marking.empty()) continue;
 
+            // Must be exactly one post, in order to not remove branching
             if (place._post.size() != 1) {
                 continue;
             }
@@ -82,18 +83,18 @@ namespace PetriEngine::Colored::Reduction {
         if (inQuery.isTransitionUsed(t)) return false;
 
         const Transition &transition = red.transitions()[t];
-        // Easiest to not handle guards, todo if guard, iterate through bindings and find the valid bindings
+        // Easiest to not handle guards, todo if guard, iterate through bindings and find the valid bindings, and only move those tokens
         if (transition.guard || transition.inhibited) return false;
 
-        //could also relax this, but seems much more difficult
+        //could perhaps also relax this, but seems much more difficult
         if (transition.input_arcs.size() > 1) return false;
 
-        // - Make sure that we do not produce tokens to something that can produce tokens to our preset. To disallow infinite use of this rule
+        // - Make sure that we do not produce tokens to something that can produce tokens to our preset. To disallow infinite use of this rule by looping
         std::set<uint32_t> already_checked;
         if ((transition_can_produce_to_place(t, p, red, already_checked))) return false;
 
         bool ok = true;
-        // - Preset and postset cannot inhibit or be in query
+        // - postset cannot inhibit or be in query
         for (auto &out: transition.output_arcs) {
             if (inQuery.isPlaceUsed(out.place) || red.places()[out.place].inhibitor) {
                 ok = false;
@@ -108,7 +109,7 @@ namespace PetriEngine::Colored::Reduction {
                 }
             }
 
-            //relax this
+            //todo could relax this, and instead of simply copying the tokens to the new place, then update them according to the out arc expression
             const auto &in = red.getInArc(p, transition);
             if (to_string(*out.expr) != to_string(*in->expr)) {
                 ok = false;
