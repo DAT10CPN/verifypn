@@ -25,30 +25,15 @@ namespace PetriEngine::Colored::Reduction {
             if (place.marking.empty()) continue;
             if (place.inhibitor) continue; //could perhaps relax this
 
-            // - Preset can only have one transition in post
-            uint32_t t;
-            if (place._post.size() == 0) {
+
+            if (place._post.size() != 1) {
                 continue;
-            } else if (place._post.size() == 1) {
-                if (t_is_viable(red, inQuery, place._post[0], p)) {
-                    t = place._post[0];
-                } else {
-                    continue;
-                }
-            } else if (1 < place._post.size()) {
-                bool found_candidate = false;
-                bool ok = true;
-                for (uint32_t tpost: place._post) {
-                    if (found_candidate) {
-                        ok = false;
-                        break;
-                    }
-                    found_candidate = t_is_viable(red, inQuery, tpost, p);
-                    t = tpost;
-                }
-                if (!found_candidate || !ok) continue;
             }
 
+            if (!t_is_viable(red, inQuery, place._post[0], p)) continue;
+
+            uint32_t t = place._post[0];
+            
             const Transition &transition = red.transitions()[t];
 
             for (auto &out: transition.output_arcs) {
