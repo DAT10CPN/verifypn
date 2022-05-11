@@ -53,6 +53,11 @@ namespace PetriEngine::Colored::Reduction {
         const Transition &transition = red.transitions()[t];
         for (auto &out: transition.output_arcs) {
 
+            //base case
+            if (out.place == p) {
+                return true;
+            }
+
             if (already_checked.find(out.place) != already_checked.end()) {
                 continue;
             } else {
@@ -61,11 +66,6 @@ namespace PetriEngine::Colored::Reduction {
 
             const Place &place = red.places()[out.place];
             if (place.skipped) continue;
-
-            //base case
-            if (out.place == p) {
-                return true;
-            }
 
             // recursive case
             for (auto &inout: place._post) {
