@@ -95,6 +95,7 @@ namespace PetriEngine::Colored::Reduction {
                 bool todoAllGood = true;
                 // S11, S12
                 std::vector<bool> kIsAlwaysOne (postsize, true);
+                bool prodAllConst = true;
 
                 for (const auto& prod : place._pre){
                     const Transition& producer = red.transitions()[prod];
@@ -106,6 +107,13 @@ namespace PetriEngine::Colored::Reduction {
 
                     const CArcIter& prodArc = red.getOutArc(producer, pid);
                     uint32_t kw;
+
+                    std::set<const Variable*> prodArcVars;
+                    Colored::VariableVisitor::get_variables(*prodArc->expr, prodArcVars);
+                    prodAllConst &= !prodArcVars.empty();
+                    if (prodArcVars.size() > 1){
+                        break;
+                    }
 
                     // T9, S6
                     if(prodArc->expr->is_single_color()){
@@ -119,6 +127,14 @@ namespace PetriEngine::Colored::Reduction {
                         const PetriEngine::Colored::Transition& consumer = red.transitions()[place._post[n]];
                         const CArcIter& consArc = red.getInArc(pid, consumer);
                         uint32_t w = consArc->expr->weight();
+
+                        std::set<const Variable*> prodArcVars;
+                        Colored::VariableVisitor::get_variables(*prodArc->expr, prodArcVars);
+                        if (prodArcVars.size() > 1){
+                            ok = false;
+                            break;
+                        }
+
                         // (T9, S6), S10, T10, T12
                         if (atomic_viable){
                             if (!consArc->expr->is_single_color() || kw % w != 0) {
@@ -209,9 +225,18 @@ namespace PetriEngine::Colored::Reduction {
                     std::set<const Variable*> consVars;
                     std::set<const Variable*> consArcVars;
                     std::set<const Variable*> consGuardVars;
+
+                    Colored::VariableVisitor::get_variables(*consArc->expr, consArcVars);
+                    if (consArcVars.size() > 1 || (prodAllConst && !consArcVars.empty())){
+                        if (atomic_viable){
+                            continue;
+                        } else {
+                            break;
+                        }
+                    }
+
                     if (prodHangingVars.second){
                         // The hanging variable checks need the arc variables and guard variables in separate sets
-                        Colored::VariableVisitor::get_variables(*consArc->expr, consArcVars);
                         if(consumer.guard)
                             Colored::VariableVisitor::get_variables(*consumer.guard, consGuardVars);
 
@@ -388,8 +413,8 @@ namespace PetriEngine::Colored::Reduction {
             const CArcIter prodArc = red.getOutArc(producer, pid);
             std::set<const Variable*> prodArcVars;
             std::set<const Variable*> prodGuardVars;
-
             Colored::VariableVisitor::get_variables(*prodArc->expr, prodArcVars);
+
             if(producer.guard){
                 Colored::VariableVisitor::get_variables(*producer.guard, prodGuardVars);
                 for (auto& var : prodArcVars){
