@@ -30,7 +30,11 @@ namespace PetriEngine::Colored::Reduction {
             if (place._post.size() == 0) {
                 continue;
             } else if (place._post.size() == 1) {
-                t = place._post[0];
+                if (t_is_viable(red, inQuery, place._post[0], p)) {
+                    t = place._post[0];
+                } else {
+                    continue;
+                }
             } else if (1 < place._post.size()) {
                 bool found_candidate = false;
                 bool ok = true;
@@ -42,7 +46,7 @@ namespace PetriEngine::Colored::Reduction {
                     found_candidate = t_is_viable(red, inQuery, tpost, p);
                     t = tpost;
                 }
-                if (!ok) continue;
+                if (!found_candidate || !ok) continue;
             }
 
             const Transition &transition = red.transitions()[t];
@@ -98,20 +102,17 @@ namespace PetriEngine::Colored::Reduction {
         //fireability consistency check
         if (inQuery.isTransitionUsed(t)) return false;
 
-        bool ok = true;
-
-        // - Make sure that we do not produce tokens to something that can produce tokens to our preset. To disallow infinite use of this rule
-        if ((transition_can_produce_to_place(t, p, red, std::vector<uint32_t>())).first) return false;
-
         const Transition &transition = red.transitions()[t];
-
         // Easiest to not handle guards, todo if guard, iterate through bindings and find the valid bindings
         if (transition.guard) return false;
 
         //could also relax this, but seems much more difficult
         if (transition.input_arcs.size() > 1) return false;
-        const auto &in = red.getInArc(p, transition);
 
+        // - Make sure that we do not produce tokens to something that can produce tokens to our preset. To disallow infinite use of this rule
+        if ((transition_can_produce_to_place(t, p, red, std::vector<uint32_t>())).first) return false;
+
+        bool ok = true;
         // - Preset and postset cannot inhibit or be in query
         for (auto &out: transition.output_arcs) {
             if (inQuery.isPlaceUsed(out.place) || red.places()[out.place].inhibitor) {
@@ -128,6 +129,7 @@ namespace PetriEngine::Colored::Reduction {
             }
 
             //relax this
+            const auto &in = red.getInArc(p, transition);
             if (to_string(*out.expr) != to_string(*in->expr)) {
                 ok = false;
                 break;
@@ -137,14 +139,14 @@ namespace PetriEngine::Colored::Reduction {
         if (!ok) return false;
 
         // - Preset and postset cannot inhibit or be in query
-        for (auto &in_arc: transition.input_arcs) {
+        /*for (auto &in_arc: transition.input_arcs) {
             if (inQuery.isPlaceUsed(in_arc.place) || red.places()[in_arc.place].inhibitor) {
                 ok = false;
                 break;
             }
-        }
+        }*/
 
-        if (!ok) return false;
+        //if (!ok) return false;
 
         return true;
     }
