@@ -47,16 +47,15 @@ namespace PetriEngine::Colored::Reduction {
     }
 
     // Search function to see if a transition t can somehow get tokens to place p. Very overestimation, just looking at arcs
-    std::pair<bool, std::vector<uint32_t>>
-    RedRulePreemptiveFiring::transition_can_produce_to_place(unsigned int t, uint32_t p, ColoredReducer &red,
-                                                             std::vector<uint32_t> already_checked) const {
+    bool RedRulePreemptiveFiring::transition_can_produce_to_place(unsigned int t, uint32_t p, ColoredReducer &red,
+                                                                  std::set<uint32_t> &already_checked) const {
         const Transition &transition = red.transitions()[t];
         for (auto &out: transition.output_arcs) {
 
-            if (std::find(already_checked.begin(), already_checked.end(), out.place) != already_checked.end()) {
+            if (already_checked.find(out.place) != already_checked.end()) {
                 continue;
             } else {
-                already_checked.push_back(out.place);
+                already_checked.insert(out.place);
             }
 
             const Place &place = red.places()[out.place];
@@ -64,18 +63,17 @@ namespace PetriEngine::Colored::Reduction {
 
             //base case
             if (out.place == p) {
-                return std::pair(true, already_checked);
+                return true;
             }
 
             // recursive case
             for (auto &inout: place._post) {
-                auto res = (transition_can_produce_to_place(inout, p, red, already_checked));
-                if (res.first) return std::pair(true, already_checked);
-                already_checked = res.second;
+                bool can_produce = (transition_can_produce_to_place(inout, p, red, already_checked));
+                if (can_produce) return true;
             }
         }
 
-        return std::pair(false, already_checked);
+        return false;
     }
 
     bool RedRulePreemptiveFiring::t_is_viable(ColoredReducer &red, const PetriEngine::PQL::ColoredUseVisitor &inQuery,
@@ -91,7 +89,8 @@ namespace PetriEngine::Colored::Reduction {
         if (transition.input_arcs.size() > 1) return false;
 
         // - Make sure that we do not produce tokens to something that can produce tokens to our preset. To disallow infinite use of this rule
-        if ((transition_can_produce_to_place(t, p, red, std::vector<uint32_t>())).first) return false;
+        std::set<uint32_t> already_checked;
+        if ((transition_can_produce_to_place(t, p, red, already_checked))) return false;
 
         bool ok = true;
         // - Preset and postset cannot inhibit or be in query
