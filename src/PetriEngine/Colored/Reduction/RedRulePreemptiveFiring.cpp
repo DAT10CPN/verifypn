@@ -84,6 +84,7 @@ namespace PetriEngine::Colored::Reduction {
 
         const Transition &transition = red.transitions()[t];
         // Easiest to not handle guards, todo if guard, iterate through bindings and find the valid bindings, and only move those tokens
+        //todo Inhib is actually ok, but we need to check if it is inhibited in the current marking
         if (transition.guard || transition.inhibited) return false;
 
         //could perhaps also relax this, but seems much more difficult
