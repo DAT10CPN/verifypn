@@ -32,9 +32,7 @@ namespace PetriEngine::Colored::Reduction {
 
             if (!t_is_viable(red, inQuery, place._post[0], p)) continue;
 
-            uint32_t t = place._post[0];
-            
-            const Transition &transition = red.transitions()[t];
+            const Transition &transition = red.transitions()[place._post[0]];
 
             for (auto &out: transition.output_arcs) {
                 auto &otherplace = const_cast<Place &>(red.places()[out.place]);
@@ -122,16 +120,6 @@ namespace PetriEngine::Colored::Reduction {
         }
 
         if (!ok) return false;
-
-        // - Preset and postset cannot inhibit or be in query
-        /*for (auto &in_arc: transition.input_arcs) {
-            if (inQuery.isPlaceUsed(in_arc.place) || red.places()[in_arc.place].inhibitor) {
-                ok = false;
-                break;
-            }
-        }*/
-
-        //if (!ok) return false;
 
         return true;
     }
