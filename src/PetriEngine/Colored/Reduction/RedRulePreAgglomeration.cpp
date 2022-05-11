@@ -205,10 +205,11 @@ namespace PetriEngine::Colored::Reduction {
                     uint32_t w = consArc->expr->weight();
 
                     // Identify the variables of the consumer
+                    bool consHangingGuardVarRisk = false;
                     std::set<const Variable*> consVars;
                     std::set<const Variable*> consArcVars;
                     std::set<const Variable*> consGuardVars;
-                    if (prodHangingVars.first || prodHangingVars.second){
+                    if (prodHangingVars.second){
                         // The hanging variable checks need the arc variables and guard variables in separate sets
                         Colored::VariableVisitor::get_variables(*consArc->expr, consArcVars);
                         if(consumer.guard)
@@ -217,7 +218,7 @@ namespace PetriEngine::Colored::Reduction {
                         for (auto& var : consArcVars){
                             if (prodHangingVars.second && consGuardVars.find(var) != consGuardVars.end()){
                                 // prodHangingArcVar && consHangingGuardVarRisk is NG
-                                ok = false;
+                                consHangingGuardVarRisk = true;
                                 break;
                             }
                         }
@@ -237,7 +238,8 @@ namespace PetriEngine::Colored::Reduction {
                         }
                     }
 
-                    if (prodHangingVars.first) {
+                    // The hanging guards that could not be caught by the producer's arcs have to be caught by the consumer's arcs now, or the agglomeration cant go on.
+                    if (prodHangingVars.first || consHangingGuardVarRisk) {
                         for (auto& var : consArcVars){
                             if (consVars.find(var) == consVars.end()){
                                 // If the producer has a hanging guard variable, we cannot allow consArc to also have hanging variables
@@ -386,7 +388,7 @@ namespace PetriEngine::Colored::Reduction {
             const CArcIter prodArc = red.getOutArc(producer, pid);
             std::set<const Variable*> prodArcVars;
             std::set<const Variable*> prodGuardVars;
-            
+
             Colored::VariableVisitor::get_variables(*prodArc->expr, prodArcVars);
             if(producer.guard){
                 Colored::VariableVisitor::get_variables(*producer.guard, prodGuardVars);
