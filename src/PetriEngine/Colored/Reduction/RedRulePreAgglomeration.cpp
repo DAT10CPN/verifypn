@@ -268,7 +268,9 @@ namespace PetriEngine::Colored::Reduction {
                         for (auto& tuple : tuples){
                             for (uint32_t tupleIndex = 0; tupleIndex < tuple.second.size(); tupleIndex++){
                                 if (centerVariables.size() <= tupleIndex){
-                                    centerVariables.emplace_back(new Variable{*producer.name + *consumer.name + tuple.second[tupleIndex]->name, tuple.second[tupleIndex]->colorType});
+                                    auto* newVar = new Variable{*producer.name + *consumer.name + tuple.second[tupleIndex]->name, tuple.second[tupleIndex]->colorType};
+                                    red.addVariable(newVar);
+                                    centerVariables.emplace_back(newVar);
                                 }
                                 varReplacementMap[tuple.second[tupleIndex]->name] = centerVariables[tupleIndex];
                             }
@@ -287,7 +289,9 @@ namespace PetriEngine::Colored::Reduction {
 
                         for (auto& var : pairVars){
                             if (varReplacementMap[var->name] == nullptr){
-                                varReplacementMap[var->name] = new Variable{*producer.name + *consumer.name + var->name, var->colorType};
+                                auto* newVar = new Variable{*producer.name + *consumer.name + var->name, var->colorType};
+                                red.addVariable(newVar);
+                                varReplacementMap[var->name] = newVar;
                             }
                         }
 
@@ -314,7 +318,9 @@ namespace PetriEngine::Colored::Reduction {
                             // Separate variables for the k_i firing versions.
                             if (k_i > 1){
                                 for (auto& kvPair : varReplacementMap) {
-                                    kvPair.second = new Variable{kvPair.first + "k" + std::to_string(k_i), kvPair.second->colorType};
+                                    auto* newVar = new Variable{kvPair.first + "k" + std::to_string(k_i), kvPair.second->colorType};
+                                    red.addVariable(newVar);
+                                    kvPair.second = newVar;
                                 }
                             }
 

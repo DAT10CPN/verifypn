@@ -96,6 +96,10 @@ namespace PetriEngine::Colored {
                 return _builder.inhibitors();
             }
 
+            void addVariable(const Colored::Variable* var) const {
+                _builder.addVariable(var);
+            }
+
             void addInputArc(uint32_t pid, uint32_t tid, ArcExpression_ptr& expr, uint32_t inhib_weight);
             void addOutputArc(uint32_t tid, uint32_t pid, ArcExpression_ptr expr);
 
