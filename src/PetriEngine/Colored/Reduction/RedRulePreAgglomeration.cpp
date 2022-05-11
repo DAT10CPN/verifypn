@@ -171,7 +171,9 @@ namespace PetriEngine::Colored::Reduction {
 
                 std::vector<uint32_t> originalConsumers = place._post;
                 std::vector<uint32_t> originalProducers = place._pre;
-                bool prodHangingGuardVarRisk = _prodHangingGuardVar(red, pid, originalProducers);
+                // a pair containing prodHangingGuardVarRisk, prodHangingArcVar
+                std::pair<bool, bool> prodHangingVars = _prodHangingGuardVar(red, pid, originalProducers);
+
                 for (uint32_t n = 0; n < originalConsumers.size(); n++)
                 {
                     if (red.hasTimedOut())
@@ -190,7 +192,7 @@ namespace PetriEngine::Colored::Reduction {
                         // S11
                         if (!kIsAlwaysOne[n]) {
                             for (const auto& conspost : consumer.output_arcs) {
-                                if (red.places()[conspost.place].inhibitor)) {
+                                if (red.places()[conspost.place].inhibitor) {
                                     ok = false;
                                     break;
                                 }
@@ -202,49 +204,45 @@ namespace PetriEngine::Colored::Reduction {
                     const auto& consArc = red.getInArc(pid, consumer);
                     uint32_t w = consArc->expr->weight();
 
-                    // Identify if there is risk of hanging variables in the guards of any producer
-                    bool consHangingGuardVarRisk = false;
-
                     // Identify the variables of the consumer
                     std::set<const Variable*> consVars;
                     std::set<const Variable*> consArcVars;
                     std::set<const Variable*> consGuardVars;
-                    if(consumer.guard){
-                        if (prodHangingGuardVarRisk){
-                            Colored::VariableVisitor::get_variables(*consArc->expr, consArcVars);
+                    if (prodHangingVars.first || prodHangingVars.second){
+                        // The hanging variable checks need the arc variables and guard variables in separate sets
+                        Colored::VariableVisitor::get_variables(*consArc->expr, consArcVars);
+                        if(consumer.guard)
                             Colored::VariableVisitor::get_variables(*consumer.guard, consGuardVars);
-                            for (auto& var : consArcVars){
-                                if (consGuardVars.find(var) != consGuardVars.end()){
-                                    consHangingGuardVarRisk = true;
-                                    break;
-                                }
-                            }
-                        } else {
-                            Colored::VariableVisitor::get_variables(*consumer.guard, consVars);
-                        }
 
+                        for (auto& var : consArcVars){
+                            if (prodHangingVars.second && consGuardVars.find(var) != consGuardVars.end()){
+                                // prodHangingArcVar && consHangingGuardVarRisk is NG
+                                ok = false;
+                                break;
+                            }
+                        }
+                    } else {
+                        if(consumer.guard)
+                            Colored::VariableVisitor::get_variables(*consumer.guard, consVars);
                     }
+
                     for (auto& arc : consumer.input_arcs){
-                        if (!consHangingGuardVarRisk || arc.place != consArc->place){
+                        if (!prodHangingVars.first || arc.place != consArc->place){
                             Colored::VariableVisitor::get_variables(*arc.expr, consVars);
                         }
                     }
                     for (auto& arc : consumer.output_arcs){
-                        if (!consHangingGuardVarRisk || arc.place != consArc->place){
+                        if (!prodHangingVars.first || arc.place != consArc->place){
                             Colored::VariableVisitor::get_variables(*arc.expr, consVars);
                         }
                     }
 
-                    if (consHangingGuardVarRisk) {
+                    if (prodHangingVars.first) {
                         for (auto& var : consArcVars){
                             if (consVars.find(var) == consVars.end()){
-                                if (consGuardVars.find(var) != consGuardVars.end()){
-                                    // Both a producer and a consumer have a hanging guard variable, at which point it is an actual problem.
-                                    ok = false;
-                                    break;
-                                } else {
-                                    consVars.insert(var);
-                                }
+                                // If the producer has a hanging guard variable, we cannot allow consArc to also have hanging variables
+                                ok = false;
+                                break;
                             }
                         }
                     }
@@ -253,7 +251,6 @@ namespace PetriEngine::Colored::Reduction {
                         if (atomic_viable){
                             continue;
                         } else {
-                            ok = false;
                             break;
                         }
                     }
@@ -381,25 +378,25 @@ namespace PetriEngine::Colored::Reduction {
         return continueReductions;
     }
 
-    bool RedRulePreAgglomeration::_prodHangingGuardVar(ColoredReducer& red, uint32_t pid, const std::vector<uint32_t>& originalProducers) {
-        bool hangingGuardVarRisk = false;
+    std::pair<bool, bool> RedRulePreAgglomeration::_prodHangingGuardVar(ColoredReducer& red, uint32_t pid, const std::vector<uint32_t>& originalProducers) {
+        bool hangingGuardVar_risk = false;
+        bool hangingArcVar = false;
         for (const auto& prod : originalProducers){
             const Transition& producer = red.transitions()[prod];
             const CArcIter prodArc = red.getOutArc(producer, pid);
             std::set<const Variable*> prodArcVars;
             std::set<const Variable*> prodGuardVars;
-            // Valid because there is only allowed to be at most 1 variable on each.
+            
             Colored::VariableVisitor::get_variables(*prodArc->expr, prodArcVars);
             if(producer.guard){
                 Colored::VariableVisitor::get_variables(*producer.guard, prodGuardVars);
                 for (auto& var : prodArcVars){
                     if (prodGuardVars.find(var) != prodGuardVars.end()){
-                        hangingGuardVarRisk = true;
+                        hangingGuardVar_risk = true;
                         break;
                     }
                 }
             }
-            if (!hangingGuardVarRisk) continue;
 
             std::set<const Variable*> prodVars;
 
@@ -415,13 +412,16 @@ namespace PetriEngine::Colored::Reduction {
             }
 
             for (auto& var : prodArcVars){
-                if (prodVars.find(var) == prodVars.end() && prodGuardVars.find(var) != prodGuardVars.end()){
+                if (prodVars.find(var) == prodVars.end()){
                     // There is indeed a hanging guard variable here;
-                    return true;
+                    hangingArcVar = true;
+                    break;
                 }
             }
+            if (hangingGuardVar_risk && hangingArcVar) break;
         }
-        return false;
+        // hangingGuardVar_risk is only actually a problem if there is a hangingArcVar too.
+        return std::pair{(hangingGuardVar_risk && hangingArcVar), hangingArcVar};
     }
 }
 
