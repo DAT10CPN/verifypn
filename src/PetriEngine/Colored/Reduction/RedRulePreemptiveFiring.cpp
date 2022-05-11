@@ -23,8 +23,6 @@ namespace PetriEngine::Colored::Reduction {
             auto &place = const_cast<Place &>(red.places()[p]);
             if (place.skipped) continue;
             if (place.marking.empty()) continue;
-            if (place.inhibitor) continue; //could perhaps relax this
-
 
             if (place._post.size() != 1) {
                 continue;
