@@ -35,10 +35,7 @@ namespace PetriEngine::Colored::Reduction {
             const Transition &transition = red.transitions()[place._post[0]];
 
             for (auto &out: transition.output_arcs) {
-                std::cout << "transition: " << *transition.name << std::endl;
-                std::cout << "place: " << *place.name << std::endl;
                 auto &otherplace = const_cast<Place &>(red.places()[out.place]);
-                std::cout << "otherplace: " << *otherplace.name << std::endl;
                 otherplace.marking += place.marking;
             }
             place.marking *= 0;
@@ -88,8 +85,17 @@ namespace PetriEngine::Colored::Reduction {
 
         const Transition &transition = red.transitions()[t];
         // Easiest to not handle guards, todo if guard, iterate through bindings and find the valid bindings, and only move those tokens
-        //todo Inhib is actually ok, but we need to check if it is inhibited in the current marking
-        if (transition.guard || transition.inhibited) return false;
+        if (transition.guard) return false;
+
+        // Check if the transition is currently inhibited
+        for (auto &inhibArc: red.inhibitorArcs()) {
+            if (inhibArc.place == p && inhibArc.transition == t) {
+                auto &place = red.places()[p];
+                if (inhibArc.inhib_weight <= place.marking.size()) {
+                    return false;
+                }
+            }
+        }
 
         //could perhaps also relax this, but seems much more difficult
         if (transition.input_arcs.size() > 1) return false;
