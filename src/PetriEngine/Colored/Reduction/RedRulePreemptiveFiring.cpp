@@ -107,28 +107,25 @@ namespace PetriEngine::Colored::Reduction {
         bool ok = true;
         // - postset cannot inhibit or be in query
         for (auto &out: transition.output_arcs) {
-            if (inQuery.isPlaceUsed(out.place) || red.places()[out.place].inhibitor) {
-                ok = false;
-                break;
+            auto &outPlace = red.places()[out.place];
+            if (inQuery.isPlaceUsed(out.place) || outPlace.inhibitor) {
+                return false;
             }
 
+
             //for fireability consistency. We don't want to put tokens to a place enabling transition
-            for (auto &tin: red.places()[out.place]._post) {
+            for (auto &tin: outPlace._post) {
                 if (inQuery.isTransitionUsed(tin)) {
-                    ok = false;
-                    break;
+                    return false;
                 }
             }
 
             //todo could relax this, and instead of simply copying the tokens to the new place, then update them according to the out arc expression
             const auto &in = red.getInArc(p, transition);
             if (to_string(*out.expr) != to_string(*in->expr)) {
-                ok = false;
-                break;
+                return false;
             }
         }
-
-        if (!ok) return false;
 
         return true;
     }
