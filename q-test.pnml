@@ -1,0 +1,613 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+    <net id="ComposedModel" type="http://www.pnml.org/version-2009/grammar/ptnet">
+        <name>
+            <text>ComposedModel</text>
+        </name>
+        <declaration>
+            <structure>
+                <declarations>
+                    <namedsort id="dot" name="dot">
+                        <dot/>
+                    </namedsort>
+                    <namedsort id="signal" name="signal">
+                        <cyclicenumeration>
+                            <feconstant id="Signal0" name="signal"/>
+                            <feconstant id="Signal1" name="signal"/>
+                        </cyclicenumeration>
+                    </namedsort>
+                    <namedsort id="Altitude" name="Altitude">
+                        <cyclicenumeration>
+                            <feconstant id="Altitude1" name="Altitude"/>
+                            <feconstant id="Altitude2" name="Altitude"/>
+                            <feconstant id="Altitude3" name="Altitude"/>
+                            <feconstant id="Altitude4" name="Altitude"/>
+                            <feconstant id="Altitude5" name="Altitude"/>
+                            <feconstant id="Altitude6" name="Altitude"/>
+                            <feconstant id="Altitude7" name="Altitude"/>
+                            <feconstant id="Altitude8" name="Altitude"/>
+                            <feconstant id="Altitude9" name="Altitude"/>
+                            <feconstant id="Altitude10" name="Altitude"/>
+                            <feconstant id="Altitude11" name="Altitude"/>
+                            <feconstant id="Altitude12" name="Altitude"/>
+                            <feconstant id="Altitude13" name="Altitude"/>
+                            <feconstant id="Altitude14" name="Altitude"/>
+                            <feconstant id="Altitude15" name="Altitude"/>
+                            <feconstant id="Altitude16" name="Altitude"/>
+                            <feconstant id="Altitude17" name="Altitude"/>
+                            <feconstant id="Altitude18" name="Altitude"/>
+                            <feconstant id="Altitude19" name="Altitude"/>
+                            <feconstant id="Altitude20" name="Altitude"/>
+                            <feconstant id="Altitude21" name="Altitude"/>
+                            <feconstant id="Altitude22" name="Altitude"/>
+                            <feconstant id="Altitude23" name="Altitude"/>
+                            <feconstant id="Altitude24" name="Altitude"/>
+                            <feconstant id="Altitude25" name="Altitude"/>
+                            <feconstant id="Altitude26" name="Altitude"/>
+                            <feconstant id="Altitude27" name="Altitude"/>
+                            <feconstant id="Altitude28" name="Altitude"/>
+                            <feconstant id="Altitude29" name="Altitude"/>
+                            <feconstant id="Altitude30" name="Altitude"/>
+                            <feconstant id="Altitude31" name="Altitude"/>
+                            <feconstant id="Altitude32" name="Altitude"/>
+                            <feconstant id="Altitude33" name="Altitude"/>
+                            <feconstant id="Altitude34" name="Altitude"/>
+                            <feconstant id="Altitude35" name="Altitude"/>
+                            <feconstant id="Altitude36" name="Altitude"/>
+                            <feconstant id="Altitude37" name="Altitude"/>
+                            <feconstant id="Altitude38" name="Altitude"/>
+                            <feconstant id="Altitude39" name="Altitude"/>
+                            <feconstant id="Altitude40" name="Altitude"/>
+                            <feconstant id="Altitude41" name="Altitude"/>
+                            <feconstant id="Altitude42" name="Altitude"/>
+                            <feconstant id="Altitude43" name="Altitude"/>
+                            <feconstant id="Altitude44" name="Altitude"/>
+                            <feconstant id="Altitude45" name="Altitude"/>
+                            <feconstant id="Altitude46" name="Altitude"/>
+                            <feconstant id="Altitude47" name="Altitude"/>
+                            <feconstant id="Altitude48" name="Altitude"/>
+                            <feconstant id="Altitude49" name="Altitude"/>
+                            <feconstant id="Altitude50" name="Altitude"/>
+                            <feconstant id="Altitude51" name="Altitude"/>
+                            <feconstant id="Altitude52" name="Altitude"/>
+                            <feconstant id="Altitude53" name="Altitude"/>
+                            <feconstant id="Altitude54" name="Altitude"/>
+                            <feconstant id="Altitude55" name="Altitude"/>
+                            <feconstant id="Altitude56" name="Altitude"/>
+                            <feconstant id="Altitude57" name="Altitude"/>
+                            <feconstant id="Altitude58" name="Altitude"/>
+                            <feconstant id="Altitude59" name="Altitude"/>
+                            <feconstant id="Altitude60" name="Altitude"/>
+                            <feconstant id="Altitude61" name="Altitude"/>
+                            <feconstant id="Altitude62" name="Altitude"/>
+                            <feconstant id="Altitude63" name="Altitude"/>
+                            <feconstant id="Altitude64" name="Altitude"/>
+                            <feconstant id="Altitude65" name="Altitude"/>
+                            <feconstant id="Altitude66" name="Altitude"/>
+                            <feconstant id="Altitude67" name="Altitude"/>
+                            <feconstant id="Altitude68" name="Altitude"/>
+                            <feconstant id="Altitude69" name="Altitude"/>
+                            <feconstant id="Altitude70" name="Altitude"/>
+                            <feconstant id="Altitude71" name="Altitude"/>
+                            <feconstant id="Altitude72" name="Altitude"/>
+                            <feconstant id="Altitude73" name="Altitude"/>
+                            <feconstant id="Altitude74" name="Altitude"/>
+                            <feconstant id="Altitude75" name="Altitude"/>
+                            <feconstant id="Altitude76" name="Altitude"/>
+                            <feconstant id="Altitude77" name="Altitude"/>
+                            <feconstant id="Altitude78" name="Altitude"/>
+                            <feconstant id="Altitude79" name="Altitude"/>
+                            <feconstant id="Altitude80" name="Altitude"/>
+                            <feconstant id="Altitude81" name="Altitude"/>
+                            <feconstant id="Altitude82" name="Altitude"/>
+                            <feconstant id="Altitude83" name="Altitude"/>
+                            <feconstant id="Altitude84" name="Altitude"/>
+                            <feconstant id="Altitude85" name="Altitude"/>
+                            <feconstant id="Altitude86" name="Altitude"/>
+                            <feconstant id="Altitude87" name="Altitude"/>
+                            <feconstant id="Altitude88" name="Altitude"/>
+                            <feconstant id="Altitude89" name="Altitude"/>
+                            <feconstant id="Altitude90" name="Altitude"/>
+                            <feconstant id="Altitude91" name="Altitude"/>
+                            <feconstant id="Altitude92" name="Altitude"/>
+                            <feconstant id="Altitude93" name="Altitude"/>
+                            <feconstant id="Altitude94" name="Altitude"/>
+                            <feconstant id="Altitude95" name="Altitude"/>
+                            <feconstant id="Altitude96" name="Altitude"/>
+                            <feconstant id="Altitude97" name="Altitude"/>
+                            <feconstant id="Altitude98" name="Altitude"/>
+                            <feconstant id="Altitude99" name="Altitude"/>
+                            <feconstant id="Altitude100" name="Altitude"/>
+                            <feconstant id="Altitude101" name="Altitude"/>
+                            <feconstant id="Altitude102" name="Altitude"/>
+                            <feconstant id="Altitude103" name="Altitude"/>
+                            <feconstant id="Altitude104" name="Altitude"/>
+                            <feconstant id="Altitude105" name="Altitude"/>
+                            <feconstant id="Altitude106" name="Altitude"/>
+                            <feconstant id="Altitude107" name="Altitude"/>
+                            <feconstant id="Altitude108" name="Altitude"/>
+                            <feconstant id="Altitude109" name="Altitude"/>
+                            <feconstant id="Altitude110" name="Altitude"/>
+                            <feconstant id="Altitude111" name="Altitude"/>
+                            <feconstant id="Altitude112" name="Altitude"/>
+                            <feconstant id="Altitude113" name="Altitude"/>
+                            <feconstant id="Altitude114" name="Altitude"/>
+                            <feconstant id="Altitude115" name="Altitude"/>
+                            <feconstant id="Altitude116" name="Altitude"/>
+                            <feconstant id="Altitude117" name="Altitude"/>
+                            <feconstant id="Altitude118" name="Altitude"/>
+                            <feconstant id="Altitude119" name="Altitude"/>
+                            <feconstant id="Altitude120" name="Altitude"/>
+                            <feconstant id="Altitude121" name="Altitude"/>
+                            <feconstant id="Altitude122" name="Altitude"/>
+                            <feconstant id="Altitude123" name="Altitude"/>
+                            <feconstant id="Altitude124" name="Altitude"/>
+                            <feconstant id="Altitude125" name="Altitude"/>
+                            <feconstant id="Altitude126" name="Altitude"/>
+                            <feconstant id="Altitude127" name="Altitude"/>
+                            <feconstant id="Altitude128" name="Altitude"/>
+                            <feconstant id="Altitude129" name="Altitude"/>
+                            <feconstant id="Altitude130" name="Altitude"/>
+                            <feconstant id="Altitude131" name="Altitude"/>
+                            <feconstant id="Altitude132" name="Altitude"/>
+                            <feconstant id="Altitude133" name="Altitude"/>
+                            <feconstant id="Altitude134" name="Altitude"/>
+                            <feconstant id="Altitude135" name="Altitude"/>
+                            <feconstant id="Altitude136" name="Altitude"/>
+                            <feconstant id="Altitude137" name="Altitude"/>
+                            <feconstant id="Altitude138" name="Altitude"/>
+                            <feconstant id="Altitude139" name="Altitude"/>
+                            <feconstant id="Altitude140" name="Altitude"/>
+                            <feconstant id="Altitude141" name="Altitude"/>
+                            <feconstant id="Altitude142" name="Altitude"/>
+                            <feconstant id="Altitude143" name="Altitude"/>
+                            <feconstant id="Altitude144" name="Altitude"/>
+                            <feconstant id="Altitude145" name="Altitude"/>
+                            <feconstant id="Altitude146" name="Altitude"/>
+                            <feconstant id="Altitude147" name="Altitude"/>
+                            <feconstant id="Altitude148" name="Altitude"/>
+                            <feconstant id="Altitude149" name="Altitude"/>
+                            <feconstant id="Altitude150" name="Altitude"/>
+                            <feconstant id="Altitude151" name="Altitude"/>
+                            <feconstant id="Altitude152" name="Altitude"/>
+                            <feconstant id="Altitude153" name="Altitude"/>
+                            <feconstant id="Altitude154" name="Altitude"/>
+                            <feconstant id="Altitude155" name="Altitude"/>
+                            <feconstant id="Altitude156" name="Altitude"/>
+                            <feconstant id="Altitude157" name="Altitude"/>
+                            <feconstant id="Altitude158" name="Altitude"/>
+                            <feconstant id="Altitude159" name="Altitude"/>
+                            <feconstant id="Altitude160" name="Altitude"/>
+                            <feconstant id="Altitude161" name="Altitude"/>
+                            <feconstant id="Altitude162" name="Altitude"/>
+                            <feconstant id="Altitude163" name="Altitude"/>
+                            <feconstant id="Altitude164" name="Altitude"/>
+                            <feconstant id="Altitude165" name="Altitude"/>
+                            <feconstant id="Altitude166" name="Altitude"/>
+                            <feconstant id="Altitude167" name="Altitude"/>
+                            <feconstant id="Altitude168" name="Altitude"/>
+                            <feconstant id="Altitude169" name="Altitude"/>
+                            <feconstant id="Altitude170" name="Altitude"/>
+                            <feconstant id="Altitude171" name="Altitude"/>
+                            <feconstant id="Altitude172" name="Altitude"/>
+                            <feconstant id="Altitude173" name="Altitude"/>
+                            <feconstant id="Altitude174" name="Altitude"/>
+                            <feconstant id="Altitude175" name="Altitude"/>
+                            <feconstant id="Altitude176" name="Altitude"/>
+                            <feconstant id="Altitude177" name="Altitude"/>
+                            <feconstant id="Altitude178" name="Altitude"/>
+                            <feconstant id="Altitude179" name="Altitude"/>
+                            <feconstant id="Altitude180" name="Altitude"/>
+                            <feconstant id="Altitude181" name="Altitude"/>
+                            <feconstant id="Altitude182" name="Altitude"/>
+                            <feconstant id="Altitude183" name="Altitude"/>
+                            <feconstant id="Altitude184" name="Altitude"/>
+                            <feconstant id="Altitude185" name="Altitude"/>
+                            <feconstant id="Altitude186" name="Altitude"/>
+                            <feconstant id="Altitude187" name="Altitude"/>
+                            <feconstant id="Altitude188" name="Altitude"/>
+                            <feconstant id="Altitude189" name="Altitude"/>
+                            <feconstant id="Altitude190" name="Altitude"/>
+                            <feconstant id="Altitude191" name="Altitude"/>
+                            <feconstant id="Altitude192" name="Altitude"/>
+                            <feconstant id="Altitude193" name="Altitude"/>
+                            <feconstant id="Altitude194" name="Altitude"/>
+                            <feconstant id="Altitude195" name="Altitude"/>
+                            <feconstant id="Altitude196" name="Altitude"/>
+                            <feconstant id="Altitude197" name="Altitude"/>
+                            <feconstant id="Altitude198" name="Altitude"/>
+                            <feconstant id="Altitude199" name="Altitude"/>
+                            <feconstant id="Altitude200" name="Altitude"/>
+                        </cyclicenumeration>
+                    </namedsort>
+                    <namedsort id="Speed" name="Speed">
+                        <cyclicenumeration>
+                            <feconstant id="Speed1" name="Speed"/>
+                            <feconstant id="Speed2" name="Speed"/>
+                            <feconstant id="Speed3" name="Speed"/>
+                            <feconstant id="Speed4" name="Speed"/>
+                            <feconstant id="Speed5" name="Speed"/>
+                            <feconstant id="Speed6" name="Speed"/>
+                            <feconstant id="Speed7" name="Speed"/>
+                            <feconstant id="Speed8" name="Speed"/>
+                            <feconstant id="Speed9" name="Speed"/>
+                            <feconstant id="Speed10" name="Speed"/>
+                            <feconstant id="Speed11" name="Speed"/>
+                            <feconstant id="Speed12" name="Speed"/>
+                            <feconstant id="Speed13" name="Speed"/>
+                            <feconstant id="Speed14" name="Speed"/>
+                            <feconstant id="Speed15" name="Speed"/>
+                            <feconstant id="Speed16" name="Speed"/>
+                            <feconstant id="Speed17" name="Speed"/>
+                            <feconstant id="Speed18" name="Speed"/>
+                            <feconstant id="Speed19" name="Speed"/>
+                            <feconstant id="Speed20" name="Speed"/>
+                            <feconstant id="Speed21" name="Speed"/>
+                            <feconstant id="Speed22" name="Speed"/>
+                            <feconstant id="Speed23" name="Speed"/>
+                            <feconstant id="Speed24" name="Speed"/>
+                            <feconstant id="Speed25" name="Speed"/>
+                            <feconstant id="Speed26" name="Speed"/>
+                            <feconstant id="Speed27" name="Speed"/>
+                            <feconstant id="Speed28" name="Speed"/>
+                            <feconstant id="Speed29" name="Speed"/>
+                            <feconstant id="Speed30" name="Speed"/>
+                            <feconstant id="Speed31" name="Speed"/>
+                            <feconstant id="Speed32" name="Speed"/>
+                            <feconstant id="Speed33" name="Speed"/>
+                            <feconstant id="Speed34" name="Speed"/>
+                            <feconstant id="Speed35" name="Speed"/>
+                            <feconstant id="Speed36" name="Speed"/>
+                            <feconstant id="Speed37" name="Speed"/>
+                            <feconstant id="Speed38" name="Speed"/>
+                            <feconstant id="Speed39" name="Speed"/>
+                            <feconstant id="Speed40" name="Speed"/>
+                            <feconstant id="Speed41" name="Speed"/>
+                            <feconstant id="Speed42" name="Speed"/>
+                            <feconstant id="Speed43" name="Speed"/>
+                            <feconstant id="Speed44" name="Speed"/>
+                            <feconstant id="Speed45" name="Speed"/>
+                            <feconstant id="Speed46" name="Speed"/>
+                            <feconstant id="Speed47" name="Speed"/>
+                            <feconstant id="Speed48" name="Speed"/>
+                            <feconstant id="Speed49" name="Speed"/>
+                            <feconstant id="Speed50" name="Speed"/>
+                            <feconstant id="Speed51" name="Speed"/>
+                            <feconstant id="Speed52" name="Speed"/>
+                            <feconstant id="Speed53" name="Speed"/>
+                            <feconstant id="Speed54" name="Speed"/>
+                            <feconstant id="Speed55" name="Speed"/>
+                            <feconstant id="Speed56" name="Speed"/>
+                            <feconstant id="Speed57" name="Speed"/>
+                            <feconstant id="Speed58" name="Speed"/>
+                            <feconstant id="Speed59" name="Speed"/>
+                            <feconstant id="Speed60" name="Speed"/>
+                            <feconstant id="Speed61" name="Speed"/>
+                            <feconstant id="Speed62" name="Speed"/>
+                            <feconstant id="Speed63" name="Speed"/>
+                            <feconstant id="Speed64" name="Speed"/>
+                            <feconstant id="Speed65" name="Speed"/>
+                            <feconstant id="Speed66" name="Speed"/>
+                            <feconstant id="Speed67" name="Speed"/>
+                            <feconstant id="Speed68" name="Speed"/>
+                            <feconstant id="Speed69" name="Speed"/>
+                            <feconstant id="Speed70" name="Speed"/>
+                            <feconstant id="Speed71" name="Speed"/>
+                            <feconstant id="Speed72" name="Speed"/>
+                            <feconstant id="Speed73" name="Speed"/>
+                            <feconstant id="Speed74" name="Speed"/>
+                            <feconstant id="Speed75" name="Speed"/>
+                            <feconstant id="Speed76" name="Speed"/>
+                            <feconstant id="Speed77" name="Speed"/>
+                            <feconstant id="Speed78" name="Speed"/>
+                            <feconstant id="Speed79" name="Speed"/>
+                            <feconstant id="Speed80" name="Speed"/>
+                            <feconstant id="Speed81" name="Speed"/>
+                            <feconstant id="Speed82" name="Speed"/>
+                            <feconstant id="Speed83" name="Speed"/>
+                            <feconstant id="Speed84" name="Speed"/>
+                            <feconstant id="Speed85" name="Speed"/>
+                            <feconstant id="Speed86" name="Speed"/>
+                            <feconstant id="Speed87" name="Speed"/>
+                            <feconstant id="Speed88" name="Speed"/>
+                            <feconstant id="Speed89" name="Speed"/>
+                            <feconstant id="Speed90" name="Speed"/>
+                            <feconstant id="Speed91" name="Speed"/>
+                            <feconstant id="Speed92" name="Speed"/>
+                            <feconstant id="Speed93" name="Speed"/>
+                            <feconstant id="Speed94" name="Speed"/>
+                            <feconstant id="Speed95" name="Speed"/>
+                            <feconstant id="Speed96" name="Speed"/>
+                            <feconstant id="Speed97" name="Speed"/>
+                            <feconstant id="Speed98" name="Speed"/>
+                            <feconstant id="Speed99" name="Speed"/>
+                            <feconstant id="Speed100" name="Speed"/>
+                        </cyclicenumeration>
+                    </namedsort>
+                    <namedsort id="weight" name="weight">
+                        <cyclicenumeration>
+                            <feconstant id="Weight0" name="weight"/>
+                            <feconstant id="Weight1" name="weight"/>
+                        </cyclicenumeration>
+                    </namedsort>
+                    <variabledecl id="varW" name="varW">
+                        <usersort declaration="weight"/>
+                    </variabledecl>
+                    <variabledecl id="varA" name="varA">
+                        <usersort declaration="Altitude"/>
+                    </variabledecl>
+                    <variabledecl id="varS" name="varS">
+                        <usersort declaration="Speed"/>
+                    </variabledecl>
+                </declarations>
+            </structure>
+        </declaration>
+        <page id="page0">
+            <place id="P3">
+                <name>
+                    <text>P3</text>
+                    <graphics>
+                        <offset x="-5" y="35"/>
+                    </graphics>
+                </name>
+                <graphics>
+                    <position x="630" y="350"/>
+                </graphics>
+                <type>
+                    <text>dot</text>
+                    <structure>
+                        <usersort declaration="dot"/>
+                    </structure>
+                </type>
+            </place>
+            <place id="P2">
+                <name>
+                    <text>P2</text>
+                    <graphics>
+                        <offset x="-5" y="35"/>
+                    </graphics>
+                </name>
+                <graphics>
+                    <position x="320" y="350"/>
+                </graphics>
+                <type>
+                    <text>dot</text>
+                    <structure>
+                        <usersort declaration="dot"/>
+                    </structure>
+                </type>
+            </place>
+            <place id="Weight_Left_Wheel">
+                <name>
+                    <text>Weight_Left_Wheel</text>
+                    <graphics>
+                        <offset x="-5" y="35"/>
+                    </graphics>
+                </name>
+                <graphics>
+                    <position x="210" y="270"/>
+                </graphics>
+                <type>
+                    <text>weight</text>
+                    <structure>
+                        <usersort declaration="weight"/>
+                    </structure>
+                </type>
+            </place>
+            <place id="stp1">
+                <name>
+                    <text>stp1</text>
+                    <graphics>
+                        <offset x="-5" y="35"/>
+                    </graphics>
+                </name>
+                <graphics>
+                    <position x="65" y="60"/>
+                </graphics>
+                <type>
+                    <text>dot</text>
+                    <structure>
+                        <usersort declaration="dot"/>
+                    </structure>
+                </type>
+                <hlinitialMarking>
+                    <text>(1'dot)</text>
+                    <structure>
+                        <add>
+                            <subterm>
+                                <numberof>
+                                    <subterm>
+                                        <numberconstant value="1">
+                                            <positive/>
+                                        </numberconstant>
+                                    </subterm>
+                                    <subterm>
+                                        <useroperator declaration="dot"/>
+                                    </subterm>
+                                </numberof>
+                            </subterm>
+                        </add>
+                    </structure>
+                </hlinitialMarking>
+            </place>
+            <place id="P5">
+                <name>
+                    <text>P5</text>
+                    <graphics>
+                        <offset x="0" y="0"/>
+                    </graphics>
+                </name>
+                <graphics>
+                    <position x="315" y="810"/>
+                </graphics>
+                <type>
+                    <text>dot</text>
+                    <structure>
+                        <usersort declaration="dot"/>
+                    </structure>
+                </type>
+            </place>
+            <transition id="t2_2">
+                <name>
+                    <graphics>
+                        <offset x="-5" y="35"/>
+                    </graphics>
+                    <text>t2_2</text>
+                </name>
+                <graphics>
+                    <position x="430" y="350"/>
+                </graphics>
+                <condition>
+                    <text>varW eq Weight1</text>
+                    <structure>
+                        <equality>
+                            <subterm>
+                                <variable refvariable="varW"/>
+                            </subterm>
+                            <subterm>
+                                <useroperator declaration="Weight1"/>
+                            </subterm>
+                        </equality>
+                    </structure>
+                </condition>
+            </transition>
+            <transition id="t1_2">
+                <name>
+                    <graphics>
+                        <offset x="-5" y="35"/>
+                    </graphics>
+                    <text>t1_2</text>
+                </name>
+                <graphics>
+                    <position x="210" y="350"/>
+                </graphics>
+                <condition>
+                    <text>varW eq Weight1</text>
+                    <structure>
+                        <equality>
+                            <subterm>
+                                <variable refvariable="varW"/>
+                            </subterm>
+                            <subterm>
+                                <useroperator declaration="Weight1"/>
+                            </subterm>
+                        </equality>
+                    </structure>
+                </condition>
+            </transition>
+            <transition id="SampleLW">
+                <name>
+                    <graphics>
+                        <offset x="-5" y="35"/>
+                    </graphics>
+                    <text>SampleLW</text>
+                </name>
+                <graphics>
+                    <position x="160" y="165"/>
+                </graphics>
+            </transition>
+            <arc id="P2_to_t2_2" source="P2" target="t2_2" type="normal">
+                <hlinscription>
+                    <text>1'dot</text>
+                    <structure>
+                        <numberof>
+                            <subterm>
+                                <numberconstant value="1">
+                                    <positive/>
+                                </numberconstant>
+                            </subterm>
+                            <subterm>
+                                <dotconstant/>
+                            </subterm>
+                        </numberof>
+                    </structure>
+                </hlinscription>
+            </arc>
+            <arc id="Weight_Left_Wheel_to_t1_2" source="Weight_Left_Wheel" target="t1_2" type="normal">
+                <hlinscription>
+                    <text>1'varW</text>
+                    <structure>
+                        <numberof>
+                            <subterm>
+                                <numberconstant value="1">
+                                    <positive/>
+                                </numberconstant>
+                            </subterm>
+                            <subterm>
+                                <variable refvariable="varW"/>
+                            </subterm>
+                        </numberof>
+                    </structure>
+                </hlinscription>
+            </arc>
+            <arc id="stp1_to_SampleLW" source="stp1" target="SampleLW" type="normal">
+                <hlinscription>
+                    <text>1'dot</text>
+                    <structure>
+                        <numberof>
+                            <subterm>
+                                <numberconstant value="1">
+                                    <positive/>
+                                </numberconstant>
+                            </subterm>
+                            <subterm>
+                                <dotconstant/>
+                            </subterm>
+                        </numberof>
+                    </structure>
+                </hlinscription>
+            </arc>
+            <arc id="t2_2_to_P3" source="t2_2" target="P3" type="normal">
+                <hlinscription>
+                    <text>1'dot</text>
+                    <structure>
+                        <numberof>
+                            <subterm>
+                                <numberconstant value="1">
+                                    <positive/>
+                                </numberconstant>
+                            </subterm>
+                            <subterm>
+                                <dotconstant/>
+                            </subterm>
+                        </numberof>
+                    </structure>
+                </hlinscription>
+            </arc>
+            <arc id="t1_2_to_P2" source="t1_2" target="P2" type="normal">
+                <hlinscription>
+                    <text>1'dot</text>
+                    <structure>
+                        <numberof>
+                            <subterm>
+                                <numberconstant value="1">
+                                    <positive/>
+                                </numberconstant>
+                            </subterm>
+                            <subterm>
+                                <dotconstant/>
+                            </subterm>
+                        </numberof>
+                    </structure>
+                </hlinscription>
+            </arc>
+            <arc id="SampleLW_to_Weight_Left_Wheel" source="SampleLW" target="Weight_Left_Wheel" type="normal">
+                <hlinscription>
+                    <text>1'varW</text>
+                    <structure>
+                        <numberof>
+                            <subterm>
+                                <numberconstant value="1">
+                                    <positive/>
+                                </numberconstant>
+                            </subterm>
+                            <subterm>
+                                <variable refvariable="varW"/>
+                            </subterm>
+                        </numberof>
+                    </structure>
+                </hlinscription>
+            </arc>
+        </page>
+    </net>
+</pnml>

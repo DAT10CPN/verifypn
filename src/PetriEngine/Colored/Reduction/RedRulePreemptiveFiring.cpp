@@ -9,12 +9,12 @@
 #include "PetriEngine/Colored/Reduction/RedRulePreemptiveFiring.h"
 #include "PetriEngine/Colored/Reduction/ColoredReducer.h"
 #include "PetriEngine/Colored/ArcVarMultisetVisitor.h"
+#include "PetriEngine/Colored/BindingGenerator.h"
 
 namespace PetriEngine::Colored::Reduction {
     bool RedRulePreemptiveFiring::apply(ColoredReducer &red, const PetriEngine::PQL::ColoredUseVisitor &inQuery,
                                         QueryType queryType,
                                         bool preserveLoops, bool preserveStutter) {
-        Colored::PartitionBuilder partition(red.transitions(), red.places());
         bool continueReductions = false;
         const size_t numberofplaces = red.placeCount();
         for (uint32_t p = 0; p < numberofplaces; ++p) {
@@ -30,13 +30,21 @@ namespace PetriEngine::Colored::Reduction {
                 continue;
             }
 
-            if (!t_is_viable(red, inQuery, place._post[0], p)) continue;
+            auto map = t_is_viable_and_get_map(red, inQuery, place._post[0], p);
+            if (map.empty()) continue;
 
             const Transition &transition = red.transitions()[place._post[0]];
+            std::cout << "place: " << *place.name << std::endl;
+            std::cout << "transition: " << *transition.name << std::endl;
+            std::cout << "map: " << std::endl;
+            for (auto &mapping: map) {
+                std::cout << mapping.first << " : " << mapping.second << std::endl;
+            }
 
             for (auto &out: transition.output_arcs) {
                 auto &otherplace = const_cast<Place &>(red.places()[out.place]);
-                otherplace.marking += place.marking;
+                std::cout << "otherplace: " << *otherplace.name << std::endl;
+                //otherplace.marking += place.marking;
             }
             place.marking *= 0;
 
@@ -78,61 +86,110 @@ namespace PetriEngine::Colored::Reduction {
         return false;
     }
 
-    bool RedRulePreemptiveFiring::t_is_viable(ColoredReducer &red, const PetriEngine::PQL::ColoredUseVisitor &inQuery,
-                                              uint32_t t, uint32_t p) {
+    std::map<uint32_t, std::string>
+    RedRulePreemptiveFiring::t_is_viable_and_get_map(ColoredReducer &red,
+                                                     const PetriEngine::PQL::ColoredUseVisitor &inQuery,
+                                                     uint32_t t, uint32_t p) {
+
+        std::map<uint32_t, std::string> pMap;
+
         //fireability consistency check
-        if (inQuery.isTransitionUsed(t)) return false;
+        if (inQuery.isTransitionUsed(t)) return pMap;
 
         const Transition &transition = red.transitions()[t];
         // Easiest to not handle guards, todo if guard, iterate through bindings and find the valid bindings, and only move those tokens
-        if (transition.guard) return false;
+        auto place = red.places()[p];
+        Colored::PartitionBuilder partition(red.transitions(), red.places());
+        const auto &in = red.getInArc(p, transition);
+
+        //Guard check was here before
+        if (!markingEnablesInArc(place.marking, *in, transition, partition, red.colors())) return pMap;
 
         // Check if the transition is currently inhibited
         for (auto &inhibArc: red.inhibitorArcs()) {
             if (inhibArc.place == p && inhibArc.transition == t) {
-                auto &place = red.places()[p];
                 if (inhibArc.inhib_weight <= place.marking.size()) {
-                    return false;
+                    return pMap;
                 }
             }
         }
 
         //could perhaps also relax this, but seems much more difficult
-        if (transition.input_arcs.size() > 1) return false;
+        if (transition.input_arcs.size() > 1) return pMap;
 
         //Could relax this, and only move some tokens, or check distinct size on marking
-        auto &place = red.places()[p];
-        const auto &in = red.getInArc(p, transition);
+
         if ((place.marking.size() % in->expr->weight()) != 0) {
-            return false;
+            return pMap;
         }
 
         // - Make sure that we do not produce tokens to something that can produce tokens to our preset. To disallow infinite use of this rule by looping
         std::set<uint32_t> already_checked;
-        if ((transition_can_produce_to_place(t, p, red, already_checked))) return false;
+        if ((transition_can_produce_to_place(t, p, red, already_checked))) return pMap;
 
+        std::map<uint32_t, std::string> emptyMap;
         // - postset cannot inhibit or be in query
         for (auto &out: transition.output_arcs) {
-            auto &outPlace = red.places()[out.place];
+            Place outPlace = red.places()[out.place];
             if (inQuery.isPlaceUsed(out.place) || outPlace.inhibitor) {
-                return false;
+                return emptyMap;
             }
 
-
+            bool same = to_string(*out.expr) == to_string(*in->expr);
             //for fireability consistency. We don't want to put tokens to a place enabling transition
-            for (auto &tin: outPlace._post) {
+            for (auto tin: outPlace._post) {
                 if (inQuery.isTransitionUsed(tin)) {
-                    return false;
+                    return emptyMap;
                 }
-            }
+                if (same) {
+                    pMap.insert({out.place, "same"});
+                }
 
-            //todo could relax this, and instead of simply copying the tokens to the new place, then update them according to the out arc expression
-            const auto &in = red.getInArc(p, transition);
-            if (to_string(*out.expr) != to_string(*in->expr)) {
-                return false;
+                pMap.insert({out.place, getTheValidColor(partition, red, out,
+                                                         tin, transition)});
+
             }
         }
+        return pMap;
+    }
 
+    bool RedRulePreemptiveFiring::markingEnablesInArc(Multiset &marking, const Arc &arc,
+                                                      const Colored::Transition &transition,
+                                                      PartitionBuilder &partition,
+                                                      const ColorTypeMap &colors) const {
+        assert(arc.input);
+
+        NaiveBindingGenerator gen(transition, colors);
+        for (const auto &binding: gen) {
+            const ExpressionContext context{binding, colors, partition.partition()[arc.place]};
+            const auto ms = EvaluationVisitor::evaluate(*arc.expr, context);
+            if (!(ms.isSubsetOrEqTo(marking))) return false;
+        }
         return true;
+    }
+
+    std::string
+    RedRulePreemptiveFiring::getTheValidColor(PartitionBuilder &partition, ColoredReducer &red, const Arc &arc,
+                                              uint32_t tin, const Colored::Transition &transition) {
+        const Transition &innerTransition = red.transitions()[tin];
+        NaiveBindingGenerator gen(transition, red.colors());
+
+
+        bool multipleValid = false;
+        for (auto &binding: gen) {
+
+            const ExpressionContext context{binding, red.colors(), partition.partition()[arc.place]};
+            if (EvaluationVisitor::evaluate(*innerTransition.guard, context)) {
+                if (multipleValid) {
+                    return "";
+                }
+                multipleValid = true;
+
+                for (auto col: binding) {
+                    return col.second->getColorName();
+                }
+            }
+        }
+        return "";
     }
 }

@@ -25,7 +25,15 @@ namespace PetriEngine::Colored::Reduction {
 
         bool transition_can_produce_to_place(unsigned int t, uint32_t p, ColoredReducer &red, std::set<uint32_t> &already_checked) const;
 
-        bool t_is_viable(ColoredReducer &red, const PetriEngine::PQL::ColoredUseVisitor &inQuery, uint32_t t, uint32_t p);
+        std::map<uint32_t, std::string> t_is_viable_and_get_map(ColoredReducer &red, const PetriEngine::PQL::ColoredUseVisitor &inQuery, uint32_t t, uint32_t p);
+
+        bool markingEnablesInArc(Multiset &marking, const Arc &arc,
+                                 const Colored::Transition &transition,
+                                 PartitionBuilder &partition,
+                                 const ColorTypeMap &colors) const;
+
+        std::string getTheValidColor(PartitionBuilder &partition, ColoredReducer &red, const Arc &arc, uint32_t tin,
+                                     const Transition &transition);
     };
 }
 

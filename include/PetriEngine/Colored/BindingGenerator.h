@@ -57,6 +57,9 @@ namespace PetriEngine {
 
         Iterator begin();
         Iterator end();
+        uint32_t size(){
+            return _bindings.size();
+        };
     };
 
 
