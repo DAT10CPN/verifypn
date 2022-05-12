@@ -23,6 +23,7 @@ namespace PetriEngine::Colored::Reduction {
             auto &place = const_cast<Place &>(red.places()[p]);
             if (place.skipped) continue;
             if (place.marking.empty()) continue;
+            if (inQuery.isPlaceUsed(p)) continue;
 
             // Must be exactly one post, in order to not remove branching
             if (place._post.size() != 1) {
@@ -34,7 +35,10 @@ namespace PetriEngine::Colored::Reduction {
             const Transition &transition = red.transitions()[place._post[0]];
 
             for (auto &out: transition.output_arcs) {
+                std::cout << "transition: " << *transition.name << std::endl;
+                std::cout << "place: " << *place.name << std::endl;
                 auto &otherplace = const_cast<Place &>(red.places()[out.place]);
+                std::cout << "otherplace: " << *otherplace.name << std::endl;
                 otherplace.marking += place.marking;
             }
             place.marking *= 0;
