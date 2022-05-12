@@ -231,7 +231,7 @@ namespace PetriEngine {
 
             static inline void get_variables(Expression& e, std::set<const Colored::Variable*>& variables, PositionVariableMap& varPositions, VariableModifierMap& varModifierMap, bool includeSubtracts) {
                 std::unordered_map<uint32_t, std::vector<const Colored::Variable*>> tuples;
-                get_variables(e, variables, varPositions, varModifierMap, tuples, false);
+                get_variables(e, variables, varPositions, varModifierMap, tuples, includeSubtracts);
             }
 
             static inline void get_variables(Expression& e, std::set<const Colored::Variable*>& variables, PositionVariableMap& varPositions) {
