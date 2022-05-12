@@ -100,11 +100,17 @@ namespace PetriEngine::Colored::Reduction {
         //could perhaps also relax this, but seems much more difficult
         if (transition.input_arcs.size() > 1) return false;
 
+        //Could relax this, and only move some tokens, or check distinct size on marking
+        auto &place = red.places()[p];
+        const auto &in = red.getInArc(p, transition);
+        if ((place.marking.size() % in->expr->weight()) != 0) {
+            return false;
+        }
+
         // - Make sure that we do not produce tokens to something that can produce tokens to our preset. To disallow infinite use of this rule by looping
         std::set<uint32_t> already_checked;
         if ((transition_can_produce_to_place(t, p, red, already_checked))) return false;
 
-        bool ok = true;
         // - postset cannot inhibit or be in query
         for (auto &out: transition.output_arcs) {
             auto &outPlace = red.places()[out.place];
