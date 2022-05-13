@@ -10,6 +10,7 @@
 #include "PetriEngine/Colored/Reduction/ColoredReducer.h"
 #include "PetriEngine/Colored/ArcVarMultisetVisitor.h"
 #include "PetriEngine/Colored/VariableVisitor.h"
+#include "PetriEngine/Colored/IsVariableVisitor.h"
 
 namespace PetriEngine::Colored::Reduction {
     bool RedRulePreAgglomeration::isApplicable(QueryType queryType, bool preserveLoops, bool preserveStutter) const {
@@ -95,7 +96,8 @@ namespace PetriEngine::Colored::Reduction {
                 bool todoAllGood = true;
                 // S11, S12
                 std::vector<bool> kIsAlwaysOne (postsize, true);
-                bool prodAllConst = true;
+                std::set<const Variable*> prodArcVars;
+                std::unordered_map<uint32_t, std::vector<const Colored::ColorExpression*>> allProdTuples;
 
                 for (const auto& prod : place._pre){
                     const Transition& producer = red.transitions()[prod];
@@ -108,18 +110,18 @@ namespace PetriEngine::Colored::Reduction {
                     const CArcIter& prodArc = red.getOutArc(producer, pid);
                     uint32_t kw;
 
-                    std::set<const Variable*> prodArcVars;
-                    Colored::VariableVisitor::get_variables(*prodArc->expr, prodArcVars);
-                    prodAllConst &= !prodArcVars.empty();
-                    if (prodArcVars.size() > 1){
-                        ok = false;
-                        break;
-                    }
-
                     // T9, S6
                     if(prodArc->expr->is_single_color()){
                         kw = prodArc->expr->weight();
                     } else {
+                        ok = false;
+                        break;
+                    }
+
+                    uint32_t prodTuplesStatus = allProdTuples.size();
+                    Colored::VariableVisitor::get_variables(*prodArc->expr, prodArcVars, allProdTuples);
+                    // if there are any tuples, there has to be exactly 1 on all the arcs.
+                    if (!allProdTuples.empty() && allProdTuples.size() != prodTuplesStatus + 1) {
                         ok = false;
                         break;
                     }
@@ -179,13 +181,37 @@ namespace PetriEngine::Colored::Reduction {
 
                 if (!ok) continue;
 
+                // Every tuple has to line up with each other, so we save one to compare them all to.
+                std::vector<const Colored::ColorExpression*>* referenceTuple = nullptr;
+                if (!allProdTuples.empty()){
+                    for (auto& tuple : allProdTuples){
+                        if (!referenceTuple){
+                            // We only support tuples of variables
+                            IsVariableVisitor v;
+                            for (auto& element : tuple.second){
+                                if(v.isVariableExpr(element)){
+                                    ok = false;
+                                    break;
+                                }
+                            }
+                            if (!ok) break;
+                            referenceTuple = &tuple.second;
+                            continue;
+                        } else if (tuple.second != *referenceTuple){
+                            ok = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (!ok) continue;
+
                 std::vector<uint32_t> originalConsumers = place._post;
                 std::vector<uint32_t> originalProducers = place._pre;
                 // a pair containing prodHangingGuardVarRisk, prodHangingArcVar
                 std::pair<bool, bool> prodHangingVars = _prodHangingGuardVar(red, pid, originalProducers);
 
-                for (uint32_t n = 0; n < originalConsumers.size(); n++)
-                {
+                for (uint32_t n = 0; n < originalConsumers.size(); n++) {
                     if (red.hasTimedOut())
                         return false;
                     if (!todo[n])
@@ -194,14 +220,14 @@ namespace PetriEngine::Colored::Reduction {
 
                     const Transition &consumer = red.transitions()[originalConsumers[n]];
 
-                    if (atomic_viable){
+                    if (atomic_viable) {
                         // S12
                         if (!kIsAlwaysOne[n] && consumer.input_arcs.size() != 1) {
                             continue;
                         }
                         // S11
                         if (!kIsAlwaysOne[n]) {
-                            for (const auto& conspost : consumer.output_arcs) {
+                            for (const auto &conspost: consumer.output_arcs) {
                                 if (red.places()[conspost.place].inhibitor) {
                                     ok = false;
                                     break;
@@ -211,56 +237,50 @@ namespace PetriEngine::Colored::Reduction {
                         if (!ok) continue;
                     }
 
-                    const auto& consArc = red.getInArc(pid, consumer);
+                    const auto &consArc = red.getInArc(pid, consumer);
                     uint32_t w = consArc->expr->weight();
 
                     // Identify the variables of the consumer
                     bool consHangingGuardVarRisk = false;
-                    std::set<const Variable*> consVars;
-                    std::set<const Variable*> consArcVars;
-                    std::set<const Variable*> consGuardVars;
+                    std::set<const Variable *> consVars;
+                    std::set<const Variable *> consArcVars;
+                    std::set<const Variable *> consGuardVars;
+                    std::unordered_map<uint32_t, std::vector<const Colored::ColorExpression*>> consTuples;
 
-                    Colored::VariableVisitor::get_variables(*consArc->expr, consArcVars);
-                    if (consArcVars.size() > 1 || (prodAllConst && !consArcVars.empty())){
-                        if (atomic_viable){
-                            continue;
-                        } else {
-                            break;
-                        }
-                    }
+                    Colored::VariableVisitor::get_variables(*consArc->expr, consArcVars, consTuples);
 
-                    if (prodHangingVars.second){
+                    if (prodHangingVars.second) {
                         // The hanging variable checks need the arc variables and guard variables in separate sets
-                        if(consumer.guard)
+                        if (consumer.guard)
                             Colored::VariableVisitor::get_variables(*consumer.guard, consGuardVars);
 
-                        for (auto& var : consArcVars){
-                            if (prodHangingVars.second && consGuardVars.find(var) != consGuardVars.end()){
+                        for (auto &var: consArcVars) {
+                            if (prodHangingVars.second && consGuardVars.find(var) != consGuardVars.end()) {
                                 // prodHangingArcVar && consHangingGuardVarRisk is NG
                                 consHangingGuardVarRisk = true;
                                 break;
                             }
                         }
                     } else {
-                        if(consumer.guard)
+                        if (consumer.guard)
                             Colored::VariableVisitor::get_variables(*consumer.guard, consVars);
                     }
 
-                    for (auto& arc : consumer.input_arcs){
-                        if (!prodHangingVars.first || arc.place != consArc->place){
+                    for (auto &arc: consumer.input_arcs) {
+                        if (!prodHangingVars.first || arc.place != consArc->place) {
                             Colored::VariableVisitor::get_variables(*arc.expr, consVars);
                         }
                     }
-                    for (auto& arc : consumer.output_arcs){
-                        if (!prodHangingVars.first || arc.place != consArc->place){
+                    for (auto &arc: consumer.output_arcs) {
+                        if (!prodHangingVars.first || arc.place != consArc->place) {
                             Colored::VariableVisitor::get_variables(*arc.expr, consVars);
                         }
                     }
 
                     // The hanging guards that could not be caught by the producer's arcs have to be caught by the consumer's arcs now, or the agglomeration cant go on.
                     if (prodHangingVars.first || consHangingGuardVarRisk) {
-                        for (auto& var : consArcVars){
-                            if (consVars.find(var) == consVars.end()){
+                        for (auto &var: consArcVars) {
+                            if (consVars.find(var) == consVars.end()) {
                                 // If the producer has a hanging guard variable, we cannot allow consArc to also have hanging variables
                                 ok = false;
                                 break;
@@ -268,36 +288,118 @@ namespace PetriEngine::Colored::Reduction {
                         }
                     }
 
-                    if (!ok){
-                        if (atomic_viable){
+                    if (!ok) {
+                        if (atomic_viable) {
+                            todo[n] = false;
+                            todoAllGood = false;
                             continue;
                         } else {
+                            ok = false;
                             break;
                         }
                     }
 
-                    // Update
+                    // referenceTuple being nullptr here means there were no tuples in the producers
+                    assert(consTuples.empty() == (referenceTuple == nullptr));
+                    if (!consTuples.empty()){
+                        IsVariableVisitor varvis;
+                        for (auto& tuple : consTuples){
+                            if (tuple.second.size() == referenceTuple->size()){
+                                std::unordered_map<std::string , uint32_t> tuplematching;
+                                for (uint32_t ii = 0; ii < consTuples.size(); ii++){
+                                    if (!varvis.isVariableExpr(tuple.second[ii])){
+                                        // Check that the tuple is all variables, now for the consumer
+                                        ok = false;
+                                        break;
+                                    } else if (tuplematching[varvis.getVariableName(tuple.second[ii])] != tuplematching[varvis.getVariableName((*referenceTuple)[ii])]){
+                                        // This branch is reached if one of the transitions is a duplicate, while the other is not, or is a duplicate too but of a different variable
+                                        ok = false;
+                                        break;
+                                    } else {
+                                        tuplematching[varvis.getVariableName(tuple.second[ii])] = ii;
+                                        tuplematching[varvis.getVariableName((*referenceTuple)[ii])] = ii;
+                                    }
+                                }
+                            } else {
+                                ok = false;
+                            }
+                            if (!ok) break;
+                        }
+                    }
+
+                    if (atomic_viable) {
+                        todo[n] = false;
+                        todoAllGood = false;
+                        continue;
+                    } else {
+                        ok = false;
+                        break;
+                    }
+                }
+
+                if (!ok) continue;
+
+                // Update
+                for (uint32_t n = 0; n < originalConsumers.size(); n++)
+                {
+                    if (!todo[n])
+                        continue;
+                    const Transition &consumer = red.transitions()[originalConsumers[n]];
+                    const auto &consArc = red.getInArc(pid, consumer);
+                    uint32_t w = consArc->expr->weight();
+                    std::set<const Variable *> consVars;
+                    std::set<const Variable *> consArcVars;
+                    std::unordered_map<uint32_t, std::vector<const Colored::ColorExpression*>> consTuples;
+                    Colored::VariableVisitor::get_variables(*consArc->expr, consArcVars, consTuples);
+
+                    if(consumer.guard){
+                        Colored::VariableVisitor::get_variables(*consumer.guard, consVars);
+                    }
+                    for (auto& arc : consumer.input_arcs){
+                        Colored::VariableVisitor::get_variables(*arc.expr, consVars);
+                    }
+                    for (auto& arc : consumer.output_arcs){
+                        Colored::VariableVisitor::get_variables(*arc.expr, consVars);
+                    }
+
                     for (const auto& prod : originalProducers){
                         const Transition& producer = red.transitions()[prod];
                         const CArcIter proArc = red.getOutArc(producer, pid);
-                        std::set<const Variable*> pairVars;
-                        std::unordered_map<uint32_t, std::vector<const Colored::Variable*>> tuples;
-                        // Valid because there is only allowed to be at most 1 variable on each.
-                        Colored::VariableVisitor::get_variables(*proArc->expr, pairVars, tuples);
-                        Colored::VariableVisitor::get_variables(*consArc->expr, pairVars, tuples);
 
-                        std::vector<Variable*> centerVariables;
+                        std::set<const Variable*> pairVars;
+                        std::unordered_map<uint32_t, std::vector<const Colored::ColorExpression*>> prodTuples;
+                        Colored::VariableVisitor::get_variables(*proArc->expr, pairVars, prodTuples);
+                        IsVariableVisitor varvis;
+
+                        std::set<Variable*> centerVariables;
                         std::unordered_map<std::string, const Variable*> varReplacementMap;
-                        for (auto& tuple : tuples){
-                            for (uint32_t tupleIndex = 0; tupleIndex < tuple.second.size(); tupleIndex++){
-                                if (centerVariables.size() <= tupleIndex){
-                                    auto* newVar = new Variable{*producer.name + *consumer.name + tuple.second[tupleIndex]->name, tuple.second[tupleIndex]->colorType};
+                        if (!prodTuples.empty()){
+                            std::vector<const Colored::ColorExpression*>& tuple = prodTuples.at(1);
+                            for (uint32_t tupleIndex = 0; tupleIndex < referenceTuple->size(); tupleIndex++){
+                                const Variable* var = varvis.getVariable(tuple[tupleIndex]);
+                                if (varReplacementMap[var->name] == nullptr){
+                                    auto* newVar = new Variable{*producer.name + *consumer.name + var->name, var->colorType};
                                     red.addVariable(newVar);
-                                    centerVariables.emplace_back(newVar);
+                                    centerVariables.insert(newVar);
+                                    varReplacementMap[var->name] = newVar;
+                                    varReplacementMap[varvis.getVariable(consTuples.at(1)[tupleIndex])->name] = newVar;
                                 }
-                                varReplacementMap[tuple.second[tupleIndex]->name] = centerVariables[tupleIndex];
+                            }
+                        } else {
+                            for (auto& pvar : pairVars){
+                                if (varReplacementMap[pvar->name] == nullptr){
+                                    auto* newVar = new Variable{*producer.name + *consumer.name + pvar->name, pvar->colorType};
+                                    red.addVariable(newVar);
+                                    centerVariables.insert(newVar);
+                                    varReplacementMap[pvar->name] = newVar;
+                                    for (auto& cvar : consArcVars){
+                                        varReplacementMap[cvar->name] = newVar;
+                                    }
+
+                                }
                             }
                         }
+
                         pairVars.insert(consVars.begin(), consVars.end());
 
                         if(producer.guard){
@@ -318,7 +420,7 @@ namespace PetriEngine::Colored::Reduction {
                             }
                         }
 
-                        VarReplaceVisitor varvis = VarReplaceVisitor(varReplacementMap);
+                        VarReplaceVisitor varReplacevis = VarReplaceVisitor(varReplacementMap);
 
                         uint32_t k = 1;
                         if (!kIsAlwaysOne[n]){
@@ -326,11 +428,11 @@ namespace PetriEngine::Colored::Reduction {
                         }
                         GuardExpression_ptr mergedguard = nullptr;
                         if (consumer.guard != nullptr && producer.guard != nullptr){
-                            mergedguard = std::make_shared<PetriEngine::Colored::AndExpression>(varvis.makeReplacementGuard(producer.guard), varvis.makeReplacementGuard(consumer.guard));
+                            mergedguard = std::make_shared<PetriEngine::Colored::AndExpression>(varReplacevis.makeReplacementGuard(producer.guard), varReplacevis.makeReplacementGuard(consumer.guard));
                         } else if (consumer.guard != nullptr){
-                            mergedguard = varvis.makeReplacementGuard(consumer.guard);
+                            mergedguard = varReplacevis.makeReplacementGuard(consumer.guard);
                         } else if (producer.guard != nullptr){
-                            mergedguard = varvis.makeReplacementGuard(producer.guard);
+                            mergedguard = varReplacevis.makeReplacementGuard(producer.guard);
                         }
 
                         // One for each number of firings of consumer possible after one firing of producer
@@ -353,7 +455,7 @@ namespace PetriEngine::Colored::Reduction {
 
                             // Arcs from consumer
                             for (const auto& arc : consumerPrime.output_arcs) {
-                                ArcExpression_ptr expr = varvis.makeReplacementArcExpr(arc.expr);
+                                ArcExpression_ptr expr = varReplacevis.makeReplacementArcExpr(arc.expr);
                                 if (k_i > 1){
                                     red.addOutputArc(tid, arc.place, std::make_shared<PetriEngine::Colored::ScalarProductExpression>(std::shared_ptr(expr), k_i));
                                 } else {
@@ -362,18 +464,18 @@ namespace PetriEngine::Colored::Reduction {
                             }
                             for (const auto& arc : consumerPrime.input_arcs){
                                 if (arc.place != pid){
-                                    ArcExpression_ptr expr = varvis.makeReplacementArcExpr(arc.expr);
+                                    ArcExpression_ptr expr = varReplacevis.makeReplacementArcExpr(arc.expr);
                                     red.addInputArc(arc.place, tid, expr, arc.inhib_weight);
                                 }
                             }
 
                             for (const auto& arc : producerPrime.input_arcs){
-                                ArcExpression_ptr expr = varvis.makeReplacementArcExpr(arc.expr);
+                                ArcExpression_ptr expr = varReplacevis.makeReplacementArcExpr(arc.expr);
                                 red.addInputArc(arc.place, tid, expr, arc.inhib_weight);
                             }
 
                             if (k_i != k){
-                                red.addOutputArc(tid, pid, std::make_shared<PetriEngine::Colored::ScalarProductExpression>(varvis.makeReplacementArcExpr(proArc->expr), k-k_i));
+                                red.addOutputArc(tid, pid, std::make_shared<PetriEngine::Colored::ScalarProductExpression>(varReplacevis.makeReplacementArcExpr(proArc->expr), k-k_i));
                             }
                         }
                     }
