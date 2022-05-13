@@ -31,19 +31,24 @@ namespace PetriEngine::Colored::Reduction {
             }
 
             auto map = t_is_viable_and_get_map(red, inQuery, place._post[0], p);
-            if (map.empty()) continue;
+            if (map.empty()) {
+                std::cout << "------------------------------" << std::endl;
+                std::cout << "empty map for place: " << *place.name << std::endl;
+                continue;
+            }
 
             const Transition &transition = red.transitions()[place._post[0]];
+            std::cout << "------------------------------" << std::endl;
             std::cout << "place: " << *place.name << std::endl;
             std::cout << "transition: " << *transition.name << std::endl;
             std::cout << "map: " << std::endl;
             for (auto &mapping: map) {
-                std::cout << mapping.first << " : " << mapping.second << std::endl;
+                auto &otherplace = red.places()[mapping.first];
+                std::cout << *otherplace.name << " : " << mapping.second << std::endl;
             }
 
             for (auto &out: transition.output_arcs) {
                 auto &otherplace = const_cast<Place &>(red.places()[out.place]);
-                std::cout << "otherplace: " << *otherplace.name << std::endl;
                 //otherplace.marking += place.marking;
             }
             place.marking *= 0;
@@ -97,18 +102,19 @@ namespace PetriEngine::Colored::Reduction {
         if (inQuery.isTransitionUsed(t)) return pMap;
 
         const Transition &transition = red.transitions()[t];
-        // Easiest to not handle guards, todo if guard, iterate through bindings and find the valid bindings, and only move those tokens
-        auto place = red.places()[p];
         Colored::PartitionBuilder partition(red.transitions(), red.places());
-        const auto &in = red.getInArc(p, transition);
 
         //If there is a guard, and only one color, we good to go
+        std::string postColor;
         if (transition.guard) {
-            std::string postColor = getTheValidColorFirst(partition, red, transition, p);
+            postColor = getTheValidColorFirst(partition, red, transition, p);
         }
+
         //if (!markingEnablesInArc(place.marking, *in, transition, partition, red.colors())) return pMap;
 
 
+        auto place = red.places()[p];
+        const auto &in = red.getInArc(p, transition);
 
         // Check if the transition is currently inhibited
         for (auto &inhibArc: red.inhibitorArcs()) {
@@ -119,14 +125,13 @@ namespace PetriEngine::Colored::Reduction {
             }
         }
 
-        //could perhaps also relax this, but seems much more difficult
-        if (transition.input_arcs.size() > 1) return pMap;
-
         //Could relax this, and only move some tokens, or check distinct size on marking
-
         if ((place.marking.size() % in->expr->weight()) != 0) {
             return pMap;
         }
+
+        //could perhaps also relax this, but seems much more difficult
+        if (transition.input_arcs.size() > 1) return pMap;
 
         // - Make sure that we do not produce tokens to something that can produce tokens to our preset. To disallow infinite use of this rule by looping
         std::set<uint32_t> already_checked;
@@ -141,19 +146,26 @@ namespace PetriEngine::Colored::Reduction {
             }
 
             bool same = to_string(*out.expr) == to_string(*in->expr);
+            if (same) {
+                pMap.insert({out.place, "same"});
+                continue;
+            }
             //for fireability consistency. We don't want to put tokens to a place enabling transition
+            std::string validColor;
             for (auto tin: outPlace._post) {
                 if (inQuery.isTransitionUsed(tin)) {
                     return emptyMap;
                 }
-                if (same) {
-                    pMap.insert({out.place, "same"});
+                const Transition &innerTransition = red.transitions()[tin];
+                std::string nextValidColor = getTheValidColorFirst(partition, red, innerTransition, out.place);
+                if (validColor.empty()) {
+                    validColor = nextValidColor;
                 }
-
-                pMap.insert({out.place, getTheValidColor(partition, red, out.place,
-                                                         tin, transition)});
-
+                if ((transition.guard && (validColor != postColor)) || (nextValidColor != validColor)) {
+                    return emptyMap;
+                }
             }
+            pMap.insert({out.place, validColor});
         }
         return pMap;
     }
@@ -173,60 +185,27 @@ namespace PetriEngine::Colored::Reduction {
         return true;
     }
 
-    std::string
-    RedRulePreemptiveFiring::getTheValidColor(PartitionBuilder &partition, ColoredReducer &red, uint32_t p,
-                                              uint32_t tin, const Colored::Transition &transition) {
-        const Transition &innerTransition = red.transitions()[tin];
-        NaiveBindingGenerator gen(transition, red.colors());
-
-
-        bool multipleValid = false;
-        for (auto &binding: gen) {
-
-            const ExpressionContext context{binding, red.colors(), partition.partition()[p]};
-            if (EvaluationVisitor::evaluate(*innerTransition.guard, context)) {
-                if (multipleValid) {
-                    return "";
-                }
-                multipleValid = true;
-
-                for (auto col: binding) {
-                    return col.second->getColorName();
-                }
-            }
-        }
-        return "";
-    }
-
     std::string RedRulePreemptiveFiring::getTheValidColorFirst(PartitionBuilder &partition, ColoredReducer &red,
                                                                const Colored::Transition &transition, uint32_t p) {
         NaiveBindingGenerator gen(transition, red.colors());
 
-        std::cout << "checking transition guards: " << *transition.name << std::endl;
+        if (!transition.guard) return "";
 
         bool multipleValid = false;
+        std::string validCol;
         for (auto &binding: gen) {
-            std::cout << "binding: " << std::endl;
-            for (auto col: binding) {
-                std::cout << "col:" << std::endl;
-                std::cout << col.first->name << ": " << col.second->getColorName() << std::endl;
-            }
-
             const ExpressionContext context{binding, red.colors(), partition.partition()[p]};
-            if (!transition.guard) return "";
             if (EvaluationVisitor::evaluate(*transition.guard, context)) {
-
                 if (multipleValid) {
                     return "";
                 }
                 multipleValid = true;
 
                 for (auto col: binding) {
-                    std::cout << "test col.second->getColorName(): " << col.second->getColorName() << std::endl;
-                    //return col.second->getColorName();
+                    validCol = col.second->getColorName();
                 }
             }
         }
-        return "";
+        return validCol;
     }
 }
