@@ -185,14 +185,15 @@ namespace PetriEngine::Colored::Reduction {
         return numFire;
     }
 
-    std::string RedRulePreemptiveFiring::getTheValidColor(PartitionBuilder &partition, ColoredReducer &red,
+    std::optional<const Color *> RedRulePreemptiveFiring::getTheValidColor(PartitionBuilder &partition, ColoredReducer &red,
                                                           const Colored::Transition &transition, uint32_t p) {
         NaiveBindingGenerator gen(transition, red.colors());
-
+        return std::nullopt;
+        //use if() to check if it is null, and dereference to use
         if (!transition.guard) return "";
 
         bool multipleValid = false;
-        std::string validCol;
+        const Color * validCol;
         for (auto &binding: gen) {
             const ExpressionContext context{binding, red.colors(), partition.partition()[p]};
             if (EvaluationVisitor::evaluate(*transition.guard, context)) {
@@ -202,7 +203,7 @@ namespace PetriEngine::Colored::Reduction {
                 multipleValid = true;
 
                 for (auto col: binding) {
-                    validCol = col.second->getColorName();
+                    validCol = col.second;
                 }
             }
         }
