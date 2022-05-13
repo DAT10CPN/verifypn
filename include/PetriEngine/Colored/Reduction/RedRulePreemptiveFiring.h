@@ -32,8 +32,12 @@ namespace PetriEngine::Colored::Reduction {
                                  PartitionBuilder &partition,
                                  const ColorTypeMap &colors) const;
 
-        std::string getTheValidColor(PartitionBuilder &partition, ColoredReducer &red, const Arc &arc, uint32_t tin,
+        std::string getTheValidColor(PartitionBuilder &partition, ColoredReducer &red,  uint32_t p, uint32_t tin,
                                      const Transition &transition);
+
+        std::string
+        getTheValidColorFirst(PartitionBuilder &partition, ColoredReducer &red, const Transition &transition,
+                              uint32_t p);
     };
 }
 

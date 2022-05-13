@@ -102,8 +102,13 @@ namespace PetriEngine::Colored::Reduction {
         Colored::PartitionBuilder partition(red.transitions(), red.places());
         const auto &in = red.getInArc(p, transition);
 
-        //Guard check was here before
-        if (!markingEnablesInArc(place.marking, *in, transition, partition, red.colors())) return pMap;
+        //If there is a guard, and only one color, we good to go
+        if (transition.guard) {
+            std::string postColor = getTheValidColorFirst(partition, red, transition, p);
+        }
+        //if (!markingEnablesInArc(place.marking, *in, transition, partition, red.colors())) return pMap;
+
+
 
         // Check if the transition is currently inhibited
         for (auto &inhibArc: red.inhibitorArcs()) {
@@ -145,7 +150,7 @@ namespace PetriEngine::Colored::Reduction {
                     pMap.insert({out.place, "same"});
                 }
 
-                pMap.insert({out.place, getTheValidColor(partition, red, out,
+                pMap.insert({out.place, getTheValidColor(partition, red, out.place,
                                                          tin, transition)});
 
             }
@@ -169,7 +174,7 @@ namespace PetriEngine::Colored::Reduction {
     }
 
     std::string
-    RedRulePreemptiveFiring::getTheValidColor(PartitionBuilder &partition, ColoredReducer &red, const Arc &arc,
+    RedRulePreemptiveFiring::getTheValidColor(PartitionBuilder &partition, ColoredReducer &red, uint32_t p,
                                               uint32_t tin, const Colored::Transition &transition) {
         const Transition &innerTransition = red.transitions()[tin];
         NaiveBindingGenerator gen(transition, red.colors());
@@ -178,7 +183,7 @@ namespace PetriEngine::Colored::Reduction {
         bool multipleValid = false;
         for (auto &binding: gen) {
 
-            const ExpressionContext context{binding, red.colors(), partition.partition()[arc.place]};
+            const ExpressionContext context{binding, red.colors(), partition.partition()[p]};
             if (EvaluationVisitor::evaluate(*innerTransition.guard, context)) {
                 if (multipleValid) {
                     return "";
@@ -187,6 +192,38 @@ namespace PetriEngine::Colored::Reduction {
 
                 for (auto col: binding) {
                     return col.second->getColorName();
+                }
+            }
+        }
+        return "";
+    }
+
+    std::string RedRulePreemptiveFiring::getTheValidColorFirst(PartitionBuilder &partition, ColoredReducer &red,
+                                                               const Colored::Transition &transition, uint32_t p) {
+        NaiveBindingGenerator gen(transition, red.colors());
+
+        std::cout << "checking transition guards: " << *transition.name << std::endl;
+
+        bool multipleValid = false;
+        for (auto &binding: gen) {
+            std::cout << "binding: " << std::endl;
+            for (auto col: binding) {
+                std::cout << "col:" << std::endl;
+                std::cout << col.first->name << ": " << col.second->getColorName() << std::endl;
+            }
+
+            const ExpressionContext context{binding, red.colors(), partition.partition()[p]};
+            if (!transition.guard) return "";
+            if (EvaluationVisitor::evaluate(*transition.guard, context)) {
+
+                if (multipleValid) {
+                    return "";
+                }
+                multipleValid = true;
+
+                for (auto col: binding) {
+                    std::cout << "test col.second->getColorName(): " << col.second->getColorName() << std::endl;
+                    //return col.second->getColorName();
                 }
             }
         }
