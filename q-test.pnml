@@ -376,6 +376,25 @@
                         <usersort declaration="dot"/>
                     </structure>
                 </type>
+                <hlinitialMarking>
+                    <text>(1'dot)</text>
+                    <structure>
+                        <add>
+                            <subterm>
+                                <numberof>
+                                    <subterm>
+                                        <numberconstant value="1">
+                                            <positive/>
+                                        </numberconstant>
+                                    </subterm>
+                                    <subterm>
+                                        <useroperator declaration="dot"/>
+                                    </subterm>
+                                </numberof>
+                            </subterm>
+                        </add>
+                    </structure>
+                </hlinitialMarking>
             </place>
             <place id="Weight_Left_Wheel">
                 <name>
@@ -393,6 +412,25 @@
                         <usersort declaration="weight"/>
                     </structure>
                 </type>
+                <hlinitialMarking>
+                    <text>(1'Weight0)</text>
+                    <structure>
+                        <add>
+                            <subterm>
+                                <numberof>
+                                    <subterm>
+                                        <numberconstant value="1">
+                                            <positive/>
+                                        </numberconstant>
+                                    </subterm>
+                                    <subterm>
+                                        <useroperator declaration="Weight0"/>
+                                    </subterm>
+                                </numberof>
+                            </subterm>
+                        </add>
+                    </structure>
+                </hlinitialMarking>
             </place>
             <place id="stp1">
                 <name>

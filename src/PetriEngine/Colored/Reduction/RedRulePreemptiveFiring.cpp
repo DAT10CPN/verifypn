@@ -107,14 +107,14 @@ namespace PetriEngine::Colored::Reduction {
         //If there is a guard, and only one color, we good to go
         std::string postColor;
         if (transition.guard) {
-            postColor = getTheValidColorFirst(partition, red, transition, p);
+            postColor = getTheValidColor(partition, red, transition, p);
         }
-
-        //if (!markingEnablesInArc(place.marking, *in, transition, partition, red.colors())) return pMap;
 
 
         auto place = red.places()[p];
         const auto &in = red.getInArc(p, transition);
+        uint32_t canFiresTimes = numFirable(place.marking, *in, transition, partition, red.colors());
+        if (canFiresTimes == 0) return pMap;
 
         // Check if the transition is currently inhibited
         for (auto &inhibArc: red.inhibitorArcs()) {
@@ -157,7 +157,7 @@ namespace PetriEngine::Colored::Reduction {
                     return emptyMap;
                 }
                 const Transition &innerTransition = red.transitions()[tin];
-                std::string nextValidColor = getTheValidColorFirst(partition, red, innerTransition, out.place);
+                std::string nextValidColor = getTheValidColor(partition, red, innerTransition, out.place);
                 if (validColor.empty()) {
                     validColor = nextValidColor;
                 }
@@ -170,23 +170,23 @@ namespace PetriEngine::Colored::Reduction {
         return pMap;
     }
 
-    bool RedRulePreemptiveFiring::markingEnablesInArc(Multiset &marking, const Arc &arc,
-                                                      const Colored::Transition &transition,
-                                                      PartitionBuilder &partition,
-                                                      const ColorTypeMap &colors) const {
+    uint32_t RedRulePreemptiveFiring::numFirable(Multiset &marking, const Arc &arc,
+                                                 const Colored::Transition &transition,
+                                                 PartitionBuilder &partition,
+                                                 const ColorTypeMap &colors) const {
         assert(arc.input);
-
+        uint32_t numFire = 0;
         NaiveBindingGenerator gen(transition, colors);
         for (const auto &binding: gen) {
             const ExpressionContext context{binding, colors, partition.partition()[arc.place]};
             const auto ms = EvaluationVisitor::evaluate(*arc.expr, context);
-            if (!(ms.isSubsetOrEqTo(marking))) return false;
+            if ((ms.isSubsetOrEqTo(marking))) numFire++;
         }
-        return true;
+        return numFire;
     }
 
-    std::string RedRulePreemptiveFiring::getTheValidColorFirst(PartitionBuilder &partition, ColoredReducer &red,
-                                                               const Colored::Transition &transition, uint32_t p) {
+    std::string RedRulePreemptiveFiring::getTheValidColor(PartitionBuilder &partition, ColoredReducer &red,
+                                                          const Colored::Transition &transition, uint32_t p) {
         NaiveBindingGenerator gen(transition, red.colors());
 
         if (!transition.guard) return "";

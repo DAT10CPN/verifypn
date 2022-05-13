@@ -390,6 +390,21 @@
 						<usersort declaration="weight"/>
 					</structure>
 				</type>
+				<hlinitialMarking>
+					<text>1'(Weight0)</text>
+					<structure>
+						<numberof>
+							<subterm>
+								<numberconstant value="1">
+									<positive/>
+								</numberconstant>
+							</subterm>
+							<subterm>
+								<useroperator declaration="Weight0"/>
+							</subterm>
+						</numberof>
+					</structure>
+				</hlinitialMarking>
 			</place>
 			<place id="stp1">
 				<name>

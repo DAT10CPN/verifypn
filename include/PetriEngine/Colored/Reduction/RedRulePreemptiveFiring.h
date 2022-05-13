@@ -23,21 +23,21 @@ namespace PetriEngine::Colored::Reduction {
         bool apply(ColoredReducer &red, const PetriEngine::PQL::ColoredUseVisitor &inQuery, QueryType queryType,
                    bool preserveLoops, bool preserveStutter) override;
 
-        bool transition_can_produce_to_place(unsigned int t, uint32_t p, ColoredReducer &red, std::set<uint32_t> &already_checked) const;
+        bool transition_can_produce_to_place(unsigned int t, uint32_t p, ColoredReducer &red,
+                                             std::set<uint32_t> &already_checked) const;
 
-        std::map<uint32_t, std::string> t_is_viable_and_get_map(ColoredReducer &red, const PetriEngine::PQL::ColoredUseVisitor &inQuery, uint32_t t, uint32_t p);
+        std::map<uint32_t, std::string>
+        t_is_viable_and_get_map(ColoredReducer &red, const PetriEngine::PQL::ColoredUseVisitor &inQuery, uint32_t t,
+                                uint32_t p);
 
-        bool markingEnablesInArc(Multiset &marking, const Arc &arc,
-                                 const Colored::Transition &transition,
-                                 PartitionBuilder &partition,
-                                 const ColorTypeMap &colors) const;
-
-        std::string getTheValidColor(PartitionBuilder &partition, ColoredReducer &red,  uint32_t p, uint32_t tin,
-                                     const Transition &transition);
+        uint32_t numFirable(Multiset &marking, const Arc &arc,
+                            const Colored::Transition &transition,
+                            PartitionBuilder &partition,
+                            const ColorTypeMap &colors) const;
 
         std::string
-        getTheValidColorFirst(PartitionBuilder &partition, ColoredReducer &red, const Transition &transition,
-                              uint32_t p);
+        getTheValidColor(PartitionBuilder &partition, ColoredReducer &red, const Transition &transition,
+                         uint32_t p);
     };
 }
 
