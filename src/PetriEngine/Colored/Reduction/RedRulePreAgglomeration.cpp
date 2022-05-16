@@ -189,7 +189,7 @@ namespace PetriEngine::Colored::Reduction {
                             // We only support tuples of variables
                             IsVariableVisitor v;
                             for (auto& element : tuple.second){
-                                if(v.isVariableExpr(element)){
+                                if(!v.isVariableExpr(element)){
                                     ok = false;
                                     break;
                                 }
