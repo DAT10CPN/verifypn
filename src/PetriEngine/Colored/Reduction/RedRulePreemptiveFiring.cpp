@@ -30,34 +30,61 @@ namespace PetriEngine::Colored::Reduction {
                 continue;
             }
 
-            auto map = t_is_viable_and_get_map(red, inQuery, place._post[0], p);
-            if (map.empty()) {
+            auto placeColorMap = t_is_viable_and_get_map(red, inQuery, place._post[0], p);
+            const Transition &transition = red.transitions()[place._post[0]];
+            if (!placeColorMap) {
                 std::cout << "------------------------------" << std::endl;
-                std::cout << "empty map for place: " << *place.name << std::endl;
+                std::cout << "Not viable" << std::endl;
+                std::cout << "place: " << *place.name << std::endl;
+                std::cout << "transition: " << *transition.name << std::endl;
                 continue;
             }
 
-            const Transition &transition = red.transitions()[place._post[0]];
+
+            if (placeColorMap->empty()) { //&&to_string(*transition.output_arcs[0].expr) != to_string(*transition.input_arcs[0].expr)) {
+                std::cout << "------------------------------" << std::endl;
+                std::cout << "empty map for place, just copy the color: " << *place.name << std::endl;
+                std::cout << "transition: " << *transition.name << std::endl;
+                continue;
+            }
+
+
             std::cout << "------------------------------" << std::endl;
             std::cout << "place: " << *place.name << std::endl;
             std::cout << "transition: " << *transition.name << std::endl;
             std::cout << "map: " << std::endl;
-            for (auto &mapping: map) {
+            for (auto &mapping: *placeColorMap) {
+                const Color *col = *mapping.second;
                 auto &otherplace = red.places()[mapping.first];
-                std::cout << *otherplace.name << " : " << mapping.second << std::endl;
+                if (mapping.second) {
+                    std::cout << *otherplace.name << " : " << col->getColorName() << std::endl;
+                } else {
+                    std::cout << *otherplace.name << " : anything" << std::endl;
+                }
             }
 
             for (auto &out: transition.output_arcs) {
+                std::optional<const Color*> col = placeColorMap->find(out.place)->second;
+                if (col) {
+                    std::cout << "------------------------------" << std::endl;
+                    std::cout << "place: " << out.place << std::endl;
+                    std::cout << "color: " << *col->getColorName() << std::endl;
+                }
                 auto &otherplace = const_cast<Place &>(red.places()[out.place]);
-                //otherplace.marking += place.marking;
+                if (to_string(*out.expr) == to_string(*transition.input_arcs[0].expr)) {
+                    std::cout << "same" << std::endl;
+                    otherplace.marking += place.marking;
+                    continue;
+                }
             }
-            place.marking *= 0;
+            //place.marking *= 0;
 
 
             _applications++;
             continueReductions = true;
 
         }
+        return false;
         return continueReductions;
     }
 
@@ -91,114 +118,132 @@ namespace PetriEngine::Colored::Reduction {
         return false;
     }
 
-    std::map<uint32_t, std::string>
+    std::optional<std::map<uint32_t, std::optional<const Color *>>>
     RedRulePreemptiveFiring::t_is_viable_and_get_map(ColoredReducer &red,
                                                      const PetriEngine::PQL::ColoredUseVisitor &inQuery,
                                                      uint32_t t, uint32_t p) {
 
-        std::map<uint32_t, std::string> pMap;
 
         //fireability consistency check
-        if (inQuery.isTransitionUsed(t)) return pMap;
+        if (inQuery.isTransitionUsed(t)) return std::nullopt;
 
         const Transition &transition = red.transitions()[t];
         Colored::PartitionBuilder partition(red.transitions(), red.places());
 
-        //If there is a guard, and only one color, we good to go
-        std::string postColor;
-        if (transition.guard) {
-            postColor = getTheValidColor(partition, red, transition, p);
-        }
-
-
-        auto place = red.places()[p];
-        const auto &in = red.getInArc(p, transition);
-        uint32_t canFiresTimes = numFirable(place.marking, *in, transition, partition, red.colors());
-        if (canFiresTimes == 0) return pMap;
-
-        // Check if the transition is currently inhibited
-        for (auto &inhibArc: red.inhibitorArcs()) {
-            if (inhibArc.place == p && inhibArc.transition == t) {
-                if (inhibArc.inhib_weight <= place.marking.size()) {
-                    return pMap;
-                }
-            }
-        }
-
-        //Could relax this, and only move some tokens, or check distinct size on marking
-        if ((place.marking.size() % in->expr->weight()) != 0) {
-            return pMap;
-        }
-
         //could perhaps also relax this, but seems much more difficult
-        if (transition.input_arcs.size() > 1) return pMap;
+        if (transition.input_arcs.size() > 1) return std::nullopt;
 
         // - Make sure that we do not produce tokens to something that can produce tokens to our preset. To disallow infinite use of this rule by looping
         std::set<uint32_t> already_checked;
-        if ((transition_can_produce_to_place(t, p, red, already_checked))) return pMap;
+        if ((transition_can_produce_to_place(t, p, red, already_checked))) return std::nullopt;
 
-        std::map<uint32_t, std::string> emptyMap;
+        auto outerPlace = red.places()[p];
+        // Check if the transition is currently inhibited
+        for (auto &inhibArc: red.inhibitorArcs()) {
+            if (inhibArc.place == p && inhibArc.transition == t) {
+                if (inhibArc.inhib_weight <= outerPlace.marking.size()) {
+                    return std::nullopt;
+                }
+            }
+        }
+
+        const auto &outerIn = red.getInArc(p, transition);
+        //Can relax this and see if the actual binding we need allows, and just use that as many times
+        //todo fix, does not work for P2
+        if (!everyBindingAllows(outerPlace.marking, *outerIn, transition, partition, red.colors())) return std::nullopt;
+
+        //Could relax this, and only move some tokens, or check distinct size on marking
+        if ((outerPlace.marking.size() % outerIn->expr->weight()) != 0) {
+            return std::nullopt;
+        }
+
+        //If there is a guard, and only one color, we good to go
+        std::optional<const Color *> singleValidColor;
+        std::map<uint32_t, std::optional<const Color *>> pMap;
+        if (transition.guard) {
+            singleValidColor = getTheValidColor(partition, red, transition, p);
+            if (singleValidColor) {
+                pMap.insert({p, singleValidColor});
+            }
+        }
+
+        std::map<uint32_t, std::optional<const Color *>> emptyMap;
+
+        //The inner check
         // - postset cannot inhibit or be in query
         for (auto &out: transition.output_arcs) {
-            Place outPlace = red.places()[out.place];
-            if (inQuery.isPlaceUsed(out.place) || outPlace.inhibitor) {
-                return emptyMap;
+            Place innerPlace = red.places()[out.place];
+            if (inQuery.isPlaceUsed(out.place) || innerPlace.inhibitor) {
+                return std::nullopt;
             }
 
-            bool same = to_string(*out.expr) == to_string(*in->expr);
-            if (same) {
-                pMap.insert({out.place, "same"});
-                continue;
-            }
             //for fireability consistency. We don't want to put tokens to a place enabling transition
-            std::string validColor;
-            for (auto tin: outPlace._post) {
+            std::optional<const Color *> validColor;
+            for (auto tin: innerPlace._post) {
                 if (inQuery.isTransitionUsed(tin)) {
-                    return emptyMap;
+                    return std::nullopt;
                 }
+
+                if (singleValidColor) {
+                    continue;
+                }
+
+                //const auto &innerOut = red.getOutArc(transition, p);
+
                 const Transition &innerTransition = red.transitions()[tin];
-                std::string nextValidColor = getTheValidColor(partition, red, innerTransition, out.place);
-                if (validColor.empty()) {
+                std::optional<const Color *> nextValidColor = getTheValidColor(partition, red, innerTransition,
+                                                                               out.place);
+                if (!nextValidColor) {
+                    return std::nullopt;
+                }
+                if (!validColor) {
                     validColor = nextValidColor;
                 }
-                if ((transition.guard && (validColor != postColor)) || (nextValidColor != validColor)) {
-                    return emptyMap;
+                if (nextValidColor != validColor) {
+                    return std::nullopt;
                 }
             }
+            /*if (singleValidColor || !validColor) {
+                continue;
+            }*/
             pMap.insert({out.place, validColor});
+        }
+        if (singleValidColor) {
+            return emptyMap;
         }
         return pMap;
     }
 
-    uint32_t RedRulePreemptiveFiring::numFirable(Multiset &marking, const Arc &arc,
-                                                 const Colored::Transition &transition,
-                                                 PartitionBuilder &partition,
-                                                 const ColorTypeMap &colors) const {
+    bool RedRulePreemptiveFiring::everyBindingAllows(Multiset &marking, const Arc &arc,
+                                                     const Colored::Transition &transition,
+                                                     PartitionBuilder &partition,
+                                                     const ColorTypeMap &colors) const {
         assert(arc.input);
-        uint32_t numFire = 0;
         NaiveBindingGenerator gen(transition, colors);
         for (const auto &binding: gen) {
             const ExpressionContext context{binding, colors, partition.partition()[arc.place]};
             const auto ms = EvaluationVisitor::evaluate(*arc.expr, context);
-            if ((ms.isSubsetOrEqTo(marking))) numFire++;
+            if (!(ms.isSubsetOrEqTo(marking))) return false;
         }
-        return numFire;
+        return true;
     }
 
-    std::optional<const Color *> RedRulePreemptiveFiring::getTheValidColor(PartitionBuilder &partition, ColoredReducer &red,
-                                                          const Colored::Transition &transition, uint32_t p) {
+    std::optional<const Color *>
+    RedRulePreemptiveFiring::getTheValidColor(PartitionBuilder &partition, ColoredReducer &red,
+                                              const Colored::Transition &transition, uint32_t p) {
+
+
         NaiveBindingGenerator gen(transition, red.colors());
-        return std::nullopt;
         //use if() to check if it is null, and dereference to use
-        if (!transition.guard) return "";
+        if (!transition.guard) return std::nullopt;
 
         bool multipleValid = false;
-        const Color * validCol;
+        const Color *validCol;
         for (auto &binding: gen) {
             const ExpressionContext context{binding, red.colors(), partition.partition()[p]};
             if (EvaluationVisitor::evaluate(*transition.guard, context)) {
                 if (multipleValid) {
-                    return "";
+                    return std::nullopt;
                 }
                 multipleValid = true;
 

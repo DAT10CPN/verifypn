@@ -364,20 +364,20 @@
                 <name>
                     <text>P2</text>
                     <graphics>
-                        <offset x="-5" y="35"/>
+                        <offset x="8" y="45"/>
                     </graphics>
                 </name>
                 <graphics>
-                    <position x="320" y="350"/>
+                    <position x="305" y="350"/>
                 </graphics>
                 <type>
-                    <text>dot</text>
+                    <text>Speed</text>
                     <structure>
-                        <usersort declaration="dot"/>
+                        <usersort declaration="Speed"/>
                     </structure>
                 </type>
                 <hlinitialMarking>
-                    <text>(1'dot)</text>
+                    <text>(1'Speed6)</text>
                     <structure>
                         <add>
                             <subterm>
@@ -388,7 +388,7 @@
                                         </numberconstant>
                                     </subterm>
                                     <subterm>
-                                        <useroperator declaration="dot"/>
+                                        <useroperator declaration="Speed6"/>
                                     </subterm>
                                 </numberof>
                             </subterm>
@@ -404,7 +404,7 @@
                     </graphics>
                 </name>
                 <graphics>
-                    <position x="210" y="270"/>
+                    <position x="150" y="270"/>
                 </graphics>
                 <type>
                     <text>weight</text>
@@ -488,26 +488,13 @@
             <transition id="t2_2">
                 <name>
                     <graphics>
-                        <offset x="-5" y="35"/>
+                        <offset x="44" y="37"/>
                     </graphics>
                     <text>t2_2</text>
                 </name>
                 <graphics>
-                    <position x="430" y="350"/>
+                    <position x="460" y="350"/>
                 </graphics>
-                <condition>
-                    <text>varW eq Weight1</text>
-                    <structure>
-                        <equality>
-                            <subterm>
-                                <variable refvariable="varW"/>
-                            </subterm>
-                            <subterm>
-                                <useroperator declaration="Weight1"/>
-                            </subterm>
-                        </equality>
-                    </structure>
-                </condition>
             </transition>
             <transition id="t1_2">
                 <name>
@@ -517,7 +504,7 @@
                     <text>t1_2</text>
                 </name>
                 <graphics>
-                    <position x="210" y="350"/>
+                    <position x="210" y="335"/>
                 </graphics>
                 <condition>
                     <text>varW eq Weight1</text>
@@ -546,7 +533,7 @@
             </transition>
             <arc id="P2_to_t2_2" source="P2" target="t2_2" type="normal">
                 <hlinscription>
-                    <text>1'dot</text>
+                    <text>1'varS</text>
                     <structure>
                         <numberof>
                             <subterm>
@@ -555,7 +542,7 @@
                                 </numberconstant>
                             </subterm>
                             <subterm>
-                                <dotconstant/>
+                                <variable refvariable="varS"/>
                             </subterm>
                         </numberof>
                     </structure>
@@ -614,7 +601,7 @@
             </arc>
             <arc id="t1_2_to_P2" source="t1_2" target="P2" type="normal">
                 <hlinscription>
-                    <text>1'dot</text>
+                    <text>1'Speed1</text>
                     <structure>
                         <numberof>
                             <subterm>
@@ -623,7 +610,7 @@
                                 </numberconstant>
                             </subterm>
                             <subterm>
-                                <dotconstant/>
+                                <useroperator declaration="Speed1"/>
                             </subterm>
                         </numberof>
                     </structure>
