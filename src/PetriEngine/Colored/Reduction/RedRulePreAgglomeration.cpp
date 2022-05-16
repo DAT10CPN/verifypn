@@ -327,13 +327,15 @@ namespace PetriEngine::Colored::Reduction {
                         }
                     }
 
-                    if (atomic_viable) {
-                        todo[n] = false;
-                        todoAllGood = false;
-                        continue;
-                    } else {
-                        ok = false;
-                        break;
+                    if (!ok){
+                        if (atomic_viable) {
+                            todo[n] = false;
+                            todoAllGood = false;
+                            continue;
+                        } else {
+                            ok = false;
+                            break;
+                        }
                     }
                 }
 
