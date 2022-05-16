@@ -32,7 +32,7 @@ namespace PetriEngine {
             };
              void accept(const TupleExpression*)  override {
                 _isVariable = false;
-            };;
+            };
              void accept(const LessThanExpression*)  override {
                 _isVariable = false;
             };
