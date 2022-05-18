@@ -302,10 +302,9 @@ namespace PetriEngine::Colored::Reduction {
             id = _skippedTransitions.back();
             _skippedTransitions.pop_back();
             PetriEngine::Colored::Transition& tran = _builder._transitions[id];
-            tran.guard = nullptr;
+            tran.guard = guard;
             tran.skipped = false;
             tran.inhibited = false;
-            tran.guard = nullptr;
             _builder._transitionnames.erase(tran.name);
             tran.name = std::make_shared<const_string>(newTransitionName());
             _builder._transitionnames[tran.name] = id;
