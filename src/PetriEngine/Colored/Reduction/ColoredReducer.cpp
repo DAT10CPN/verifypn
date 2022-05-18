@@ -6,6 +6,7 @@
  */
 
 #include <PetriEngine/Colored/VariableVisitor.h>
+#include <PetriEngine/Colored/VarReplaceVisitor.h>
 #include "PetriEngine/Colored/ColoredPetriNetBuilder.h"
 #include "PetriEngine/Colored/Reduction/ColoredReducer.h"
 #include "PetriEngine/Colored/Multiset.h"
@@ -278,6 +279,39 @@ namespace PetriEngine::Colored::Reduction {
 
     void ColoredReducer::addDummyPlace(){
         _builder.addPlace("Dummy", ColorType::dotInstance(), Multiset(), 0, 0);
+    }
+
+    void ColoredReducer::renameVariables(uint32_t transId){
+        PetriEngine::Colored::Transition& transition = _builder._transitions[transId];
+        std::unordered_map<std::string, const Variable*> varReplacementMap;
+        std::set<const Variable*> vars;
+
+        if (transition.guard){
+            Colored::VariableVisitor::get_variables(*transition.guard, vars);
+        }
+        for (auto& arc : transition.input_arcs) {
+            Colored::VariableVisitor::get_variables(*arc.expr, vars);
+        }
+        for (auto& arc : transition.output_arcs) {
+            Colored::VariableVisitor::get_variables(*arc.expr, vars);
+        }
+
+        for (const auto& var : vars){
+            const Variable* newvar = new Variable {*transition.name + var->name, var->colorType};
+            varReplacementMap[var->name] = newvar;
+            addVariable(newvar);
+        }
+        auto varvis = VarReplaceVisitor(varReplacementMap);
+
+        if (transition.guard){
+            transition.guard = varvis.makeReplacementGuard(transition.guard);
+        }
+        for (auto& arc : transition.input_arcs) {
+            arc.expr = varvis.makeReplacementArcExpr(arc.expr);
+        }
+        for (auto& arc : transition.output_arcs) {
+            arc.expr = varvis.makeReplacementArcExpr(arc.expr);
+        }
     }
 
     void ColoredReducer::addInputArc(uint32_t pid, uint32_t tid, ArcExpression_ptr& expr, uint32_t inhib_weight){

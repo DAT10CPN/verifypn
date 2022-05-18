@@ -114,6 +114,8 @@ namespace PetriEngine::Colored {
             uint32_t newTransition(const Colored::GuardExpression_ptr& guard);
             void addDummyPlace();
 
+            void renameVariables(uint32_t transId);
+
             void consistent();
 
             std::vector<uint8_t> _tflags;

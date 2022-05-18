@@ -139,7 +139,7 @@ namespace PetriEngine::Colored::Reduction {
                             } else if (kw != w) {
                                 kIsAlwaysOne[n] = false;
                             }
-                        } else if (!consArc->expr->is_single_color() || kw != w || consumer.input_arcs.size() != 1) {
+                        } else if (!consArc->expr->is_single_color() || kw != w) {
                             ok = false;
                             break;
                         }
@@ -160,17 +160,9 @@ namespace PetriEngine::Colored::Reduction {
                         } else if (!atomic_viable) {
                             // For reachability, we can do free agglomeration which avoids this condition
                             // T5
-                            for(uint32_t alternative : preplace._post){
-                                // T5; Transitions in place.pre are exempt from this check
-                                if (std::lower_bound(place._pre.begin(), place._pre.end(), alternative) != place._pre.end())
-                                    continue;
-
-                                const Transition& alternativeConsumer = red.transitions()[alternative];
-                                // T5; Transitions outside place.pre are not allowed to alter the contents of preplace
-                                if (red.getInArc(prearc.place, alternativeConsumer)->expr == red.getOutArc(alternativeConsumer, prearc.place)->expr){
-                                    ok = false;
-                                    break;
-                                }
+                            if (preplace._post.size() > 1){
+                                ok = false;
+                                break;
                             }
                         }
                         if (!ok) break;
@@ -348,6 +340,9 @@ namespace PetriEngine::Colored::Reduction {
                         continue;
                     const Transition &consumer = red.transitions()[originalConsumers[n]];
                     const auto &consArc = red.getInArc(pid, consumer);
+
+                    red.renameVariables(originalConsumers[n]);
+
                     uint32_t w = consArc->expr->weight();
                     std::set<const Variable *> consVars;
                     std::set<const Variable *> consArcVars;
