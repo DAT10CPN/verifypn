@@ -84,7 +84,7 @@ namespace PetriEngine::Colored::Reduction {
         if (inQuery.isTransitionUsed(t)) return false;
 
         const Transition &transition = red.transitions()[t];
-        // Easiest to not handle guards, todo if guard, iterate through bindings and find the valid bindings, and only move those tokens
+        // Easiest to not handle guards
         if (transition.guard) return false;
 
         // Check if the transition is currently inhibited
@@ -97,7 +97,7 @@ namespace PetriEngine::Colored::Reduction {
             }
         }
 
-        //could perhaps also relax this, but seems much more difficult
+        //could also relax this, but seems difficult
         if (transition.input_arcs.size() > 1) return false;
 
         //Could relax this, and only move some tokens, or check distinct size on marking
@@ -127,6 +127,7 @@ namespace PetriEngine::Colored::Reduction {
             }
 
             //todo could relax this, and instead of simply copying the tokens to the new place, then update them according to the out arc expression
+            //todo or simple extension, check if constant color on the out arc
             const auto &in = red.getInArc(p, transition);
             if (to_string(*out.expr) != to_string(*in->expr)) {
                 return false;
