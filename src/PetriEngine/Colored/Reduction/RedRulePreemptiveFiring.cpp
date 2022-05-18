@@ -107,12 +107,6 @@ namespace PetriEngine::Colored::Reduction {
             return false;
         }
 
-        // - Make sure that we do not produce tokens to something that can produce tokens to our preset. To disallow infinite use of this rule by looping
-        std::set<uint32_t> already_checked;
-        if (place._pre.size() > 0) {
-            if (transition_can_produce_to_place(t, p, red, already_checked)) return false;
-        }
-
         // - postset cannot inhibit or be in query
         for (auto &out: transition.output_arcs) {
             auto &outPlace = red.places()[out.place];
@@ -130,10 +124,16 @@ namespace PetriEngine::Colored::Reduction {
 
             //todo could relax this, and instead of simply copying the tokens to the new place, then update them according to the out arc expression
             //todo or simple extension, check if constant color on the out arc
-            const auto &in = red.getInArc(p, transition);
             if (to_string(*out.expr) != to_string(*in->expr)) {
                 return false;
             }
+        }
+
+        // - Make sure that we do not produce tokens to something that can produce tokens to our preset. To disallow infinite use of this rule by looping
+        if (place._pre.size() > 0) {
+            if (in->expr->weight() != 1) return false;
+            std::set<uint32_t> already_checked;
+            if (transition_can_produce_to_place(t, p, red, already_checked)) return false;
         }
 
         return true;
