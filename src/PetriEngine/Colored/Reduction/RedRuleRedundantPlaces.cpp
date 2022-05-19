@@ -68,6 +68,7 @@ namespace PetriEngine::Colored::Reduction {
 
             if (!ok) continue;
 
+            std::cout << "removing place: " << *place.name << std::endl;
             ++_applications;
             red.skipPlace(p);
             continueReductions = true;

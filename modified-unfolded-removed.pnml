@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+<net id="ClientsAndServers-PT-N0500P0" type="http://www.pnml.org/version-2009/grammar/ptnet">
+<page id="page0">
+<name>
+<text>DefaultPage</text></name><place id="lm0_orphan">
+<graphics><position x="725" y="690"/></graphics>
+<name><text>lm0_orphan</text></name>
+</place>
+<place id="m1_orphan">
+<graphics><position x="795" y="545"/></graphics>
+<name><text>m1_orphan</text></name>
+</place>
+<place id="m2_orphan">
+<graphics><position x="785" y="180"/></graphics>
+<name><text>m2_orphan</text></name>
+</place>
+</page></net>
+</pnml>

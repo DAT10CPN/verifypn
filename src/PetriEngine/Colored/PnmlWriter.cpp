@@ -175,6 +175,7 @@ namespace PetriEngine {
             places();
             transitions();
             arcs();
+            //inhibitorArcs();
             _out << decreaseTabs() << "</page>\n";
         }
 

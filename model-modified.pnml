@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+    <net id="ComposedModel" type="http://www.pnml.org/version-2009/grammar/ptnet">
+        <name>
+            <text>ComposedModel</text>
+        </name>
+        <declaration>
+            <structure>
+                <declarations>
+                    <namedsort id="dot" name="dot">
+                        <dot/>
+                    </namedsort>
+                    <namedsort id="LegalResident" name="LegalResident">
+                        <cyclicenumeration>
+                            <feconstant id="LegalResident0" name="LegalResident"/>
+                            <feconstant id="LegalResident1" name="LegalResident"/>
+                            <feconstant id="LegalResident2" name="LegalResident"/>
+                            <feconstant id="LegalResident3" name="LegalResident"/>
+                            <feconstant id="LegalResident4" name="LegalResident"/>
+                            <feconstant id="LegalResident5" name="LegalResident"/>
+                            <feconstant id="LegalResident6" name="LegalResident"/>
+                            <feconstant id="LegalResident7" name="LegalResident"/>
+                            <feconstant id="LegalResident8" name="LegalResident"/>
+                            <feconstant id="LegalResident9" name="LegalResident"/>
+                            <feconstant id="LegalResident10" name="LegalResident"/>
+                        </cyclicenumeration>
+                    </namedsort>
+                    <namedsort id="MICSystem" name="MICSystem">
+                        <cyclicenumeration>
+                            <feconstant id="MICSystem0" name="MICSystem"/>
+                            <feconstant id="MICSystem1" name="MICSystem"/>
+                        </cyclicenumeration>
+                    </namedsort>
+                    <namedsort id="CINFORMI" name="CINFORMI">
+                        <cyclicenumeration>
+                            <feconstant id="CINFORMI0" name="CINFORMI"/>
+                            <feconstant id="CINFORMI1" name="CINFORMI"/>
+                        </cyclicenumeration>
+                    </namedsort>
+                    <namedsort id="PublicAdminOffice" name="PublicAdminOffice">
+                        <cyclicenumeration>
+                            <feconstant id="PublicAdminOffice0" name="PublicAdminOffice"/>
+                            <feconstant id="PublicAdminOffice1" name="PublicAdminOffice"/>
+                        </cyclicenumeration>
+                    </namedsort>
+                    <namedsort id="GovernmentCommission" name="GovernmentCommission">
+                        <cyclicenumeration>
+                            <feconstant id="GovernmentCommission0" name="GovernmentCommission"/>
+                            <feconstant id="GovernmentCommission1" name="GovernmentCommission"/>
+                        </cyclicenumeration>
+                    </namedsort>
+                    <namedsort id="response" name="Response">
+                        <cyclicenumeration>
+                            <feconstant id="Response0" name="Response"/>
+                            <feconstant id="Response1" name="Response"/>
+                        </cyclicenumeration>
+                    </namedsort>
+                    <namedsort id="LxM" name="LxM">
+                        <productsort>
+                            <usersort declaration="LegalResident"/>
+                            <usersort declaration="MICSystem"/>
+                        </productsort>
+                    </namedsort>
+                    <namedsort id="LxC" name="LxC">
+                        <productsort>
+                            <usersort declaration="LegalResident"/>
+                            <usersort declaration="CINFORMI"/>
+                        </productsort>
+                    </namedsort>
+                    <namedsort id="LxP" name="LxP">
+                        <productsort>
+                            <usersort declaration="LegalResident"/>
+                            <usersort declaration="PublicAdminOffice"/>
+                        </productsort>
+                    </namedsort>
+                    <namedsort id="LxG" name="LxG">
+                        <productsort>
+                            <usersort declaration="LegalResident"/>
+                            <usersort declaration="GovernmentCommission"/>
+                        </productsort>
+                    </namedsort>
+                    <namedsort id="LxR" name="LxR">
+                        <productsort>
+                            <usersort declaration="LegalResident"/>
+                            <usersort declaration="response"/>
+                        </productsort>
+                    </namedsort>
+                    <variabledecl id="varl" name="l">
+                        <usersort declaration="LegalResident"/>
+                    </variabledecl>
+                    <variabledecl id="varm" name="m">
+                        <usersort declaration="MICSystem"/>
+                    </variabledecl>
+                    <variabledecl id="varc" name="c">
+                        <usersort declaration="CINFORMI"/>
+                    </variabledecl>
+                    <variabledecl id="varp" name="p">
+                        <usersort declaration="PublicAdminOffice"/>
+                    </variabledecl>
+                    <variabledecl id="varg" name="g">
+                        <usersort declaration="GovernmentCommission"/>
+                    </variabledecl>
+                    <variabledecl id="varr" name="r">
+                        <usersort declaration="response"/>
+                    </variabledecl>
+                </declarations>
+            </structure>
+        </declaration>
+        <page id="page0">
+            <place id="lm0">
+                <name>
+                    <text>lm0</text>
+                    <graphics>
+                        <offset x="-8" y="20"/>
+                    </graphics>
+                </name>
+                <graphics>
+                    <position x="725" y="690"/>
+                </graphics>
+                <type>
+                    <text>LegalResident</text>
+                    <structure>
+                        <usersort declaration="LegalResident"/>
+                    </structure>
+                </type>
+            </place>
+            <place id="m1">
+                <name>
+                    <text>m1</text>
+                    <graphics>
+                        <offset x="-5" y="35"/>
+                    </graphics>
+                </name>
+                <graphics>
+                    <position x="795" y="545"/>
+                </graphics>
+                <type>
+                    <text>LxM</text>
+                    <structure>
+                        <usersort declaration="LxM"/>
+                    </structure>
+                </type>
+            </place>
+            <place id="m2">
+                <name>
+                    <text>m2</text>
+                    <graphics>
+                        <offset x="-5" y="35"/>
+                    </graphics>
+                </name>
+                <graphics>
+                    <position x="785" y="180"/>
+                </graphics>
+                <type>
+                    <text>LxM</text>
+                    <structure>
+                        <usersort declaration="LxM"/>
+                    </structure>
+                </type>
+            </place>
+            <transition id="ReceiveAccessReq">
+                <name>
+                    <graphics>
+                        <offset x="-5" y="35"/>
+                    </graphics>
+                    <text>ReceiveAccessReq</text>
+                </name>
+                <graphics>
+                    <position x="715" y="545"/>
+                </graphics>
+            </transition>
+            <transition id="DisplayLangChoice">
+                <name>
+                    <graphics>
+                        <offset x="-5" y="35"/>
+                    </graphics>
+                    <text>DisplayLangChoice</text>
+                </name>
+                <graphics>
+                    <position x="795" y="375"/>
+                </graphics>
+            </transition>
+            <arc id="m1_to_DisplayLangChoice" source="m1" target="DisplayLangChoice" type="normal">
+                <hlinscription>
+                    <text>1'(l, m)</text>
+                    <structure>
+                        <numberof>
+                            <subterm>
+                                <numberconstant value="1">
+                                    <positive/>
+                                </numberconstant>
+                            </subterm>
+                            <subterm>
+                                <tuple>
+                                    <subterm>
+                                        <variable refvariable="varl"/>
+                                    </subterm>
+                                    <subterm>
+                                        <variable refvariable="varm"/>
+                                    </subterm>
+                                </tuple>
+                            </subterm>
+                        </numberof>
+                    </structure>
+                </hlinscription>
+            </arc>
+            <arc id="ReceiveAccessReq_to_m1" source="ReceiveAccessReq" target="m1" type="normal">
+                <hlinscription>
+                    <text>1'(l, m)</text>
+                    <structure>
+                        <numberof>
+                            <subterm>
+                                <numberconstant value="1">
+                                    <positive/>
+                                </numberconstant>
+                            </subterm>
+                            <subterm>
+                                <tuple>
+                                    <subterm>
+                                        <variable refvariable="varl"/>
+                                    </subterm>
+                                    <subterm>
+                                        <variable refvariable="varm"/>
+                                    </subterm>
+                                </tuple>
+                            </subterm>
+                        </numberof>
+                    </structure>
+                </hlinscription>
+            </arc>
+            <arc id="DisplayLangChoice_to_m2" source="DisplayLangChoice" target="m2" type="normal">
+                <hlinscription>
+                    <text>1'(l, m)</text>
+                    <structure>
+                        <numberof>
+                            <subterm>
+                                <numberconstant value="1">
+                                    <positive/>
+                                </numberconstant>
+                            </subterm>
+                            <subterm>
+                                <tuple>
+                                    <subterm>
+                                        <variable refvariable="varl"/>
+                                    </subterm>
+                                    <subterm>
+                                        <variable refvariable="varm"/>
+                                    </subterm>
+                                </tuple>
+                            </subterm>
+                        </numberof>
+                    </structure>
+                </hlinscription>
+            </arc>
+            <arc id="lm0_to_ReceiveAccessReq" source="lm0" target="ReceiveAccessReq" type="inhibitor">
+                <hlinscription>
+                    <text>1'LegalResident.all</text>
+                    <structure>
+                        <numberof>
+                            <subterm>
+                                <numberconstant value="1">
+                                    <positive/>
+                                </numberconstant>
+                            </subterm>
+                            <subterm>
+                                <all>
+                                    <usersort declaration="LegalResident"/>
+                                </all>
+                            </subterm>
+                        </numberof>
+                    </structure>
+                </hlinscription>
+            </arc>
+        </page>
+    </net>
+</pnml>

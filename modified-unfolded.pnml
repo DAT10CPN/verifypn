@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+<net id="ClientsAndServers-PT-N0500P0" type="http://www.pnml.org/version-2009/grammar/ptnet">
+<page id="page0">
+<name>
+<text>DefaultPage</text></name><place id="m1_0">
+<graphics><position x="795" y="545"/></graphics>
+<name><text>m1_0</text></name>
+</place>
+<place id="lm0Sum">
+<graphics><position x="740" y="660"/></graphics>
+<name><text>lm0Sum</text></name>
+</place>
+<place id="m2_0">
+<graphics><position x="785" y="180"/></graphics>
+<name><text>m2_0</text></name>
+</place>
+<place id="m0_orphan">
+<graphics><position x="635" y="545"/></graphics>
+<name><text>m0_orphan</text></name>
+<initialMarking><text>2</text></initialMarking>
+</place>
+<transition id="ReceiveAccessReq_0">
+<player><value>0</value></player>
+<name><text>ReceiveAccessReq_0</text></name>
+<graphics><position x="715" y="545"/></graphics>
+</transition>
+<transition id="DisplayLangChoice_0">
+<player><value>0</value></player>
+<name><text>DisplayLangChoice_0</text></name>
+<graphics><position x="780" y="315"/></graphics>
+</transition>
+<arc id="0" source="lm0Sum" target="ReceiveAccessReq_0" type="inhibitor">
+</arc>
+<arc id="1" source="ReceiveAccessReq_0" target="m1_0">
+</arc>
+<arc id="2" source="m1_0" target="DisplayLangChoice_0" type="normal">
+</arc>
+<arc id="3" source="DisplayLangChoice_0" target="m2_0">
+</arc>
+</page></net>
+</pnml>
