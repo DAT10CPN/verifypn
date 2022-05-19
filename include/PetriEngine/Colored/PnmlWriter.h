@@ -90,6 +90,8 @@ namespace PetriEngine::Colored {
         void handleOtherColor(const Color *const c);
 
         void handleNumberOf(std::pair<const PetriEngine::Colored::Color *const, uint32_t> numberOff);
+
+        void inhibitorArcs();
     };
 }
 
