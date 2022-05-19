@@ -338,10 +338,9 @@ namespace PetriEngine::Colored::Reduction {
                 {
                     if (!todo[n])
                         continue;
+                    red.renameVariables(originalConsumers[n]);
                     const Transition &consumer = red.transitions()[originalConsumers[n]];
                     const auto &consArc = red.getInArc(pid, consumer);
-
-                    red.renameVariables(originalConsumers[n]);
 
                     uint32_t w = consArc->expr->weight();
                     std::set<const Variable *> consVars;
@@ -361,6 +360,7 @@ namespace PetriEngine::Colored::Reduction {
 
                     for (const auto& prod : originalProducers){
                         const Transition& producer = red.transitions()[prod];
+                        const Transition& consumer2 = red.transitions()[originalConsumers[n]];
                         const CArcIter proArc = red.getOutArc(producer, pid);
 
                         std::set<const Variable*> pairVars;
@@ -375,7 +375,7 @@ namespace PetriEngine::Colored::Reduction {
                             for (uint32_t tupleIndex = 0; tupleIndex < referenceTuple->size(); tupleIndex++){
                                 const Variable* var = varvis.getVariable(tuple[tupleIndex]);
                                 if (varReplacementMap[var->name] == nullptr){
-                                    auto* newVar = new Variable{*producer.name + *consumer.name + var->name, var->colorType};
+                                    auto* newVar = new Variable{*producer.name + *consumer2.name + var->name, var->colorType};
                                     red.addVariable(newVar);
                                     centerVariables.insert(newVar);
                                     varReplacementMap[var->name] = newVar;
@@ -385,7 +385,7 @@ namespace PetriEngine::Colored::Reduction {
                         } else {
                             for (auto& pvar : pairVars){
                                 if (varReplacementMap[pvar->name] == nullptr){
-                                    auto* newVar = new Variable{*producer.name + *consumer.name + pvar->name, pvar->colorType};
+                                    auto newVar = new Variable{*producer.name + *consumer2.name + pvar->name, pvar->colorType};
                                     red.addVariable(newVar);
                                     centerVariables.insert(newVar);
                                     varReplacementMap[pvar->name] = newVar;
@@ -411,7 +411,7 @@ namespace PetriEngine::Colored::Reduction {
 
                         for (auto& var : pairVars){
                             if (varReplacementMap[var->name] == nullptr){
-                                auto* newVar = new Variable{*producer.name + *consumer.name + var->name, var->colorType};
+                                auto* newVar = new Variable{*producer.name + *consumer2.name + var->name, var->colorType};
                                 red.addVariable(newVar);
                                 varReplacementMap[var->name] = newVar;
                             }
@@ -424,10 +424,10 @@ namespace PetriEngine::Colored::Reduction {
                             k = proArc->expr->weight() / w;
                         }
                         GuardExpression_ptr mergedguard = nullptr;
-                        if (consumer.guard != nullptr && producer.guard != nullptr){
-                            mergedguard = std::make_shared<PetriEngine::Colored::AndExpression>(varReplacevis.makeReplacementGuard(producer.guard), varReplacevis.makeReplacementGuard(consumer.guard));
-                        } else if (consumer.guard != nullptr){
-                            mergedguard = varReplacevis.makeReplacementGuard(consumer.guard);
+                        if (consumer2.guard != nullptr && producer.guard != nullptr){
+                            mergedguard = std::make_shared<PetriEngine::Colored::AndExpression>(varReplacevis.makeReplacementGuard(producer.guard), varReplacevis.makeReplacementGuard(consumer2.guard));
+                        } else if (consumer2.guard != nullptr){
+                            mergedguard = varReplacevis.makeReplacementGuard(consumer2.guard);
                         } else if (producer.guard != nullptr){
                             mergedguard = varReplacevis.makeReplacementGuard(producer.guard);
                         }
