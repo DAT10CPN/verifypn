@@ -23,6 +23,7 @@ namespace PetriEngine::Colored::Reduction {
             auto &place = const_cast<Place &>(red.places()[p]);
             if (place.skipped) continue;
             if (place.marking.empty()) continue;
+            if (place.inhibitor) continue;
             if (inQuery.isPlaceUsed(p)) continue;
 
             // Must be exactly one post, in order to not remove branching
