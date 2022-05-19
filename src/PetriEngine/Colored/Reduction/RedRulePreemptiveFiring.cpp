@@ -125,7 +125,8 @@ namespace PetriEngine::Colored::Reduction {
 
             //todo could relax this, and instead of simply copying the tokens to the new place, then update them according to the out arc expression
             //todo or simple extension, check if constant color on the out arc
-            if (to_string(*out.expr) != to_string(*in->expr)) {
+            if (to_string(*out.expr) != to_string(*in->expr) && out.expr->is_single_color()) {
+                if ()
                 return false;
             }
         }
