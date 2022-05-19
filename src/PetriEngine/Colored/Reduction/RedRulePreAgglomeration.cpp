@@ -368,18 +368,30 @@ namespace PetriEngine::Colored::Reduction {
                         Colored::VariableVisitor::get_variables(*proArc->expr, pairVars, prodTuples);
                         IsVariableVisitor varvis;
 
-                        std::set<Variable*> centerVariables;
                         std::unordered_map<std::string, const Variable*> varReplacementMap;
                         if (!prodTuples.empty()){
-                            std::vector<const Colored::ColorExpression*>& tuple = prodTuples.at(1);
                             for (uint32_t tupleIndex = 0; tupleIndex < referenceTuple->size(); tupleIndex++){
-                                const Variable* var = varvis.getVariable(tuple[tupleIndex]);
-                                if (varReplacementMap[var->name] == nullptr){
-                                    auto* newVar = new Variable{*producer.name + *consumer2.name + var->name, var->colorType};
+                                const Variable* prodVar = varvis.getVariable(prodTuples.at(1)[tupleIndex]);
+                                const Variable* consVar = varvis.getVariable(consTuples.at(1)[tupleIndex]);
+                                if (varReplacementMap[prodVar->name] == nullptr && varReplacementMap[consVar->name] == nullptr){
+                                    auto* newVar = new Variable{*producer.name + *consumer2.name + prodVar->name + consVar->name, prodVar->colorType};
                                     red.addVariable(newVar);
-                                    centerVariables.insert(newVar);
-                                    varReplacementMap[var->name] = newVar;
-                                    varReplacementMap[varvis.getVariable(consTuples.at(1)[tupleIndex])->name] = newVar;
+                                    varReplacementMap[prodVar->name] = newVar;
+                                    varReplacementMap[consVar->name] = newVar;
+                                } else if (varReplacementMap[prodVar->name] == nullptr){
+                                    varReplacementMap[prodVar->name] = varReplacementMap[consVar->name];
+                                } else if (varReplacementMap[consVar->name] == nullptr){
+                                    varReplacementMap[consVar->name] = varReplacementMap[prodVar->name];
+                                } else {
+                                    // Two variables that were thought to be separate actually need to be the same, fix it
+                                    // Only applies in cases such as --(k,k,i)->(place)--(k,i,i)->
+                                    const Variable* emergencyVar1 = varReplacementMap[prodVar->name];
+                                    const Variable* emergencyVar2 = varReplacementMap[consVar->name];
+                                    for (auto& pair : varReplacementMap){
+                                        if (pair.second == emergencyVar1){
+                                            pair.second = emergencyVar2;
+                                        }
+                                    }
                                 }
                             }
                         } else {
@@ -387,7 +399,6 @@ namespace PetriEngine::Colored::Reduction {
                                 if (varReplacementMap[pvar->name] == nullptr){
                                     auto newVar = new Variable{*producer.name + *consumer2.name + pvar->name, pvar->colorType};
                                     red.addVariable(newVar);
-                                    centerVariables.insert(newVar);
                                     varReplacementMap[pvar->name] = newVar;
                                     for (auto& cvar : consArcVars){
                                         varReplacementMap[cvar->name] = newVar;
