@@ -92,6 +92,8 @@ namespace PetriEngine::Colored {
         void handleNumberOf(std::pair<const PetriEngine::Colored::Color *const, uint32_t> numberOff);
 
         void inhibitorArcs();
+
+        void writeInhibitorExpressionToPnml(Colored::Arc inhibitor);
     };
 }
 
