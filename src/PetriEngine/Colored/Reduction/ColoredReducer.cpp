@@ -153,7 +153,7 @@ namespace PetriEngine::Colored::Reduction {
         if (tran.inhibited) {
             auto &inhibs = _builder._inhibitorArcs;
 
-            for (uint32_t i = inhibs.size() - 1; i >= 0; i--) {
+            for (int i = inhibs.size() - 1; i >= 0; i--) {
                 const Arc& inhib = inhibs[i];
                 if (inhib.transition == tid) {
                     Place &place = _builder._places[inhib.place];
