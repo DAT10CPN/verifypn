@@ -21,7 +21,7 @@ namespace PetriEngine::Colored::Reduction {
                    bool preserveLoops, bool preserveStutter) override;
 
     private:
-        uint32_t explosion_limiter = 5;
+        uint32_t explosion_limiter = 3;
         static std::pair<bool, bool> _prodHangingGuardVar(ColoredReducer& red, uint32_t pid, const std::vector<uint32_t>& originalProducers);
     };
 }

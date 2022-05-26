@@ -21,7 +21,7 @@ namespace PetriEngine::Colored::Reduction {
                                         QueryType queryType, bool preserveLoops, bool preserveStutter) {
         bool continueReductions = false;
         bool changed = true;
-        bool atomic_viable = (queryType == Reach) && !preserveLoops;
+        bool atomic_viable = (queryType == Reach) && !preserveLoops && false;
 
         // Apply repeatedly
         while (changed) {
