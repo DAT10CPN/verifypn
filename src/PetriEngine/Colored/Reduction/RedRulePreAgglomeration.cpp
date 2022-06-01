@@ -139,6 +139,8 @@ namespace PetriEngine::Colored::Reduction {
                                 todoAllGood = false;
                             } else if (kw != w) {
                                 kIsAlwaysOne[n] = false;
+                                todo[n] = false;
+                                todoAllGood = false;
                             }
                         } else if (!consArc->expr->is_single_color() || kw != w) {
                             ok = false;
